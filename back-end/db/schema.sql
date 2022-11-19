@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS users, camps, reservations, photos, camp_dates, reserves_dates,chat;
+
 CREATE TABLE IF NOT EXISTS users(
   user_id SERIAL PRIMARY KEY NOT NULL,
   user_name VARCHAR(50),
@@ -17,7 +19,7 @@ CREATE TABLE IF NOT EXISTS camps(
 CREATE TABLE IF NOT EXISTS reservations(
   reserve_id SERIAL PRIMARY KEY NOT NULL,
   camp_id INT REFERENCES camps (camp_id),
-  client_id INT REFERENCES reservations (client_id),
+  client_id INT REFERENCES users (user_id),
   confirmed BOOLEAN DEFAULT FALSE
 );
 
