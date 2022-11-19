@@ -1,3 +1,5 @@
+DROP TABLE IF EXISTS users, camps, reservations, photos, camp_dates, reserves_dates,chat;
+
 CREATE TABLE IF NOT EXISTS users(
   user_id SERIAL PRIMARY KEY NOT NULL,
   user_name VARCHAR(50),
@@ -8,16 +10,17 @@ CREATE TABLE IF NOT EXISTS users(
 CREATE TABLE IF NOT EXISTS camps(
   camp_id SERIAL PRIMARY KEY NOT NULL,
   host_id INT REFERENCES users (user_id),
+  camp_name VARCHAR(100),
   price DECIMAL,
   star_rating DECIMAL,
   location VARCHAR(50),
-  description VARCHAR(100)
+  description VARCHAR(500)
 );
 
 CREATE TABLE IF NOT EXISTS reservations(
   reserve_id SERIAL PRIMARY KEY NOT NULL,
   camp_id INT REFERENCES camps (camp_id),
-  client_id INT REFERENCES reservations (client_id),
+  client_id INT REFERENCES users (user_id),
   confirmed BOOLEAN DEFAULT FALSE
 );
 
@@ -54,16 +57,16 @@ INSERT INTO users(user_id, user_name, password, location) VALUES
   (3,'test3', 'pw3', 'Mars')
   ON CONFLICT DO NOTHING;
 
-INSERT INTO camps(camp_id, host_id, price, star_rating, location, description) VALUES
-  (1, 1, 200, 5, 'Mountain View', 'Cozy AF'),
-  (2, 1, 100, 2, 'Mountain View', 'Not Cozy AF'),
-  (3, 1, 0, 0, 'Mountain View', 'Fake place, doesnt exist'),
-  (4, 2, 215, 5, 'Sunnyvale', 'My special camp'),
-  (5, 2, 150, 3, 'Palo Alto', 'Comes with free boba'),
-  (6, 3, 1000, 5, 'Mars', 'Welcome to Mars earthling')
+INSERT INTO camps(camp_id, host_id, camp_name, price, star_rating, location, description) VALUES
+  (1, 1, 'Camp Expensive', 200, 5, 'Mountain View', 'Cozy AF'),
+  (2, 1, 'Camp Cheap', 100, 2, 'Mountain View', 'Not Cozy AF'),
+  (3, 1, 'Camp Fake', 0, 0, 'Mountain View', 'Fake place, doesnt exist'),
+  (4, 2, 'My Personal Camp', 215, 5, 'Sunnyvale', 'My special camp'),
+  (5, 2, 'My Not Personal Camp', 150, 3, 'Palo Alto', 'Comes with free boba'),
+  (6, 3, 'Camp Mars', 1000, 5, 'Mars', 'Out of this world!')
   ON CONFLICT DO NOTHING;
 
-INSERT INTO reservations(reserve_id, camp_id, client_id, confirmed) VALUES
+INSERT INTO reservations(reserve_id, camp_id, user_id, confirmed) VALUES
   (1, 3, 2, FALSE),
   (2, 1, 3, FALSE),
   (3, 6, 1, TRUE)
