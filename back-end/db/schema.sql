@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS users, camps, reservations, photos, camp_dates, reserves_dates,chat;
+DROP TABLE IF EXISTS users, camps, reservations, photos, camp_dates, reserves_dates,chat, reviews;
 
 CREATE TABLE IF NOT EXISTS users(
   user_id SERIAL PRIMARY KEY NOT NULL,
@@ -51,6 +51,14 @@ CREATE TABLE IF NOT EXISTS chat(
   messages VARCHAR(100)
 );
 
+CREATE TABLE IF NOT EXISTS reviews(
+  review_id SERIAL PRIMARY KEY NOT NULL,
+  camp_id INT REFERENCES camps (camp_id),
+  client_id INT REFERENCES users (user_id),
+  star_rating INT,
+  review VARCHAR(500)
+);
+
 INSERT INTO users(user_id, user_name, password, location) VALUES
   (1,'test1', 'pw1', 'Mountain View'),
   (2,'test2', 'pw2', 'Sunnyvale'),
@@ -63,7 +71,7 @@ INSERT INTO camps(camp_id, host_id, camp_name, price, star_rating, location, des
   (3, 1, 'Camp Fake', 0, 0, 'Mountain View', 'Fake place, doesnt exist'),
   (4, 2, 'My Personal Camp', 215, 5, 'Sunnyvale', 'My special camp'),
   (5, 2, 'My Not Personal Camp', 150, 3, 'Palo Alto', 'Comes with free boba'),
-  (6, 3, 'Camp Mars', 1000, 5, 'Mars', 'Out of this world!')
+  (6, 3, 'Camp Mars', 1000, 5, 'Mars', 'Greetings human')
   ON CONFLICT DO NOTHING;
 
 INSERT INTO reservations(reserve_id, camp_id, user_id, confirmed) VALUES
@@ -104,5 +112,10 @@ INSERT INTO photos(photo_id, camp_id, photo_url) VALUES
   (8, 1, 'https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,g_auto,h_630,q_60,w_1200/v1652453103/campground-photos/shgam6kwlyuu7cvblkth.jpg'),
   (9, 6, 'https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,g_auto,h_630,q_60,w_1200/v1652453103/campground-photos/shgam6kwlyuu7cvblkth.jpg')
   ON CONFLICT DO NOTHING;
+
+INSERT INTO reviews(review_id, camp_id , client_id, star_rating, review) VALUES
+  (1, 6, 1, 5, 'Awesome place! Out of this world!!')
+  ON CONFLICT DO NOTHING;;
+
 -- Create a database called glampcamp on postgres, then running the following code below
--- psql -d glampcamp -a -f back-end/db/schema.sql
+-- psql -d glampcamp -a -f db/schema.sql
