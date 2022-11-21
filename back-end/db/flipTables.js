@@ -14,4 +14,4 @@ const flipTables = async () => {
 flipTables()
 
 // run the command below to (╯°□°)╯︵ ┻━┻ (might need to run a few times...not sure why)
-// node server/flipTables.js
+// node back-end/db/flipTables.js
