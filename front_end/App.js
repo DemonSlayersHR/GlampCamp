@@ -1,6 +1,8 @@
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
-import SingleCampsite from './src/screens/campsite/SingleCampsite.js';
+// import SingleCampsite from './src/screens/campsite/SingleCampsite.js';
+import Campsites from './src/screens/homepage/Homepage.js';
+// import Calendar from './src/screens/campsite/Calendar.js';
 
 export default function App() {
   return (
@@ -11,8 +13,9 @@ export default function App() {
     //   <StatusBar style="auto" />
     // </View>
     // <SingleCampsite campsite={campsite}/>
-    <SingleCampsite />
-
+    <Campsites />
+    // <SingleCampsite />
+    // <Calendar />
   );
 }
 
