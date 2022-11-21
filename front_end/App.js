@@ -1,10 +1,3 @@
-<<<<<<< HEAD
-import Profile from './src/screens/profile/Profile.js';
-
-export default function App() {
-  return (
-    <Profile />
-=======
 import { StatusBar } from 'expo-status-bar';
 import { StyleSheet, Text, View } from 'react-native';
 // import SingleCampsite from './src/screens/campsite/SingleCampsite.js';
@@ -23,6 +16,5 @@ export default function App() {
     <Campsites />
     // <SingleCampsite />
     // <Calendar />
->>>>>>> origin
   );
 }
