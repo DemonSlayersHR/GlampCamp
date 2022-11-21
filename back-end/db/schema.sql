@@ -59,62 +59,62 @@ CREATE TABLE IF NOT EXISTS reviews(
   review VARCHAR(500)
 );
 
-INSERT INTO users(user_id, user_name, password, location) VALUES
-  (1,'test1', 'pw1', 'Mountain View'),
-  (2,'test2', 'pw2', 'Sunnyvale'),
-  (3,'test3', 'pw3', 'Mars')
+INSERT INTO users(user_name, password, location) VALUES
+  ('test1', 'pw1', 'Mountain View'),
+  ('test2', 'pw2', 'Sunnyvale'),
+  ('test3', 'pw3', 'Mars')
   ON CONFLICT DO NOTHING;
 
-INSERT INTO camps(camp_id, host_id, camp_name, price, star_rating, location, description) VALUES
-  (1, 1, 'Camp Expensive', 200, 5, 'Mountain View', 'Cozy AF'),
-  (2, 1, 'Camp Cheap', 100, 2, 'Mountain View', 'Not Cozy AF'),
-  (3, 1, 'Camp Fake', 0, 0, 'Mountain View', 'Fake place, doesnt exist'),
-  (4, 2, 'My Personal Camp', 215, 5, 'Sunnyvale', 'My special camp'),
-  (5, 2, 'My Not Personal Camp', 150, 3, 'Palo Alto', 'Comes with free boba'),
-  (6, 3, 'Camp Mars', 1000, 5, 'Mars', 'Greetings human')
+INSERT INTO camps(host_id, camp_name, price, star_rating, location, description) VALUES
+  (1, 'Camp Expensive', 200, 5, 'Mountain View', 'Cozy AF'),
+  (1, 'Camp Cheap', 100, 2, 'Mountain View', 'Not Cozy AF'),
+  (1, 'Camp Fake', 0, 0, 'Mountain View', 'Fake place, doesnt exist'),
+  (2, 'My Personal Camp', 215, 5, 'Sunnyvale', 'My special camp'),
+  (2, 'My Not Personal Camp', 150, 3, 'Palo Alto', 'Comes with free boba'),
+  (3, 'Camp Mars', 1000, 5, 'Mars', 'Greetings human')
   ON CONFLICT DO NOTHING;
 
-INSERT INTO reservations(reserve_id, camp_id, user_id, confirmed) VALUES
-  (1, 3, 2, FALSE),
-  (2, 1, 3, FALSE),
-  (3, 6, 1, TRUE)
+INSERT INTO reservations(camp_id, user_id, confirmed) VALUES
+  (3, 2, FALSE),
+  (1, 3, FALSE),
+  (6, 1, TRUE)
   ON CONFLICT DO NOTHING;
 
-INSERT INTO camp_dates(camp_date_id ,camp_id ,client_id ,dates ,reserved ) VALUES
-  (1, 1, null, '2022-12-23', FALSE),
-  (2, 1, null, '2022-12-24', FALSE),
-  (3, 1, null, '2022-12-25', FALSE),
-  (4, 2, null, '2023-01-01', FALSE),
-  (5, 2, null, '2023-01-02', FALSE),
-  (6, 3, null, '2023-02-14', FALSE),
-  (7, 4, null, '2023-02-14', FALSE),
-  (8, 5, null, '2022-12-25', FALSE),
-  (9, 6, 1, '2022-12-30', TRUE),
-  (10, 6, 1, '2022-12-31', TRUE),
-  (11, 6, 1, '2023-01-01', TRUE)
+INSERT INTO camp_dates(camp_id ,client_id ,dates ,reserved ) VALUES
+  (1, null, '2022-12-23', FALSE),
+  (1, null, '2022-12-24', FALSE),
+  (1, null, '2022-12-25', FALSE),
+  (2, null, '2023-01-01', FALSE),
+  (2, null, '2023-01-02', FALSE),
+  (3, null, '2023-02-14', FALSE),
+  (4, null, '2023-02-14', FALSE),
+  (5, null, '2022-12-25', FALSE),
+  (6, 1, '2022-12-30', TRUE),
+  (6, 1, '2022-12-31', TRUE),
+  (6, 1, '2023-01-01', TRUE)
   ON CONFLICT DO NOTHING;
 
-INSERT INTO reserves_dates(reserve_date_id ,reserve_id,dates) VALUES
-  (1, 1, '2023-02-14'),
-  (2, 2, '2022-12-23'),
-  (3, 2, '2022-12-24'),
-  (4, 2, '2022-12-25')
+INSERT INTO reserves_dates(reserve_id,dates) VALUES
+  (1, '2023-02-14'),
+  (2, '2022-12-23'),
+  (2, '2022-12-24'),
+  (2, '2022-12-25')
   ON CONFLICT DO NOTHING;
 
-INSERT INTO photos(photo_id, camp_id, photo_url) VALUES
-  (1, 1, 'https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,g_auto,h_630,q_60,w_1200/v1652453103/campground-photos/shgam6kwlyuu7cvblkth.jpg'),
-  (2, 2, 'https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,g_auto,h_630,q_60,w_1200/v1652453103/campground-photos/shgam6kwlyuu7cvblkth.jpg'),
-  (3, 3, 'https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,g_auto,h_630,q_60,w_1200/v1652453103/campground-photos/shgam6kwlyuu7cvblkth.jpg'),
-  (4, 4, 'https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,g_auto,h_630,q_60,w_1200/v1652453103/campground-photos/shgam6kwlyuu7cvblkth.jpg'),
-  (5, 5, 'https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,g_auto,h_630,q_60,w_1200/v1652453103/campground-photos/shgam6kwlyuu7cvblkth.jpg'),
-  (6, 6, 'https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,g_auto,h_630,q_60,w_1200/v1652453103/campground-photos/shgam6kwlyuu7cvblkth.jpg'),
-  (7, 6, 'https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,g_auto,h_630,q_60,w_1200/v1652453103/campground-photos/shgam6kwlyuu7cvblkth.jpg'),
-  (8, 1, 'https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,g_auto,h_630,q_60,w_1200/v1652453103/campground-photos/shgam6kwlyuu7cvblkth.jpg'),
-  (9, 6, 'https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,g_auto,h_630,q_60,w_1200/v1652453103/campground-photos/shgam6kwlyuu7cvblkth.jpg')
+INSERT INTO photos(camp_id, photo_url) VALUES
+  (1, 'https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,g_auto,h_630,q_60,w_1200/v1652453103/campground-photos/shgam6kwlyuu7cvblkth.jpg'),
+  (2, 'https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,g_auto,h_630,q_60,w_1200/v1652453103/campground-photos/shgam6kwlyuu7cvblkth.jpg'),
+  (3, 'https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,g_auto,h_630,q_60,w_1200/v1652453103/campground-photos/shgam6kwlyuu7cvblkth.jpg'),
+  (4, 'https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,g_auto,h_630,q_60,w_1200/v1652453103/campground-photos/shgam6kwlyuu7cvblkth.jpg'),
+  (5, 'https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,g_auto,h_630,q_60,w_1200/v1652453103/campground-photos/shgam6kwlyuu7cvblkth.jpg'),
+  (6, 'https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,g_auto,h_630,q_60,w_1200/v1652453103/campground-photos/shgam6kwlyuu7cvblkth.jpg'),
+  (6, 'https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,g_auto,h_630,q_60,w_1200/v1652453103/campground-photos/shgam6kwlyuu7cvblkth.jpg'),
+  (1, 'https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,g_auto,h_630,q_60,w_1200/v1652453103/campground-photos/shgam6kwlyuu7cvblkth.jpg'),
+  (6, 'https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,g_auto,h_630,q_60,w_1200/v1652453103/campground-photos/shgam6kwlyuu7cvblkth.jpg')
   ON CONFLICT DO NOTHING;
 
-INSERT INTO reviews(review_id, camp_id , client_id, star_rating, review) VALUES
-  (1, 6, 1, 5, 'Awesome place! Out of this world!!')
+INSERT INTO reviews(camp_id , client_id, star_rating, review) VALUES
+  (6, 1, 5, 'Awesome place! Out of this world!!')
   ON CONFLICT DO NOTHING;;
 
 -- Create a database called glampcamp on postgres, then running the following code below

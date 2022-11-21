@@ -45,8 +45,12 @@ const campsite = {
       client.release()
     }
   },
-  post: (req, res) => {
-    const camp_args = [req.body.user_id, req.body.camp_name, req.body.price,]
+  post: async (req, res) => {
+    const camp_args = [req.body.camp_name, req.body.host_id, req.body.price, req.body.location, req.body.description]
+    await pool.query(`INSERT INTO camps(camp_name, host_id, price, location, description) VALUES ($1,$2,$3,$4,$5)`, camp_args)
+    result = await pool.query(`SELECT MAX(camp_id) FROM camps`)
+    res.status(201)
+    res.send({ camp_id: result.rows[0].max })
   }
 }
 
