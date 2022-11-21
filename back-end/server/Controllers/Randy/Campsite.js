@@ -11,6 +11,8 @@ const campsite = {
 
     if (req.query.camp_id) {
       queryArgs = [req.query.camp_id]
+    } else if (req.query.host_id) {
+      queryArgs = [req.query.host_id]
     }
 
     let query = `SELECT camp_name, (SELECT user_name FROM users WHERE user_id = camps.host_id) as host, price,
@@ -31,7 +33,8 @@ const campsite = {
     )) FROM reviews WHERE camp_id = camps.camp_id) as reviews
     FROM camps `
 
-    if (req.body.camp_id) query += `WHERE camp_id = $1`
+    if (req.query.camp_id) query += `WHERE camp_id = $1`
+    else if (req.query.host_id) query += `WHERE host_id = $1`
     else query += `LIMIT $1`
 
     // try query
