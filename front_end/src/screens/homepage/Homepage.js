@@ -24,13 +24,8 @@ const Campsites = () => {
 
   return (
     <View>
-<<<<<<< HEAD
-      {campsites.map((campsite) => {
-        return <SingleCampsite campsite={campsite} />;
-=======
       {campsites.map((campsite, index) => {
         return <SingleCampsite key={index} campsite={campsite}/>
->>>>>>> main
       })}
     </View>
   );

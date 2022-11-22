@@ -5,13 +5,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 // import SingleCampsite from './src/screens/campsite/SingleCampsite.js';
 import Campsites from './src/screens/homepage/Homepage.js';
-<<<<<<< HEAD
 import Profile from './src/screens/profile/Profile.js';
 import Host from './src/screens/profile/Host.js'
-=======
 import Login from './src/screens/login_signup/Login.js';
 import Register from './src/screens/login_signup/Register.js';
->>>>>>> origin
 // import Calendar from './src/screens/campsite/Calendar.js';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import Campsites from './src/screens/homepage/Homepage.js';
@@ -20,20 +17,6 @@ const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-<<<<<<< HEAD
-    // <View style={styles.container}>
-    //   <Text>
-    //     Randy will build this out for us! 🎉 !!!
-    //   </Text>
-    //   <StatusBar style="auto" />
-    // </View>
-    // <SingleCampsite campsite={campsite}/>
-    // <Campsites />
-    // <Profile />
-    <Host />
-    // <SingleCampsite />
-    // <Calendar />
-=======
     <>
       <NavigationContainer>
         <Stack.Navigator>
@@ -54,6 +37,5 @@ export default function App() {
         </View>
       </ScrollView>
     </>
->>>>>>> origin
   );
 }

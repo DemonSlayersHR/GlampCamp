@@ -16,27 +16,6 @@ const SingleCampsite = ({campsite}) => {
   }
 
   return (
-<<<<<<< HEAD
-      <FlatList style={{padding: 69, flex: 1}}>
-        <View style={{justifyContent: "center", alignItems: "center"}} >
-          {campsite.photos[1] && <Image source={image} />}
-          <Text style={{fontSize: 20, padding:5, fontWeight: "bold", textAlign: "left", marginLeft:50,  marginRight:37}}>
-            {campsite.camp_name} - {campsite.description}
-          </Text>
-          <Text style={{textDecorationLine: "underline", textAlign: "center"}}>
-            {campsite.location}
-          </Text>
-          <Text>
-            {campsite.price} night, {campsite.star_rating} stars
-          </Text>
-          <Button
-            title="Reserve"
-            onPress={() => Alert.alert('Simple Button pressed')}
-          />
-        </View>
-      </FlatList>
-
-=======
     <ScrollView style={{padding: 69, flex: 1}}>
       <View style={{justifyContent: "center", alignItems: "center"}} >
         <Image source={image} style={{width: 400, height: 400}} />
@@ -56,7 +35,6 @@ const SingleCampsite = ({campsite}) => {
         {availabilityButtonClicked && <Calendar />}
       </View>
     </ScrollView>
->>>>>>> origin
   );
 }
 
