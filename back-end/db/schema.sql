@@ -2,9 +2,12 @@ DROP TABLE IF EXISTS users, camps, reservations, photos, camp_dates, reserves_da
 
 CREATE TABLE IF NOT EXISTS users(
   user_id SERIAL PRIMARY KEY NOT NULL,
-  user_name VARCHAR(50),
+  username VARCHAR(50),
+  first_name VARCHAR(50),
+  last_name  VARCHAR(50),
   password VARCHAR(50),
-  location VARCHAR(50)
+  location VARCHAR(50),
+  user_photo VARCHAR(200)
 );
 
 CREATE TABLE IF NOT EXISTS camps(
@@ -59,10 +62,10 @@ CREATE TABLE IF NOT EXISTS reviews(
   review VARCHAR(500)
 );
 
-INSERT INTO users(user_name, password, location) VALUES
-  ('test1', 'pw1', 'Mountain View'),
-  ('test2', 'pw2', 'Sunnyvale'),
-  ('test3', 'pw3', 'Mars')
+INSERT INTO users(username, first_name, last_name, password, location,user_photo) VALUES
+  ('test1','firstName1', 'lastName1','pw1', 'Mountain View', 'https://asset.cloudinary.com/dqlxf5j8e/e04efc0f52a9dc45cd00402977f82334'),
+  ('test2','firstName2', 'lastName2','pw2', 'Sunnyvale', 'https://asset.cloudinary.com/dqlxf5j8e/e04efc0f52a9dc45cd00402977f82334'),
+  ('test3','firstName3','lastName3','pw3', 'Mars', 'https://asset.cloudinary.com/dqlxf5j8e/e04efc0f52a9dc45cd00402977f82334')
   ON CONFLICT DO NOTHING;
 
 INSERT INTO camps(host_id, camp_name, price, star_rating, location, description) VALUES
