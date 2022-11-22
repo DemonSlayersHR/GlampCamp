@@ -8,9 +8,11 @@ const campreviews = require('./Controllers/Randy/CampReviews.js')
 
 // ----------------------- GET  -----------------------
 router.get('/user', users.getUser)
+router.get('/user/auth', users.userAuth)
 router.get('/campsites', (req, res) => campsite.get(req, res))
 
 // ----------------------- POST -----------------------
+router.post('/user', users.postUser)
 router.post('/campsites', (req, res) => campsite.post(req, res))
 router.post('/campsites/dates', (req, res) => campdates.post(req, res))
 router.post('/campsites/photos', (req, res) => campphotos.post(req, res))
@@ -27,5 +29,6 @@ router.delete('/campsites', (req, res) => campsite.delete(req, res))
 router.delete('/campsites/dates', (req, res) => campdates.delete(req, res))
 router.delete('/campsites/photos', (req, res) => campphotos.delete(req, res))
 router.delete('/campsites/reviews', (req, res) => campreviews.delete(req, res))
+router.delete('/user', users.deleteUser)
 
 module.exports = router
