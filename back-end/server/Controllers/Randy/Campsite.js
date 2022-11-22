@@ -9,6 +9,7 @@ const campsite = {
     // create parameters
     let queryArgs = [req.query.count || 10]
 
+    // check which query to use
     if (req.query.camp_id) {
       queryArgs = [req.query.camp_id]
     } else if (req.query.host_id) {
@@ -54,6 +55,35 @@ const campsite = {
     result = await pool.query(`SELECT MAX(camp_id) FROM camps`)
     res.status(201)
     res.send({ camp_id: result.rows[0].max })
+  },
+  put: async (req, res) => {
+    const prev = await pool.query(`SELECT * FROM camps WHERE camp_id = $1`, [req.body.camp_id])
+
+    const camp_args = [
+      req.body.camp_name || prev.rows[0].camp_name,
+      req.body.price || prev.rows[0].price,
+      req.body.location || prev.rows[0].location,
+      req.body.description || prev.rows[0].description,
+      req.body.camp_id
+    ]
+
+    pool.query(`UPDATE camps SET
+    camp_name = $1,
+    price = $2,
+    location = $3,
+    description = $4
+    WHERE camp_id = $5`, camp_args)
+
+    res.status(204)
+    res.send('Updated!')
+  },
+  delete: async (req, res) => {
+    await pool.query(`DELETE FROM photos WHERE camp_id = $1`, [req.query.camp_id])
+    await pool.query(`DELETE FROM camp_dates WHERE camp_id = $1`, [req.query.camp_id])
+    await pool.query(`DELETE FROM reviews WHERE camp_id = $1`, [req.query.camp_id])
+    pool.query(`DELETE FROM camps WHERE camp_id = $1`, [req.query.camp_id])
+    res.status(204)
+    res.send('Deleted!')
   }
 }
 

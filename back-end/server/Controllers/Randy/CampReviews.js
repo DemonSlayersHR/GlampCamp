@@ -8,11 +8,19 @@ const CampReviews = {
     res.status(201)
     res.send({ review_id: result.rows[0].max })
   },
-  put: (req, res) => {
+  put: async (req, res) => {
+    const prev = await pool.query(`SELECT * FROM reviews WHERE review_id = $1`, [req.body.review_id])
+
+    const review_args = [
+      req.body.star_rating || prev.rows[0].star_rating,
+      req.body.review || prev.rows[0].review,
+      req.body.review_id
+    ]
+
     pool.query(`UPDATE reviews SET
     star_rating = $1,
     review = $2
-    WHERE review_id = $3;`, [req.body.star_rating, req.body.review, req.body.review_id])
+    WHERE review_id = $3;`, review_args)
     res.status(204)
     res.send('Updated!')
   },
