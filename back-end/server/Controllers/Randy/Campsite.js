@@ -16,22 +16,29 @@ const campsite = {
       queryArgs = [req.query.host_id]
     }
 
-    let query = `SELECT camp_name, (SELECT user_name FROM users WHERE user_id = camps.host_id) as host, price,
+    let query = `SELECT camp_id, camp_name, (SELECT user_name FROM users WHERE user_id = camps.host_id) as host, price,
     (SELECT AVG(star_rating) FROM reviews WHERE camp_id = camps.camp_id) as star_rating, location, description,
     (SELECT json_agg(json_build_object(
+      'date_id', 'date_id',
       'client', (SELECT user_name FROM users WHERE user_id = camp_dates.client_id),
       'date', dates,
       'reserved', reserved
     )) as dates FROM camp_dates WHERE camp_id = camps.camp_id),
     (SELECT json_agg(json_build_object(
-      'id', photo_id,
+      'photo_id', photo_id,
       'photo_url', photo_url)) FROM photos WHERE camp_id = camps.camp_id
     ) as photos,
     (SELECT json_agg(json_build_object(
+      'review_id', review_id,
       'reviewer', (SELECT user_name FROM users WHERE user_id = reviews.client_id),
       'star_rating', star_rating,
       'review', review
-    )) FROM reviews WHERE camp_id = camps.camp_id) as reviews
+    )) FROM reviews WHERE camp_id = camps.camp_id) as reviews,
+    (SELECT json_agg(json_build_object(
+      'reserve_id', reserve_id,
+      'client_id', client_id,
+      'confirmed', confirmed
+    )) FROM reservations WHERE camp_id = camps.camp_id) as reservations
     FROM camps `
 
     if (req.query.camp_id) query += `WHERE camp_id = $1`
@@ -78,6 +85,7 @@ const campsite = {
     res.send('Updated!')
   },
   delete: async (req, res) => {
+    // might need to potentiall delete from chat and delete from reservations
     await pool.query(`DELETE FROM photos WHERE camp_id = $1`, [req.query.camp_id])
     await pool.query(`DELETE FROM camp_dates WHERE camp_id = $1`, [req.query.camp_id])
     await pool.query(`DELETE FROM reviews WHERE camp_id = $1`, [req.query.camp_id])
