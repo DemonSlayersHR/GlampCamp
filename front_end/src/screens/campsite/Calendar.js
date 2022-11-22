@@ -1,36 +1,61 @@
 import React, { useState } from 'react';
 import {
+  Button,
   StyleSheet,
   Text,
   View
 } from 'react-native';
+import axios from 'axios';
 import CalendarPicker from 'react-native-calendar-picker';
 
-const Calendar = () => {
+const Calendar = ({campsite}) => {
 
-  const [selectedStartDate, setSelectedStartDate] = useState('');
+  const [selectedStartDate, setSelectedStartDate] = useState();
   const [allowRangeSelection, setAllowRangeSelection] = useState(false);
-  const [selectedDayColor, setSelectedDayColor] = useState('');
-  const [todayBackgroundColor, setTodayBackgroundColor] = useState('');
-  const [selectedRangeStartTextStyle, setSelectedRangeStartTextStyle] = useState({});
-  const [selectedRangeEndTextStyle, setSelectedRangeEndTextStyle] = useState({});
-  // const [selectedRangeStyle, setSelectedRangeStyle] = useState(viewStyle);
-  const [customDatesStyles, setCustomDatesStyles] = useState([]);
+  const [dates, setDates] = useState([]);
 
-  const onDateChange = (d: dateTime) => {
-    // setSelectedDayColor('blue');
-    console.log(d);
+  // from stack overflow: https://stackoverflow.com/questions/4413590/javascript-get-array-of-dates-between-2-dates
+  const getDaysArray = (start, end) => {
+    for(var arr=[(new Date(start - 24*60*60*1000)).toISOString().slice(0, 10)], dt = new Date(start); dt < new Date(end); dt.setDate(dt.getDate()+1)){
+        arr.push(new Date(dt).toISOString().slice(0, 10));
+    }
+    return arr;
+  };
+
+  // change to date format yyyy-mm-dd for axios post request
+  const convertToDateFormat = (date) => {
+    let stringDate = date._i.year + '-' + (Number(date._i.month) + 1).toString() + '-' + (Number(date._i.day) + 1).toString();
+    return stringDate;
+  }
+
+  const onDateChange = (date) => {
+    let string = convertToDateFormat(date);
+    setDates([...dates, string]);
+  }
+
+  const reserveDates = () => {
+    if (dates.length === 2) {
+      var daylist = getDaysArray(new Date(dates[0]), new Date(dates[1]));
+      setDates(daylist);
+      console.log('daylist', daylist);
+      console.log('campsite', campsite);
+      // let camp_id =
+      // axios.post('/campsites', )
+    }
   }
 
   return (
     <View style={styles.container}>
       <CalendarPicker
-        // onDateChange={selectedStartDate}
+        onDateChange={onDateChange}
+        allowRangeSelection={true}
+        // selectedRangeStyle="F4A259"
       />
-
-      {/* <View>
-        <Text>SELECTED DATE:{ selectedStartDate }</Text>
-      </View> */}
+      <Button
+        title="Reserve Dates"
+        color="#BC4B51"
+        onPress={reserveDates}
+      />
     </View>
   );
 }
