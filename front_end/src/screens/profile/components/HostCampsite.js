@@ -26,7 +26,8 @@ export default function HostCampsite ({campsite}) {
       <View style={styles.list}>
         <View style={styles.listOption}>
           <TouchableOpacity onPress={()=>{setModalVisible(!modalVisible)}}><Text>Edit</Text></TouchableOpacity>
-          <TouchableOpacity><Text>Delete</Text></TouchableOpacity>
+          <TouchableOpacity onPress={()=>{setModalVisible(!modalVisible)}}><Text>Availability</Text></TouchableOpacity>
+          <TouchableOpacity onPress={()=>{setModalVisible(!modalVisible)}}><Text>Delete</Text></TouchableOpacity>
         </View>
       </View>
       : null}
@@ -46,7 +47,7 @@ export default function HostCampsite ({campsite}) {
               style={[styles.button, styles.buttonClose]}
               onPress={() => setModalVisible(!modalVisible)}
             >
-              <Text style={styles.textStyle}>Hide Modal</Text>
+              <Text style={styles.textStyle} >Hide Modal</Text>
             </Pressable>
           </View>
         </View>
