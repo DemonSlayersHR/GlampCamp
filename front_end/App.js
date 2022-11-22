@@ -8,23 +8,33 @@ import Campsites from './src/screens/homepage/Homepage.js';
 import Login from './src/screens/login_signup/Login.js';
 import Register from './src/screens/login_signup/Register.js';
 // import Calendar from './src/screens/campsite/Calendar.js';
+import { StyleSheet, Text, View, ScrollView } from 'react-native';
+import Campsites from './src/screens/homepage/Homepage.js';
 
 const Stack = createNativeStackNavigator();
 
 export default function App() {
   return (
-    <NavigationContainer>
-      <Stack.Navigator>
-        <Stack.Screen
-          name='login'
-          component={Login}
-          options={{ headerShown: false }}></Stack.Screen>
-        <Stack.Screen
-          name='register'
-          component={Register}
-          options={{ headerShown: false }}></Stack.Screen>
-      </Stack.Navigator>
-    </NavigationContainer>
+    <>
+      <NavigationContainer>
+        <Stack.Navigator>
+          <Stack.Screen
+            name='login'
+            component={Login}
+            options={{ headerShown: false }}></Stack.Screen>
+          <Stack.Screen
+            name='register'
+            component={Register}
+            options={{ headerShown: false }}></Stack.Screen>
+        </Stack.Navigator>
+      </NavigationContainer>
+      <ScrollView>
+        <View style={styles.container}>
+          <Campsites />
+          <StatusBar style='auto' />
+        </View>
+      </ScrollView>
+    </>
     // <View style={styles.container}>
     //   <Text>
     //     Randy will build this out for us! 🎉 !!!
