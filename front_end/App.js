@@ -35,15 +35,6 @@ export default function App() {
         </View>
       </ScrollView>
     </>
-    // <View style={styles.container}>
-    //   <Text>
-    //     Randy will build this out for us! 🎉 !!!
-    //   </Text>
-    //   <StatusBar style="auto" />
-    // </View>
-    // <SingleCampsite campsite={campsite}/>
-    // <SingleCampsite />
-    // <Calendar />
   );
 }
 
