@@ -8,7 +8,7 @@ const Campsites = () => {
 
   useEffect(() => {
     axios
-      .get('http://10.0.0.30:3000/campsites')
+      .get('http://192.168.86.36:3000/campsites')
       .then((results) => {
         console.log('results from successful axios request', results.data);
         setCampsites(results.data);
