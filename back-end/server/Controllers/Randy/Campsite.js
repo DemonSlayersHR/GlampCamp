@@ -20,11 +20,12 @@ const campsite = {
     (SELECT AVG(star_rating) FROM reviews WHERE camp_id = camps.camp_id) as star_rating, location, description,
     (SELECT json_agg(json_build_object(
       'client', (SELECT user_name FROM users WHERE user_id = camp_dates.client_id),
+      'date_id', 'date_id',
       'date', dates,
       'reserved', reserved
     )) as dates FROM camp_dates WHERE camp_id = camps.camp_id),
     (SELECT json_agg(json_build_object(
-      'id', photo_id,
+      'photo_id', photo_id,
       'photo_url', photo_url)) FROM photos WHERE camp_id = camps.camp_id
     ) as photos,
     (SELECT json_agg(json_build_object(
