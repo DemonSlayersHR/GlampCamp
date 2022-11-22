@@ -7,11 +7,12 @@ import {
   Image,
   TextInput,
   TouchableOpacity,
+  ScrollView,
 } from 'react-native';
-// import logo from '../../../assets/glampcamp.jpeg';
-function Login({ navigation }) {
+import BackArrow from 'react-native-vector-icons/Feather';
+const Register = ({ navigation }) => {
   const navigate = () => {
-    navigation.navigate('register');
+    navigation.navigate('login');
   };
   return (
     <View style={styles.mainView}>
@@ -21,11 +22,27 @@ function Login({ navigation }) {
           source={require('../../../assets/logo.png')}
         />
       </View>
-      <View style={styles.BottomView}>
-        <Text style={styles.Heading}>Welcome {'\n'}Back</Text>
+      <ScrollView style={styles.BottomView}>
+        <BackArrow
+          onPress={navigate}
+          style={styles.Icon}
+          name='chevron-left'
+          size={60}
+          color={'#fff'}></BackArrow>
+        <Text style={styles.Heading}>Create {'\n'}Account</Text>
         <View style={styles.FormView}>
           <TextInput
-            placeholder={'Email Address'}
+            placeholder={'Full Name'}
+            placeholderTextColor={'#fff'}
+            style={styles.TextInput}
+          />
+          <TextInput
+            placeholder={'Email'}
+            placeholderTextColor={'#fff'}
+            style={styles.TextInput}
+          />
+          <TextInput
+            placeholder={'Mobile'}
             placeholderTextColor={'#fff'}
             style={styles.TextInput}
           />
@@ -35,17 +52,20 @@ function Login({ navigation }) {
             style={styles.TextInput}
             secureTextEntry={true}
           />
+          <TextInput
+            placeholder={'Confirm Password'}
+            placeholderTextColor={'#fff'}
+            style={styles.TextInput}
+            secureTextEntry={true}
+          />
           <TouchableOpacity style={styles.Button}>
-            <Text style={styles.ButtonText}>Sign In</Text>
+            <Text style={styles.ButtonText}>Sign Up</Text>
           </TouchableOpacity>
         </View>
-        <TouchableOpacity onPress={navigate} style={styles.TextButton}>
-          <Text style={styles.SignUpText}>Sign Up</Text>
-        </TouchableOpacity>
-      </View>
+      </ScrollView>
     </View>
   );
-}
+};
 
 const styles = StyleSheet.create({
   mainView: {
@@ -57,14 +77,15 @@ const styles = StyleSheet.create({
   },
   TopView: {
     width: '100%',
-    height: '30%',
+    height: '20%',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
   },
   BottomView: {
     width: '100%',
-    height: '70%',
+    height: '80%',
+
     backgroundColor: '#000',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
@@ -75,7 +96,7 @@ const styles = StyleSheet.create({
     fontSize: 40,
     fontWeight: 'bold',
     marginLeft: 30,
-    marginTop: 60,
+    marginTop: 5,
   },
   TextInput: {
     width: '90%',
@@ -114,6 +135,9 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     marginTop: 20,
   },
+  Icon: {
+    marginLeft: 5,
+    marginTop: 10,
+  },
 });
-
-export default Login;
+export default Register;
