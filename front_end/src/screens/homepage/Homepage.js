@@ -3,8 +3,12 @@ import { Button, Image, Text, View, ScrollView } from 'react-native';
 import axios from 'axios';
 import SingleCampsite from '../campsite/SingleCampsite.js';
 
-const Campsites = () => {
+const Homepage = ({ navigation }) => {
   const [campsites, setCampsites] = useState([]);
+
+  const navigate = () => {
+    navigation.navigate('login');
+  };
 
   useEffect(() => {
     axios
@@ -19,21 +23,19 @@ const Campsites = () => {
   }, []);
 
   const handleReserve = () => {
+    //check if logged in logic
+    //if not logged in then call navigate back to login
+    //else do the other thing
     console.log('you clicked the reserve button');
   };
 
   return (
     <View>
-<<<<<<< HEAD
-      {campsites.map((campsite) => {
-        return <SingleCampsite campsite={campsite} />;
-=======
       {campsites.map((campsite, index) => {
-        return <SingleCampsite key={index} campsite={campsite}/>
->>>>>>> main
+        return <SingleCampsite key={index} campsite={campsite} />;
       })}
     </View>
   );
 };
 
-export default Campsites;
+export default Homepage;

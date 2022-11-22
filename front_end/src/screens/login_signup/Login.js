@@ -13,6 +13,11 @@ function Login({ navigation }) {
   const navigate = () => {
     navigation.navigate('register');
   };
+
+  const navigateHome = () => {
+    navigation.navigate('homepage');
+  };
+
   return (
     <View style={styles.mainView}>
       <View style={styles.TopView}>
@@ -35,7 +40,7 @@ function Login({ navigation }) {
             style={styles.TextInput}
             secureTextEntry={true}
           />
-          <TouchableOpacity style={styles.Button}>
+          <TouchableOpacity onPress={navigateHome} style={styles.Button}>
             <Text style={styles.ButtonText}>Sign In</Text>
           </TouchableOpacity>
         </View>
