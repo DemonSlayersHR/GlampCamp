@@ -33,7 +33,12 @@ const campsite = {
       'reviewer', (SELECT user_name FROM users WHERE user_id = reviews.client_id),
       'star_rating', star_rating,
       'review', review
-    )) FROM reviews WHERE camp_id = camps.camp_id) as reviews
+    )) FROM reviews WHERE camp_id = camps.camp_id) as reviews,
+    (SELECT json_agg(json_build_object(
+      'reserve_id', reserve_id,
+      'client_id', client_id,
+      'confirmed', confirmed
+    )) FROM reservations WHERE camp_id = camps.camp_id) as reservations
     FROM camps `
 
     if (req.query.camp_id) query += `WHERE camp_id = $1`
