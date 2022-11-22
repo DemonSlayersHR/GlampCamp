@@ -13,7 +13,7 @@ const SingleCampsite = ({campsite}) => {
   console.log('image', image)
 
   return (
-      <ScrollView style={{padding: 69, flex: 1}}>
+      <FlatList style={{padding: 69, flex: 1}}>
         <View style={{justifyContent: "center", alignItems: "center"}} >
           {campsite.photos[1] && <Image source={image} />}
           <Text style={{fontSize: 20, padding:5, fontWeight: "bold", textAlign: "left", marginLeft:50,  marginRight:37}}>
@@ -30,7 +30,7 @@ const SingleCampsite = ({campsite}) => {
             onPress={() => Alert.alert('Simple Button pressed')}
           />
         </View>
-      </ScrollView>
+      </FlatList>
 
   );
 }
