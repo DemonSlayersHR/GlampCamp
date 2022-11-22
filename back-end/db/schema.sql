@@ -74,7 +74,7 @@ INSERT INTO camps(host_id, camp_name, price, star_rating, location, description)
   (3, 'Camp Mars', 1000, 5, 'Mars', 'Greetings human')
   ON CONFLICT DO NOTHING;
 
-INSERT INTO reservations(camp_id, user_id, confirmed) VALUES
+INSERT INTO reservations(camp_id, client_id, confirmed) VALUES
   (3, 2, FALSE),
   (1, 3, FALSE),
   (6, 1, TRUE)
