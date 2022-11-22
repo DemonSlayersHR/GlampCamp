@@ -16,7 +16,7 @@ const campsite = {
       queryArgs = [req.query.host_id]
     }
 
-    let query = `SELECT camp_name, (SELECT user_name FROM users WHERE user_id = camps.host_id) as host, price,
+    let query = `SELECT camp_id, camp_name, (SELECT user_name FROM users WHERE user_id = camps.host_id) as host, price,
     (SELECT AVG(star_rating) FROM reviews WHERE camp_id = camps.camp_id) as star_rating, location, description,
     (SELECT json_agg(json_build_object(
       'client', (SELECT user_name FROM users WHERE user_id = camp_dates.client_id),
@@ -78,6 +78,7 @@ const campsite = {
     res.send('Updated!')
   },
   delete: async (req, res) => {
+    // might need to potentiall delete from chat and delete from reservations
     await pool.query(`DELETE FROM photos WHERE camp_id = $1`, [req.query.camp_id])
     await pool.query(`DELETE FROM camp_dates WHERE camp_id = $1`, [req.query.camp_id])
     await pool.query(`DELETE FROM reviews WHERE camp_id = $1`, [req.query.camp_id])
