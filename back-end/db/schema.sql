@@ -59,6 +59,7 @@ CREATE TABLE IF NOT EXISTS reviews(
   camp_id INT REFERENCES camps (camp_id),
   client_id INT REFERENCES users (user_id),
   star_rating INT,
+  review_photo VARCHAR(200),
   review VARCHAR(500)
 );
 
@@ -116,8 +117,8 @@ INSERT INTO photos(camp_id, photo_url) VALUES
   (6, 'https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,g_auto,h_630,q_60,w_1200/v1652453103/campground-photos/shgam6kwlyuu7cvblkth.jpg')
   ON CONFLICT DO NOTHING;
 
-INSERT INTO reviews(camp_id , client_id, star_rating, review) VALUES
-  (6, 1, 5, 'Awesome place! Out of this world!!')
+INSERT INTO reviews(camp_id , client_id, star_rating, review_photo, review) VALUES
+  (6, 1, 5, 'https://cdn.thewirecutter.com/wp-content/media/2022/06/summer-camp-2048px-1199232997-2x1-1.jpg?auto=webp&quality=75&crop=2:1&width=1024', 'Awesome place! Out of this world!!')
   ON CONFLICT DO NOTHING;;
 
 -- Create a database called glampcamp on postgres, then running the following code below
