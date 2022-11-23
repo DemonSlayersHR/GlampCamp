@@ -59,14 +59,14 @@ const styles = StyleSheet.create({
     fontSize: 16,
     borderBottomWidth: 1,
     borderColor: '#eee',
-
   },
   btn: {
     padding: 9,
     margin: 10,
     borderWidth: 1,
-    borderRadius: 100,
+    borderRadius: 10,
     borderColor: '#eee',
+    backgroundColor: '#FFADAD'
   },
   btns: {
     flexDirection: 'row',

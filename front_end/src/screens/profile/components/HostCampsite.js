@@ -20,17 +20,15 @@ export default function HostCampsite ({campsite, getHostCampsites}) {
       <TouchableOpacity style={styles.list} onClick onPress={() => {setShowOptions(!showOptions); setEditViewVisible(false)}}>
         <View style={styles.listItem}>
           <View>
+            {campsite.photos ?
+              <Image source={{uri: campsite.photos[0].photo_url}} resizeMode={'cover'} style={styles.photo} />
+            : <Image source={{uri: 'https://i.postimg.cc/gjFHrzW3/image-4.png'}} resizeMode={'cover'} style={styles.photo} />}
+          </View>
+          <View style={styles.campDetails}>
             <Text style={styles.listItemTextHead}>{campsite.camp_name}</Text>
             <Text>{campsite.description}</Text>
-            <Text>{campsite.location}</Text>
+            <Text>Location: {campsite.location}</Text>
             <Text>Price: ${campsite.price}</Text>
-            <Text>Camp ID: {campsite.camp_id}</Text>
-
-          </View>
-          <View>
-            {campsite.photos ?
-              <Image source={{uri: campsite.photos[0].photo_url}} resizeMode={'cover'} style={{width: 100, height: 100}} />
-            : null}
           </View>
         </View>
       </TouchableOpacity>
@@ -77,13 +75,21 @@ const styles = StyleSheet.create({
   },
   listItem: {
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'stretch',
     alignItems: 'center',
   },
   listOption: {
     flexDirection: 'row',
     justifyContent: 'space-around',
     alignItems: 'center',
+  },
+  photo: {
+    width: 80,
+    height: 80,
+    borderRadius: 10,
+  },
+  campDetails: {
+    paddingLeft: 15
   },
   listItemTextHead: {
     fontSize: 20,
