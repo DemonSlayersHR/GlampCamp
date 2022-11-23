@@ -93,7 +93,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   userWelcome: {
-    borderBottomWidth: 1,
+    // borderBottomWidth: 1,
     borderColor: '#eee',
     padding: 15,
   },
@@ -111,8 +111,7 @@ const styles = StyleSheet.create({
   },
   dropDown: {
     padding: 15,
-    backgroundColor: '#f8f8f8',
-    borderBottomWidth: 1,
+    // borderBottomWidth: 1,
     borderColor: '#eee',
   },
   dropDownText: {

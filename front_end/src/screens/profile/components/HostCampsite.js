@@ -28,8 +28,8 @@ export default function HostCampsite ({campsite, getHostCampsites}) {
           <View style={styles.campDetails}>
             <Text style={styles.listItemTextHead}>{campsite.camp_name}</Text>
             <Text>{campsite.description}</Text>
-            <Text>Location: {campsite.location}</Text>
-            <Text>Price: ${campsite.price}</Text>
+            <Text>{campsite.location}</Text>
+            <Text>${campsite.price} a night</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -43,7 +43,7 @@ export default function HostCampsite ({campsite, getHostCampsites}) {
       </View>
       : null}
       {editViewVisible ? <EditCampsite setEditViewVisible={setEditViewVisible} setShowOptions={setShowOptions} getHostCampsites={getHostCampsites} camp_id={campsite.camp_id} /> : null }
-      {modalVisible ? <AvailabilityModal modalVisible={modalVisible} setModalVisible={setModalVisible}/> : null}
+      {modalVisible ? <AvailabilityModal campsite={campsite} modalVisible={modalVisible} setModalVisible={setModalVisible}/> : null}
     </>
   )
 }

@@ -1,10 +1,35 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import CalendarPicker from 'react-native-calendar-picker';
 import { StyleSheet, Text, View, Button, Image, ScrollView, FlatList, TouchableOpacity, Modal, Alert, Pressable } from 'react-native';
 
-export default function AvailabilityModal ({modalVisible, setModalVisible}) {
+export default function AvailabilityModal ({campsite, modalVisible, setModalVisible}) {
 
-  const [dates, setDates] = useState([]);
+  const [reservedDates, setReservedDates] = useState([]);
+  const [availableDates, setAvailableDates] = useState([]);
+  const [selectedDates, setSelectedDates] = useState([]);
+  const [customDatesStyles, setCustomDatesStyles] = useState([])
+
+  useEffect(() => {
+    const available = [];
+    const reserved = [];
+    const newCustomDatesStyles = [];
+    campsite.dates.forEach((date) => {
+      if (date.reserved) {
+        reserved.push(date.date)
+      } else {
+        available.push(date.date)
+      }
+      newCustomDatesStyles.push({
+        date: date.date,
+        style: {backgroundColor: '#eee'},
+        textStyle: date.reserved ? {fontWeight: 'bold', color: 'red'} : {fontWeight: 'bold', color: 'green'}
+
+      })
+    })
+    setCustomDatesStyles(newCustomDatesStyles);
+    setReservedDates(reserved);
+    setAvailableDates(available);
+  }, [campsite])
 
   const convertToDateFormat = (date) => {
     let stringDate = date._i.year + '-' + (Number(date._i.month) + 1).toString() + '-' + (Number(date._i.day) + 1).toString();
@@ -13,7 +38,7 @@ export default function AvailabilityModal ({modalVisible, setModalVisible}) {
 
   const onDateChange = (date) => {
     let string = convertToDateFormat(date);
-    setDates([...dates, string]);
+    setSelectedDates([...selectedDates, string]);
   }
 
 
@@ -33,6 +58,7 @@ export default function AvailabilityModal ({modalVisible, setModalVisible}) {
           <CalendarPicker
             onDateChange={onDateChange}
             allowRangeSelection={true}
+            customDatesStyles={customDatesStyles}
           />
 
           <View style={styles.buttonList}>
