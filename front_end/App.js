@@ -10,6 +10,7 @@ import Register from './src/screens/login_signup/Register.js';
 // import Calendar from './src/screens/campsite/Calendar.js';
 import { StyleSheet, Text, View, ScrollView } from 'react-native';
 import Homepage from './src/screens/homepage/Homepage.js';
+import UserProfile from './src/screens/profile/components/UserProfile.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,6 +18,10 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen
+          name='userprofile'
+          component={UserProfile}>
+        </Stack.Screen>
         <Stack.Screen
           name='homepage'
           component={Homepage}>
