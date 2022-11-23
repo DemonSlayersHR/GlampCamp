@@ -13,7 +13,6 @@ const Homepage = ({ navigation }) => {
     axios
       .get('http://192.168.86.36:3000/campsites')
       .then((results) => {
-        console.log('results from successful axios request', results.data);
         setCampsites(results.data);
       })
       .catch((error) => {
@@ -29,11 +28,11 @@ const Homepage = ({ navigation }) => {
   };
 
   return (
-    <View>
+    <ScrollView>
       {campsites.map((campsite, index) => {
         return <SingleCampsite key={index} campsite={campsite} />;
       })}
-    </View>
+    </ScrollView>
   );
 };
 

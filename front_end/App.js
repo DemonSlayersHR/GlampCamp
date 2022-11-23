@@ -2,7 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import * as React from 'react';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
-// import SingleCampsite from './src/screens/campsite/SingleCampsite.js';
+import SingleCampsite from './src/screens/campsite/SingleCampsite.js';
 
 import Login from './src/screens/login_signup/Login.js';
 import Register from './src/screens/login_signup/Register.js';
@@ -20,7 +20,6 @@ export default function App() {
         <Stack.Screen
           name='host'
           component={Host}></Stack.Screen>
-
         <Stack.Screen
           name='homepage'
           component={Homepage}></Stack.Screen>
