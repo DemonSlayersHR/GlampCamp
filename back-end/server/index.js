@@ -11,7 +11,7 @@ app.use(morgan('dev'))
 app.use(express.json());
 
 // Uncomment/edit below to serve static site
-// app.use(express.static(path.join(__dirname, '../client/dist')))
+app.use(express.static(path.join(__dirname, '../client/dist')))
 
 // uncomment below to test socketio
 app.use('/', router)
