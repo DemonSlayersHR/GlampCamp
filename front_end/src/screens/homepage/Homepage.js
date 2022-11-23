@@ -1,39 +1,39 @@
-import React, { useEffect, useState } from 'react';
-import { Button, Image, Text, View, ScrollView } from 'react-native';
+import { useEffect, useState } from 'react';
+import { Text, View, StyleSheet } from 'react-native';
 import axios from 'axios';
-import SingleCampsite from '../campsite/SingleCampsite.js';
+import Search from './components/Search';
+import Filter from './components/Filter'
+import Nav from '../../shared/nav/Nav.js';
+import Feed from './components/Feed';
 
-const Homepage = ({ navigation }) => {
+export default function Homepage ({ navigation }) {
   const [campsites, setCampsites] = useState([]);
+  const [filter, setFilter] = useState('Discover');
 
-  const navigate = () => {
-    navigation.navigate('login');
-  };
   useEffect(() => {
-    axios
-      .get('http://192.168.86.36:3000/campsites')
+    axios.get('http://192.168.1.19:3000/campsites')
       .then((results) => {
         setCampsites(results.data);
       })
       .catch((error) => {
         console.log('error', error);
       });
-  }, []);
-
-  const handleReserve = () => {
-    //check if logged in logic
-    //if not logged in then call navigate back to login
-    //else do the other thing
-    console.log('you clicked the reserve button');
-  };
+  }, [filter]);
 
   return (
-    <ScrollView>
-      {campsites.map((campsite, index) => {
-        return <SingleCampsite key={index} campsite={campsite} />;
-      })}
-    </ScrollView>
+    <View style={styles.container}>
+      <Search/>
+      <Filter setFilter={setFilter} filter={filter}/>
+      <Feed campsites={campsites}/>
+      <Nav navigation={navigation}/>
+    </View>
   );
 };
 
-export default Homepage;
+const styles = StyleSheet.create({
+  container: {
+    flex:1,
+    backgroundColor: 'white'
+  },
+});
+
