@@ -8,22 +8,29 @@ import CalendarPicker from 'react-native-calendar-picker';
 
 const Calendar = () => {
 
-const [selectedStartDate, setSelectedStartDate] = useState('');
+  const [selectedStartDate, setSelectedStartDate] = useState('');
+  const [allowRangeSelection, setAllowRangeSelection] = useState(false);
+  const [selectedDayColor, setSelectedDayColor] = useState('');
+  const [todayBackgroundColor, setTodayBackgroundColor] = useState('');
+  const [selectedRangeStartTextStyle, setSelectedRangeStartTextStyle] = useState({});
+  const [selectedRangeEndTextStyle, setSelectedRangeEndTextStyle] = useState({});
+  // const [selectedRangeStyle, setSelectedRangeStyle] = useState(viewStyle);
+  const [customDatesStyles, setCustomDatesStyles] = useState([]);
 
-  const onDateChange = (date) => {
-    setSelectedStartDate(date);
-    // change the date a different color afer reservation is confirmed
+  const onDateChange = (d: dateTime) => {
+    // setSelectedDayColor('blue');
+    console.log(d);
   }
 
   return (
     <View style={styles.container}>
       <CalendarPicker
-        onDateChange={selectedStartDate}
+        // onDateChange={selectedStartDate}
       />
 
-      <View>
+      {/* <View>
         <Text>SELECTED DATE:{ selectedStartDate }</Text>
-      </View>
+      </View> */}
     </View>
   );
 }
