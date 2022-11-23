@@ -49,9 +49,16 @@ var postUser = (req,res) => {
     client
     .query(model.postUser(userInfo))
     .then((response) => {
-      client.release();
-      res.status(201);
-      res.send('your postUser has been succeeded')
+      client
+      .query(model.getMaxUserId())
+      .then((response) => {
+        client.release();
+        res.status(201);
+        res.send({user_id: response['rows'][0].max})
+      })
+      .catch((err) => {
+        res.send(err);
+      })
     })
     .catch(err => {
       client.release()
