@@ -18,6 +18,9 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
+          name='host'
+          component={Host}></Stack.Screen>
+        <Stack.Screen
           name='login'
           component={Login}
           options={{ headerShown: false }}></Stack.Screen>
