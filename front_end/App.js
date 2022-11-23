@@ -18,15 +18,20 @@ export default function App() {
     <NavigationContainer>
       <Stack.Navigator>
         <Stack.Screen
+          name='homepage'
+          component={Homepage}>
+        </Stack.Screen>
+        <Stack.Screen
           name='login'
           component={Login}
-          options={{ headerShown: false }}></Stack.Screen>
+          options={{ headerShown: false }}>
+        </Stack.Screen>
         <Stack.Screen
           name='register'
           component={Register}
-          options={{ headerShown: false }}></Stack.Screen>
-        <Stack.Screen name='homepage' component={Homepage}></Stack.Screen>
-      </Stack.Navigator>
+          options={{ headerShown: false }}>
+        </Stack.Screen>
+        </Stack.Navigator>
     </NavigationContainer>
   );
 }
