@@ -9,7 +9,6 @@ const Homepage = ({ navigation }) => {
   const navigate = () => {
     navigation.navigate('login');
   };
-
   useEffect(() => {
     axios
       .get('http://192.168.86.36:3000/campsites')
