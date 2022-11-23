@@ -62,7 +62,7 @@ var addReservations = (req, res) => {
       client
       .query(model.getMaxReservationId())
       .then((response) => {
-        console.log('max response', response)
+        // console.log('max response', response)
         var reserveid =response['rows'][0].max;
         reserInfo.dates.forEach((each) => {
           client
