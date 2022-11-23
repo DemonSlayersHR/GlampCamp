@@ -2,23 +2,34 @@ import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { useState } from 'react';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
-export default function App() {
+export default function Nav({navigation}) {
   const [selected, setSelected] = useState('Explore')
 
   return (
     <View style={styles.container}>
       <View style={styles.footer}>
-        <IconFormat iconName="magnify" title="Explore" selected={selected} setSelected={setSelected}/>
-        <IconFormat iconName="heart-outline" title="Saved" selected={selected} setSelected={setSelected}/>
-        <IconFormat iconName="account" title="Log in" selected={selected} setSelected={setSelected}/>
+        <IconFormat iconName="magnify" title="Explore" selected={selected} setSelected={setSelected} navigation={navigation}/>
+        <IconFormat iconName="heart-outline" title="Saved" selected={selected} setSelected={setSelected} navigation={navigation}/>
+        <IconFormat iconName="account" title="Log in" selected={selected} setSelected={setSelected} navigation={navigation}/>
       </View>
     </View>
   );
 }
 
-function IconFormat({iconName, title, selected, setSelected}){
+function IconFormat({iconName, title, selected, setSelected, navigation}){
+  function navigate() {
+    setSelected(title)
+
+    if (title === 'Log in') {
+      navigation.navigate('login');
+    }
+    if (title === 'Saved') {
+      // navigation.navigate('saved');
+    }
+  };
+
   return (
-    <Pressable style={styles.icon} onPress={() => setSelected(title)}>
+    <Pressable style={styles.icon} onPress={navigate}>
       <Text>
         <Icon name={iconName} size={20} color={title===selected? "#da5864":"#757675"}/>
       </Text>

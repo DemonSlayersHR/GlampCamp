@@ -3,10 +3,6 @@ import { Button, Text, View, StyleSheet, Pressable } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default function Filter ({ filter, setFilter }) {
-  // const navigate = () => {
-  //   navigation.navigate('login');
-  // };
-
   return (
     <View style={{height: '8%', marginTop: 30}}>
       <View style={styles.container}>

@@ -1,14 +1,14 @@
 import { useEffect, useState } from 'react';
-import { Button, Text, View, StyleSheet, Pressable } from 'react-native';
+import { Text, View, StyleSheet, Pressable } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 export default function Search ({ navigation }) {
-  // const navigate = () => {
+  // function navigate(){
   //   navigation.navigate('login');
   // };
 
   return (
-    <View style={styles.container}>
+    <Pressable style={styles.container}>
         <View style={[styles.inputContainer, styles.shadow]}>
             <View style={styles.inputItems}>
               <Icon name="search" size={20}/>
@@ -19,7 +19,7 @@ export default function Search ({ navigation }) {
               <Icon name="options-outline" size={20} style={styles.optionsIcon}/>
             </View>
         </View>
-    </View>
+    </Pressable>
   );
 };
 

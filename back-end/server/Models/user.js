@@ -8,7 +8,10 @@ var getUser = (user_id) => {
   `)
 }
 
-
+var getMaxUserId = () => {
+  return ( 'SELECT MAX(user_id) FROM users'
+  )
+}
 var postUser = (userObj) => {
   return (`
    INSERT INTO users (username, first_name, last_name, password,location,user_photo)VALUES
@@ -31,6 +34,7 @@ var deleteUser = (user_id) => {
 `)
 }
 
+module.exports.getMaxUserId = getMaxUserId;
 module.exports.deleteUser = deleteUser;
 module.exports.getUser = getUser;
 module.exports.postUser = postUser;

@@ -1,43 +1,42 @@
 import { useEffect, useState } from 'react';
 import { Button, Image, Text, View, ScrollView, StyleSheet } from 'react-native';
-import axios from 'axios';
+import { ImageSlider } from "react-native-image-slider-banner";
+import Icon from 'react-native-vector-icons/MaterialIcons';
 
-export default function Campsite ({ navigation }) {
+export default function Campsite ({ campsite, navigation }) {
+  const [images, setImages] = useState([])
+
+  useEffect(() => {
+    if (images.length < campsite.photos.length) {
+      campsite.photos.forEach(photo => setImages(prev => [...prev, {img: photo.photo_url}]))
+    }
+  }, [])
 
   return (
     <View style={styles.container}>
-      <View style={[styles.top, styles.shadow]}>
+      <View style={{borderRadius:20, marginBottom:10}}>
+        <ImageSlider
+            data={images}
+            autoPlay={false}
+            onItemChanged={(item) => console.log("item", item)}
+            closeIconColor="#fff"
+            caroselImageStyle={{ resizeMode: 'cover', width: 348}}
+        />
       </View>
-      <View style={styles.campsitesContainer}>
-        <Text>
-          hi there
-        </Text>
-      </View>
+
+      <Text style={{fontSize:18, fontWeight: 'semibold', marginBottom:2}}>
+        {campsite.camp_name}
+      </Text>
+
+      <Text style={{marginBottom:2}}>{campsite.location}</Text>
+      <Text><Text style={{fontWeight: 'bold', marginBottom:2}}>${campsite.price}</Text> a night</Text>
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
-    marginTop: 5,
-    alignItems: 'center',
+    // lineHeight: 20
   },
-  top: {
-    borderColor: 'rgba(158, 150, 150, .09)',
-    borderTopWidth: 1,
-    width: '100%',
-  },
-  shadow: {
-    shadowColor: '#171717',
-    shadowOffset: {width: 0, height: 0},
-    shadowOpacity: 0.8,
-    shadowRadius: 2,
-  },
-  campsitesContainer: {
-    padding: 16,
-    width: '100%',
-    height: '90%',
-  }
 
 });
