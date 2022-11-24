@@ -15,18 +15,30 @@ app.use(express.static(path.join(__dirname, '../client/dist')))
 
 // uncomment below to test socketio
 app.use('/', router)
-app.get('/', (req, res) => {
-  res.sendFile(__dirname + '/socketio.html');
-});
+// app.get('/', (req, res) => {
+//   res.sendFile(__dirname + '/socketio.html');
+// });
 
 const server = app.listen(3000)
 const { Server } = require("socket.io");
-const io = new Server(server);
+
+const io = new Server(server, {
+  cors: {
+    origin: "http://localhost:19006",
+    methods: ["GET", "POST"],
+    allowedHeaders: ["my-custom-header"],
+    credentials: true
+  }
+  // origins: '*:*'
+});
 
 io.on('connection', (socket) => {
   socket.on('chat message', (msg) => {
     io.emit('chat message', msg);
   });
+  socket.on('ping', (data) => {
+    io.emit('pong', {})
+  })
 });
 
 // app.listen(process.env.PORT || 3000);

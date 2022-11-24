@@ -8,11 +8,11 @@ const SingleCampsite = ({campsite}) => {
   const [availabilityButtonClicked, setAvailabilityButtonClicked] = useState(false);
 
   const image = {
-    uri: campsite.photos[1]?.photo_url
+    uri: campsite.photos[0]?.photo_url
   }
 
   const showCalendar = () => {
-    setAvailabilityButtonClicked(true);
+    setAvailabilityButtonClicked(!availabilityButtonClicked);
   }
 
   return (
@@ -26,13 +26,14 @@ const SingleCampsite = ({campsite}) => {
           {campsite.location}
         </Text>
         <Text>
-          {campsite.price} night, {campsite.star_rating} stars
+          {campsite.price} night, {Math.round(campsite.star_rating)} stars
         </Text>
         <Button
+          color="#5B8E7D"
           title="Show Availability"
           onPress={showCalendar}
         />
-        {availabilityButtonClicked && <Calendar />}
+        {availabilityButtonClicked && <Calendar campsite={campsite}/>}
       </View>
     </ScrollView>
   );
