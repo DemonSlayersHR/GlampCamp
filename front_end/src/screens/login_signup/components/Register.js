@@ -11,9 +11,10 @@ import {
   ScrollView,
 } from 'react-native';
 import BackArrow from 'react-native-vector-icons/Feather';
-import { authentication } from '../../../Firebase/firebase.js';
+import { authentication } from '../../../../Firebase/firebase.js';
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
-
+import { URL } from '../../../../config.js';
+import ImagePicker from '../ImagePicker.js';
 const formState = {
   username: '',
   first_name: '',
@@ -27,7 +28,6 @@ const Register = ({ navigation }) => {
 
   const navigate = () => {
     navigation.navigate('login');
-    // console.log(authentication);
   };
 
   const signInWithGoogle = () => {
@@ -51,7 +51,7 @@ const Register = ({ navigation }) => {
       user_photo: '',
     };
     axios
-      .post('http://localhost:3000/user', query)
+      .post(`http://${URL}:3000/user`, query)
       .then(() => console.log('yert'))
       .catch((error) => console.log(error));
   };
@@ -61,7 +61,7 @@ const Register = ({ navigation }) => {
       <View style={styles.TopView}>
         <Image
           style={styles.ImageStyle}
-          source={require('../../../assets/logo.png')}
+          source={require('../../../../assets/logo.png')}
         />
       </View>
       <ScrollView style={styles.BottomView}>
