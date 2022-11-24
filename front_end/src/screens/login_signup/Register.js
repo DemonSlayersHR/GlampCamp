@@ -1,4 +1,5 @@
-import React from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
 import {
   Text,
   StyleSheet,
@@ -10,10 +11,51 @@ import {
   ScrollView,
 } from 'react-native';
 import BackArrow from 'react-native-vector-icons/Feather';
+import { authentication } from '../../../Firebase/firebase.js';
+import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+
+const formState = {
+  username: '',
+  first_name: '',
+  last_name: '',
+  password: '',
+  location: '',
+  user_photo: '',
+};
 const Register = ({ navigation }) => {
+  const [signUpForm, setSignUpForm] = useState(formState);
+
   const navigate = () => {
     navigation.navigate('login');
+    // console.log(authentication);
   };
+
+  const signInWithGoogle = () => {
+    const provider = new GoogleAuthProvider();
+    signInWithPopup(authentication, provider)
+      .then((re) => {
+        console.log(re);
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
+  const handleUserRegister = () => {
+    let query = {
+      username: signUpForm.username,
+      first_name: signUpForm.first_name,
+      last_name: signUpForm.last_name,
+      password: signUpForm.password,
+      location: signUpForm.location,
+      user_photo: '',
+    };
+    axios
+      .post('http://localhost:3000/user', query)
+      .then(() => console.log('yert'))
+      .catch((error) => console.log(error));
+  };
+
   return (
     <View style={styles.mainView}>
       <View style={styles.TopView}>
@@ -32,32 +74,62 @@ const Register = ({ navigation }) => {
         <Text style={styles.Heading}>Create {'\n'}Account</Text>
         <View style={styles.FormView}>
           <TextInput
-            placeholder={'Full Name'}
+            onChangeText={(newText) =>
+              setSignUpForm({ ...signUpForm, first_name: newText })
+            }
+            value={signUpForm.first_name}
+            placeholder={'First Name*'}
             placeholderTextColor={'#fff'}
             style={styles.TextInput}
           />
           <TextInput
-            placeholder={'Email'}
+            onChangeText={(newText) =>
+              setSignUpForm({ ...signUpForm, last_name: newText })
+            }
+            value={signUpForm.last_name}
+            placeholder={'Last Name*'}
             placeholderTextColor={'#fff'}
             style={styles.TextInput}
           />
           <TextInput
-            placeholder={'Mobile'}
+            onChangeText={(newText) =>
+              setSignUpForm({ ...signUpForm, username: newText })
+            }
+            value={signUpForm.username}
+            placeholder={'Username*'}
             placeholderTextColor={'#fff'}
             style={styles.TextInput}
           />
           <TextInput
-            placeholder={'Password'}
+            onChangeText={(newText) =>
+              setSignUpForm({ ...signUpForm, location: newText })
+            }
+            value={signUpForm.location}
+            placeholder={'Street Address*'}
+            placeholderTextColor={'#fff'}
+            style={styles.TextInput}
+          />
+          <TextInput
+            onChangeText={(newText) =>
+              setSignUpForm({ ...signUpForm, password: newText })
+            }
+            value={signUpForm.password}
+            placeholder={'Password*'}
             placeholderTextColor={'#fff'}
             style={styles.TextInput}
             secureTextEntry={true}
           />
           <TextInput
-            placeholder={'Confirm Password'}
+            value={signUpForm.password}
+            placeholder={'Confirm Password*'}
             placeholderTextColor={'#fff'}
             style={styles.TextInput}
             secureTextEntry={true}
           />
+          <TouchableOpacity style={styles.PhotoUploadProfile}>
+            <Text style={styles.ButtonText}>Upload Profile Photo</Text>
+          </TouchableOpacity>
+
           <TouchableOpacity style={styles.Button}>
             <Text style={styles.ButtonText}>Sign Up</Text>
           </TouchableOpacity>
@@ -132,6 +204,16 @@ const styles = StyleSheet.create({
   TextButton: {
     display: 'flex',
     width: '100%',
+    alignItems: 'center',
+    marginTop: 20,
+  },
+  PhotoUploadProfile: {
+    display: 'flex',
+    width: '50%',
+    height: 52,
+    backgroundColor: '#5B8E7D',
+    borderRadius: 10,
+    justifyContent: 'center',
     alignItems: 'center',
     marginTop: 20,
   },
