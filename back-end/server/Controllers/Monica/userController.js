@@ -115,7 +115,7 @@ var userAuth = (req,res) => {
 
 var deleteUser = (req,res) => {
   var userInfo = req.query
-  console.log(userInfo.user_id)
+  // console.log(userInfo.user_id)
   if(userInfo.user_id === null || userInfo.user_id === undefined || userInfo.user_id.trim().length === 0) {
     res.status(400)
     res.send('your user_id can not be undefined')
