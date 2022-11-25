@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS users, camps, reservations, photos, camp_dates, reserves_dates,chat, reviews;
+DROP TABLE IF EXISTS users, camps, reservations, photos, camp_dates, reserves_dates,chats, reviews;
 
 CREATE TABLE IF NOT EXISTS users(
   user_id SERIAL PRIMARY KEY NOT NULL,
@@ -47,9 +47,10 @@ CREATE TABLE IF NOT EXISTS reserves_dates(
   dates DATE
 );
 
-CREATE TABLE IF NOT EXISTS chat(
+CREATE TABLE IF NOT EXISTS chats(
   chat_id SERIAL PRIMARY KEY NOT NULL,
-  camp_id INT REFERENCES camps (camp_id),
+  reserve_id INT REFERENCES reservations (reserve_id),
+  sender INT,
   created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   messages VARCHAR(100)
 );
@@ -59,6 +60,7 @@ CREATE TABLE IF NOT EXISTS reviews(
   camp_id INT REFERENCES camps (camp_id),
   client_id INT REFERENCES users (user_id),
   star_rating INT,
+  review_photo VARCHAR(200),
   review VARCHAR(500)
 );
 
@@ -119,8 +121,8 @@ INSERT INTO photos(camp_id, photo_url) VALUES
   (6, 'https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,g_auto,h_630,q_60,w_1200/v1652453103/campground-photos/shgam6kwlyuu7cvblkth.jpg')
   ON CONFLICT DO NOTHING;
 
-INSERT INTO reviews(camp_id , client_id, star_rating, review) VALUES
-  (6, 1, 5, 'Awesome place! Out of this world!!')
+INSERT INTO reviews(camp_id , client_id, star_rating, review_photo, review) VALUES
+  (6, 1, 5, 'https://cdn.thewirecutter.com/wp-content/media/2022/06/summer-camp-2048px-1199232997-2x1-1.jpg?auto=webp&quality=75&crop=2:1&width=1024', 'Awesome place! Out of this world!!')
   ON CONFLICT DO NOTHING;;
 
 -- Create a database called glampcamp on postgres, then running the following code below

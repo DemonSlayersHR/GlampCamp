@@ -6,6 +6,7 @@ import Login from './src/screens/login_signup/Login.js';
 import Register from './src/screens/login_signup/Register.js';
 import Host from './src/screens/profile/Host.js'
 import Homepage from './src/screens/homepage/Homepage.js';
+import Messaging from './src/screens/messaging/Messaging.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -17,6 +18,7 @@ export default function App() {
         <Stack.Screen
           name='host'
           component={Host}></Stack.Screen>
+
         <Stack.Screen
           name='login'
           component={Login}
@@ -26,7 +28,7 @@ export default function App() {
           component={Register}
           options={{ headerShown: false }}></Stack.Screen>
       </Stack.Navigator>
-    </NavigationContainer>
+    </NavigationContainer >
   );
 }
 
@@ -34,6 +36,8 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',
+    alignItems: 'center',
     justifyContent: 'center',
   },
 });
+

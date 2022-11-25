@@ -9,15 +9,20 @@ const CampDates = {
     res.send('Created!')
   },
   put: (req, res) => {
-    pool.query(`UPDATE camp_dates SET
-    client_id = $1,
-    reserved = $2
-    WHERE camp_date_id = $3;`, [req.body.client_id, req.body.reserved, req.body.camp_date_id])
+    for (let i of req.body.dates) {
+      pool.query(`UPDATE camp_dates SET
+      client_id = $1,
+      reserved = $2
+      WHERE camp_id = $3 AND dates = $4;`, [req.body.client_id, req.body.reserved, req.body.camp_id, i])
+    }
     res.status(204)
     res.send('Updated!')
   },
   delete: (req, res) => {
-    pool.query(`DELETE FROM camp_dates WHERE camp_date_id = $1`, [req.query.camp_date_id])
+    console.log(req.body)
+    for (let i of req.body.dates) {
+      pool.query(`DELETE FROM camp_dates WHERE dates = $1 AND camp_id = $2`, [i, req.body.camp_id])
+    }
     res.status(204)
     res.send('Deleted!')
   }
