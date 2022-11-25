@@ -15,19 +15,11 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name='homepage' component={Homepage}></Stack.Screen>
+        <Stack.Screen name='host' component={Host}></Stack.Screen>
         <Stack.Screen name='search' component={Search}></Stack.Screen>
-        <Stack.Screen
-          name='host'
-          component={Host}></Stack.Screen>
-        <Stack.Screen
-          name='login'
-          component={Login}
-          options={{ headerShown: false }}></Stack.Screen>
-        <Stack.Screen
-          name='register'
-          component={Register}
-          options={{ headerShown: false }}></Stack.Screen>
+        <Stack.Screen name='homepage' component={Homepage}></Stack.Screen>
+        <Stack.Screen name='login' component={Login}></Stack.Screen>
+        <Stack.Screen name='register' component={Register}></Stack.Screen>
       </Stack.Navigator>
     </NavigationContainer >
   );

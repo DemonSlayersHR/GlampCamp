@@ -6,8 +6,6 @@ import AddCampsite from './components/AddCampsite.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function Host({user_id}) {
-
-
   user_id = user_id || 1
 
   const [starCount, setStarCount] = useState(0)
@@ -16,6 +14,7 @@ export default function Host({user_id}) {
 
   const [displayAddCampsite, setDisplayAddCampsite] = useState(false)
   const [displayHostCampsites, setDisplayHostCampsites] = useState(true)
+  const [displayUpcomingReservations, setDisplayUpcomingReservations] = useState(false)
 
   useEffect(() => {
     getHostCampsites()
@@ -43,20 +42,40 @@ export default function Host({user_id}) {
             <Text>{hostInfo.location}</Text>
           </View>
           <View style={styles.profilePictureContainer}>
-              {hostInfo.user_photo ?
-                <Image source={{uri: 'https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,g_auto,h_630,q_60,w_1200/v1652453103/campground-photos/shgam6kwlyuu7cvblkth.jpg'}} resizeMode={'cover'} style={styles.profilePicture} />
-              : null}
+              <Image source={{uri: hostInfo.user_photo || 'https://i.postimg.cc/gjFHrzW3/image-4.png'}} resizeMode={'cover'} style={styles.profilePicture} />
           </View>
         </View>
       </View>
 
       <View>
         <View style={styles.dropDown}>
-          <TouchableOpacity style={styles.dropDownText}>
+          <TouchableOpacity style={styles.dropDownText} onPress={() => {setDisplayUpcomingReservations(!displayUpcomingReservations)}}>
             <Text style={styles.title}>Upcoming Reservations</Text>
-            <Icon name='angle-down' size={30}/>
+            {displayUpcomingReservations ? <Icon name='angle-up' size={30}/> : <Icon name='angle-down' size={30} />}
           </TouchableOpacity>
         </View>
+
+        {displayUpcomingReservations ?
+          <View>
+            {hostCampsites.map((campsite, index)=>(
+              <View key={index}>
+                {console.log(campsite)}
+                <Text>{campsite.camp_name}</Text>
+                {campsite.dates.map((date) => {
+                  if(date.reserved) {
+                    return (
+                      <View>
+                        <Text>{date.date}</Text>
+                        <Text>{date.client}</Text>
+                      </View>
+                    )
+                  }
+                })}
+                {/* <HostCampsite campsite={campsite} key={index} getHostCampsites={getHostCampsites}/> */}
+              </View>
+            ))}
+          </View>
+        : null}
 
         <View style={styles.dropDown}>
           <TouchableOpacity style={styles.dropDownText} onPress={() => {setDisplayAddCampsite(!displayAddCampsite)}}>
@@ -93,7 +112,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
   },
   userWelcome: {
-    borderBottomWidth: 1,
+    // borderBottomWidth: 1,
     borderColor: '#eee',
     padding: 15,
   },
@@ -111,8 +130,7 @@ const styles = StyleSheet.create({
   },
   dropDown: {
     padding: 15,
-    backgroundColor: '#f8f8f8',
-    borderBottomWidth: 1,
+    // borderBottomWidth: 1,
     borderColor: '#eee',
   },
   dropDownText: {
