@@ -6,20 +6,24 @@ const campsite = require('./Controllers/Randy/Campsite.js')
 const campdates = require('./Controllers/Randy/CampDates.js')
 const campphotos = require('./Controllers/Randy/CampPhotos.js')
 const campreviews = require('./Controllers/Randy/CampReviews.js')
+const chats = require('./Controllers/Randy/Chats.js')
 
 // ----------------------- GET  -----------------------
 router.get('/user', users.getUser)
 router.get('/user/auth', users.userAuth)
 router.get('/campsites', (req, res) => campsite.get(req, res))
 router.get('/reservation/client', reservations.getReservations)
+router.get('/chats', (req, res) => chats.get(req, res))
+router.get('/chats/meta', (req, res) => chats.meta(req, res))
 
 // ----------------------- POST -----------------------
 router.post('/user', users.postUser)
-router.post('/reservation',reservations.addReservations)
+router.post('/reservation', reservations.addReservations)
 router.post('/campsites', (req, res) => campsite.post(req, res))
 router.post('/campsites/dates', (req, res) => campdates.post(req, res))
 router.post('/campsites/photos', (req, res) => campphotos.post(req, res))
 router.post('/campsites/reviews', (req, res) => campreviews.post(req, res))
+router.post('/chats', (req, res) => chats.post(req, res))
 
 // ----------------------- PUT -----------------------
 router.put('/reservation', reservations.hostConfirmed)

@@ -54,7 +54,6 @@ const Register = ({ navigation }) => {
       location: signUpForm.location,
       user_photo: '',
     };
-    // setSignUpForm(formState);
     // console.log(JSON.stringify(query));
     axios
       .post(`http://${URL}:3000/user`, query)
@@ -68,6 +67,7 @@ const Register = ({ navigation }) => {
         //   });
       })
       .catch((error) => console.log(error));
+    setSignUpForm(formState);
   };
 
   return (

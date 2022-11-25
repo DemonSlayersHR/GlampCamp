@@ -27,23 +27,23 @@ var getUser = (req, res) => {
 };
 
 var postUser = (req, res) => {
-  console.log('REQ BODY', req.body);
   var userInfo = req.body;
-  if (userInfo.username === null) {
+  console.log('REQ BODY', userInfo);
+  if (userInfo.username === undefined) {
     res.status(400);
-    res.send('your username can not be null');
+    res.send('your username can not be undefined');
   }
-  if (userInfo.password === null) {
+  if (userInfo.password === undefined) {
     res.status(400);
-    res.send('your password can not be null');
+    res.send('your password can not be undefined');
   }
-  if (userInfo.first_name === null) {
+  if (userInfo.first_name === undefined) {
     res.status(400);
-    res.send('your first name can not be null');
+    res.send('your first name can not be undefined');
   }
-  if (userInfo.last_name === null) {
+  if (userInfo.last_name === undefined) {
     res.status(400);
-    res.send('your last name can not be null');
+    res.send('your last name can not be undefined');
   }
   pool
     .connect()
@@ -52,7 +52,9 @@ var postUser = (req, res) => {
       client
         .query(model.postUser(userInfo))
         .then((response) => {
-          client
+          client;
+          console
+            .log(response)
             .query(model.getMaxUserId())
             .then((response) => {
               client.release();
@@ -65,6 +67,7 @@ var postUser = (req, res) => {
         })
         .catch((err) => {
           client.release();
+          console.log(err);
           res.send(err);
         });
     })
@@ -76,13 +79,13 @@ var postUser = (req, res) => {
 var userAuth = (req, res) => {
   var userInfo = req.query;
   // console.log('req query',req.query)
-  if (userInfo.username === null) {
+  if (userInfo.username === undefined) {
     res.status(400);
-    res.send('your username can not be null');
+    res.send('your username can not be undefined');
   }
-  if (userInfo.password === null) {
+  if (userInfo.password === undefined) {
     res.status(400);
-    res.send('your password can not be null');
+    res.send('your password can not be undefined');
   }
   pool
     .connect()
@@ -115,34 +118,35 @@ var userAuth = (req, res) => {
 
 var deleteUser = (req, res) => {
   var userInfo = req.query;
-  // console.log('req query for delete',req.query)
-  if (userInfo.user_id === null) {
+  // console.log(userInfo.user_id)
+  if (
+    userInfo.user_id === null ||
+    userInfo.user_id === undefined ||
+    userInfo.user_id.trim().length === 0
+  ) {
     res.status(400);
-    res.send('your user_id can not be null');
+    res.send('your user_id can not be undefined');
+    return;
   }
-  pool
-    .connect()
-    .then((client) => {
-      // console.log(client)
-      client
-        //
-        .query(model.deleteUser(userInfo['user_id']))
-        .then((response) => {
-          client.release();
-          res.status(200);
-          res.send('your delete user request has been succeeded');
-        })
-        .catch((err) => {
-          client.release();
-          // console.log(err)
-          res.status(204);
-          res.send(err);
-        });
-    })
-    .catch((err) => {
-      res.status(204);
-      res.send(err);
-    });
+  pool.connect().then((client) => {
+    client
+      .query(model.deleteUser(userInfo['user_id']))
+      .then((response) => {
+        client.release();
+        res.status(200);
+        res.send('your delete user request has been succeeded');
+      })
+      .catch((err) => {
+        client.release();
+        // console.log(err)
+        res.status(204);
+        res.send(err);
+      })
+      .catch((err) => {
+        res.status(204);
+        res.send(err);
+      });
+  });
 };
 
 module.exports.getUser = getUser;

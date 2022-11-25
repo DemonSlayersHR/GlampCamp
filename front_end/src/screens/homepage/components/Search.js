@@ -3,12 +3,9 @@ import { Text, View, StyleSheet, Pressable } from 'react-native';
 import Icon from 'react-native-vector-icons/Ionicons';
 
 export default function Search ({ navigation }) {
-  // function navigate(){
-  //   navigation.navigate('login');
-  // };
 
   return (
-    <Pressable style={styles.container}>
+    <Pressable style={styles.container} onPress={() => navigation.navigate('search')}>
         <View style={[styles.inputContainer, styles.shadow]}>
             <View style={styles.inputItems}>
               <Icon name="search" size={20}/>
