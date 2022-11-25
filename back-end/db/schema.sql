@@ -80,7 +80,8 @@ INSERT INTO camps(host_id, camp_name, price, star_rating, location, description)
 INSERT INTO reservations(camp_id, client_id, confirmed) VALUES
   (3, 2, FALSE),
   (1, 3, FALSE),
-  (6, 1, TRUE)
+  (6, 1, FALSE),
+  (4, 2, FALSE)
   ON CONFLICT DO NOTHING;
 
 INSERT INTO camp_dates(camp_id ,client_id ,dates ,reserved ) VALUES
@@ -92,8 +93,8 @@ INSERT INTO camp_dates(camp_id ,client_id ,dates ,reserved ) VALUES
   (3, null, '2023-02-14', FALSE),
   (4, null, '2023-02-14', FALSE),
   (5, null, '2022-12-25', FALSE),
-  (6, 1, '2022-12-30', TRUE),
-  (6, 1, '2022-12-31', TRUE),
+  (6, 1, '2020-10-10', FALSE),
+  (6, 1, '2020-10-11', FALSE),
   (6, 1, '2023-01-01', TRUE)
   ON CONFLICT DO NOTHING;
 
@@ -101,7 +102,9 @@ INSERT INTO reserves_dates(reserve_id,dates) VALUES
   (1, '2023-02-14'),
   (2, '2022-12-23'),
   (2, '2022-12-24'),
-  (2, '2022-12-25')
+  (2, '2022-12-25'),
+  (3, '2020-10-10'),
+  (3, '2020-10-11')
   ON CONFLICT DO NOTHING;
 
 INSERT INTO photos(camp_id, photo_url) VALUES
