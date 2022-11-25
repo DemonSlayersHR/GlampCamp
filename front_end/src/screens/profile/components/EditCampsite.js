@@ -57,15 +57,16 @@ const styles = StyleSheet.create({
     margin: 10,
     borderWidth: 1,
     borderRadius: 10,
-    backgroundColor: '#FFADAD',
     borderColor: '#eee',
+    // backgroundColor: '#FFADAD',
   },
   btns: {
     flexDirection: 'row',
     justifyContent: 'center',
   },
   btnText: {
-    fontSize: 20,
+    // fontSize: 20,
+    fontWeight: 'bold',
     textAlign: 'center',
   }
 });

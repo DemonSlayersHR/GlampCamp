@@ -6,8 +6,6 @@ import AddCampsite from './components/AddCampsite.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
 
 export default function Host({user_id}) {
-
-
   user_id = user_id || 1
 
   const [starCount, setStarCount] = useState(0)
@@ -44,7 +42,7 @@ export default function Host({user_id}) {
           </View>
           <View style={styles.profilePictureContainer}>
               {hostInfo.user_photo ?
-                <Image source={{uri: 'https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,g_auto,h_630,q_60,w_1200/v1652453103/campground-photos/shgam6kwlyuu7cvblkth.jpg'}} resizeMode={'cover'} style={styles.profilePicture} />
+                <Image source={{uri: hostInfo.user_photo}} resizeMode={'cover'} style={styles.profilePicture} />
               : null}
           </View>
         </View>

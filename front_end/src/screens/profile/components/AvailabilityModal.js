@@ -1,46 +1,91 @@
 import { useState, useEffect } from 'react';
 import CalendarPicker from 'react-native-calendar-picker';
 import { StyleSheet, Text, View, Button, Image, ScrollView, FlatList, TouchableOpacity, Modal, Alert, Pressable } from 'react-native';
+import axios from 'axios';
 
 export default function AvailabilityModal ({campsite, modalVisible, setModalVisible}) {
 
-  const [reservedDates, setReservedDates] = useState([]);
-  const [availableDates, setAvailableDates] = useState([]);
-  const [selectedDates, setSelectedDates] = useState([]);
+  const [selectedStartDate, setSelectedStartDate] = useState();
+  const [selectedEndDate, setSelectedEndDate] = useState();
+
   const [customDatesStyles, setCustomDatesStyles] = useState([])
 
   useEffect(() => {
-    const available = [];
-    const reserved = [];
+    createCustomDatesStyle(campsite)
+  }, [campsite])
+
+  const createCustomDatesStyle = (campsite) => {
     const newCustomDatesStyles = [];
-    campsite.dates.forEach((date) => {
-      if (date.reserved) {
-        reserved.push(date.date)
-      } else {
-        available.push(date.date)
-      }
+    campsite.dates?.forEach((date) => {
       newCustomDatesStyles.push({
         date: date.date,
-        style: {backgroundColor: '#eee'},
-        textStyle: date.reserved ? {fontWeight: 'bold', color: 'red'} : {fontWeight: 'bold', color: 'green'}
-
+        // style: {backgroundColor: '#eee'},
+        textStyle: date.reserved ? {fontWeight: 'bold', color: 'red'} : {fontWeight: 'bold', color: 'blue'}
       })
     })
     setCustomDatesStyles(newCustomDatesStyles);
-    setReservedDates(reserved);
-    setAvailableDates(available);
-  }, [campsite])
-
-  const convertToDateFormat = (date) => {
-    let stringDate = date._i.year + '-' + (Number(date._i.month) + 1).toString() + '-' + (Number(date._i.day) + 1).toString();
-    return stringDate;
   }
 
-  const onDateChange = (date) => {
-    let string = convertToDateFormat(date);
-    setSelectedDates([...selectedDates, string]);
+  const onDateChange = (date, startOrEnd) => {
+    let string = null;
+    if (date) {
+      string = date._d.toISOString().slice(0,10);
+    }
+    if (startOrEnd === 'START_DATE') {
+      setSelectedStartDate(string)
+    } else {
+      setSelectedEndDate(string)
+    }
   }
 
+  const getDaysArray = (start, end) => {
+    for(var arr=[],dt=new Date(start); dt<=new Date(end); dt.setDate(dt.getDate()+1)){
+        arr.push(new Date(dt));
+    }
+    arr = arr.map((v)=>v.toISOString().slice(0,10))
+    return arr;
+  };
+
+  const addAvailableDates = () => {
+    if (selectedStartDate && selectedEndDate) {
+      let daylist = getDaysArray(new Date(selectedStartDate),new Date(selectedEndDate));
+      axios.post(`http://192.168.86.36:3000/campsites/dates`, {
+        camp_id: campsite.camp_id,
+        dates: daylist
+      })
+        .then((res) => {
+          axios.get(`http://192.168.86.36:3000/campsites?camp_id=${campsite.camp_id}`)
+            .then((res) => {createCustomDatesStyle(res.data[0])})
+            .catch((err) => {console.log(err)})
+        })
+        .catch((err) => {console.log(err)})
+    } else {
+      Alert.alert('Alert', 'must select start and end date' )
+    }
+  }
+
+  const removeAvailableDates = () => {
+    if (selectedStartDate && selectedEndDate) {
+      let daylist = getDaysArray(new Date(selectedStartDate),new Date(selectedEndDate));
+      axios.delete(`http://192.168.86.36:3000/campsites/dates`, {
+        camp_id: campsite.camp_id,
+        dates: daylist
+      })
+        .then((res) => {
+          axios.get(`http://192.168.86.36:3000/campsites?camp_id=${campsite.camp_id}`)
+            .then((res) => {createCustomDatesStyle(res.data[0])})
+            .catch((err) => {console.log(err)})
+        })
+        .catch((err) => {console.log(err)})
+    } else {
+      Alert.alert('Alert', 'must select start and end date' )
+    }
+  }
+
+  const disableSelectingPast = (date) => {
+    const today = new Date()
+    return date < today
+  }
 
   return (
     <Modal
@@ -56,24 +101,28 @@ export default function AvailabilityModal ({campsite, modalVisible, setModalVisi
         <View style={styles.modalView}>
 
           <CalendarPicker
-            onDateChange={onDateChange}
+            onDateChange={(date, startOrEnd) => onDateChange(date, startOrEnd)}
+            disabledDates={disableSelectingPast}
             allowRangeSelection={true}
+            textStyle={{color: 'black'}}
+            // todayTextStyle={{color: 'red'}}
+            todayBackgroundColor='none'
             customDatesStyles={customDatesStyles}
           />
 
           <View style={styles.buttonList}>
             <TouchableOpacity
               style={styles.button}
-              onPress={() => {}}
+              onPress={addAvailableDates}
             >
               <Text style={styles.textStyle} > Add Dates</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
               style={styles.button}
-              onPress={() => {}}
+              // onPress={removeAvailableDates}
             >
-              <Text style={styles.textStyle} > Edit Dates </Text>
+              <Text style={styles.textStyle} > Remove Dates </Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -122,13 +171,15 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   button: {
-    borderRadius: 15,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: '#eee',
     padding: 10,
     elevation: 2,
-    backgroundColor: "#2196F3",
+    // backgroundColor: "#2196F3",
   },
   textStyle: {
-    color: "white",
+    // color: "white",
     fontWeight: "bold",
     textAlign: "center"
   },

@@ -11,7 +11,7 @@ export default function Homepage ({ navigation }) {
   const [filter, setFilter] = useState('Discover');
 
   useEffect(() => {
-    axios.get('http://192.168.1.19:3000/campsites')
+    axios.get('http://192.168.86.36:3000/campsites')
       .then((results) => {
         setCampsites(results.data);
       })
