@@ -14,12 +14,6 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        {/* comment out below */}
-        <Stack.Screen
-          name='messaging'
-          component={Messaging}
-          options={{ headerShown: false }} ></Stack.Screen>
-        {/* comment out above */}
         <Stack.Screen name='homepage' component={Homepage}></Stack.Screen>
         <Stack.Screen
           name='host'
