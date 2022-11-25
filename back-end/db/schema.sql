@@ -1,4 +1,4 @@
-DROP TABLE IF EXISTS users, camps, reservations, photos, camp_dates, reserves_dates,chat, reviews;
+DROP TABLE IF EXISTS users, camps, reservations, photos, camp_dates, reserves_dates,chats, reviews;
 
 CREATE TABLE IF NOT EXISTS users(
   user_id SERIAL PRIMARY KEY NOT NULL,
@@ -47,9 +47,10 @@ CREATE TABLE IF NOT EXISTS reserves_dates(
   dates DATE
 );
 
-CREATE TABLE IF NOT EXISTS chat(
+CREATE TABLE IF NOT EXISTS chats(
   chat_id SERIAL PRIMARY KEY NOT NULL,
-  camp_id INT REFERENCES camps (camp_id),
+  reserve_id INT REFERENCES reservations (reserve_id),
+  sender INT,
   created_on TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
   messages VARCHAR(100)
 );

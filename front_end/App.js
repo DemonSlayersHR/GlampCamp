@@ -14,14 +14,16 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        {/* comment out below */}
+        <Stack.Screen
+          name='messaging'
+          component={Messaging} ></Stack.Screen>
+        {/* comment out above */}
         <Stack.Screen name='homepage' component={Homepage}></Stack.Screen>
         <Stack.Screen
           name='host'
           component={Host}></Stack.Screen>
 
-        <Stack.Screen
-          name='homepage'
-          component={Homepage}></Stack.Screen>
         <Stack.Screen
           name='login'
           component={Login}
@@ -44,35 +46,3 @@ const styles = StyleSheet.create({
   },
 });
 
-<<<<<<< HEAD
-{/* comment out below */ }
-<Stack.Screen
-  name='messaging'
-  component={Messaging} ></Stack.Screen>
-{/* comment out above */ }
-
-=======
-        <Stack.Screen name='homepage' component={Homepage}></Stack.Screen>
-        <Stack.Screen
-          name='host'
-          component={Host}></Stack.Screen>
-        <Stack.Screen
-          name='login'
-          component={Login}
-          options={{ headerShown: false }}></Stack.Screen>
-        <Stack.Screen
-          name='register'
-          component={Register}
-          options={{ headerShown: false }}></Stack.Screen>
-      </Stack.Navigator>
-    </NavigationContainer>
-  );
-}
-
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    justifyContent: 'center',
-  },
-});
