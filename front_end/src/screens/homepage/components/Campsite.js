@@ -24,11 +24,16 @@ export default function Campsite ({ campsite, navigation }) {
         />
       </View>
 
-      <Text style={{fontSize:18, fontWeight: 'semibold', marginBottom:2}}>
-        {campsite.camp_name}
-      </Text>
+      <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
+        <Text style={{fontSize:16, fontWeight: 'semibold', marginBottom:2}}>
+          {campsite.camp_name}
+        </Text>
+        <Text style={{fontSize: 13}}>
+          ★ 5.0
+        </Text>
+      </View>
 
-      <Text style={{marginBottom:2}}>{campsite.location}</Text>
+      <Text style={{marginBottom:2, color:'gray'}}>{campsite.location}</Text>
       <Text><Text style={{fontWeight: 'bold', marginBottom:2}}>${campsite.price}</Text> a night</Text>
     </View>
   );

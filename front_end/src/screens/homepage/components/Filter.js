@@ -4,7 +4,7 @@ import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default function Filter ({ filter, setFilter }) {
   return (
-    <View style={{height: '8%', marginTop: 30}}>
+    <View style={{height: '6%', marginTop: 20}}>
       <View style={styles.container}>
         <Category iconName="auto-awesome" title="Discover" filter={filter} setFilter={setFilter}/>
         <Category iconName="location-pin" title="Near you" filter={filter} setFilter={setFilter}/>
@@ -21,13 +21,13 @@ function Category({iconName, title, filter, setFilter}){
     {
       title === filter ?
       <>
-      <Icon name={iconName} size={25} color="black"/>
-      <Text style={{fontWeight: "semibold", color: 'black'}}>{title}</Text>
+      <Icon name={iconName} size={24} color="black"/>
+      <Text style={{fontWeight: "semibold", color: 'black', fontSize: 13}}>{title}</Text>
       </>
       :
       <>
-      <Icon name={iconName} size={25} color="#6e6e6e"/>
-      <Text style={{fontWeight: "semibold", color: '#6e6e6e'}}>{title}</Text>
+      <Icon name={iconName} size={24} color="#6e6e6e"/>
+      <Text style={{fontWeight: "semibold", color: '#6e6e6e', fontSize: 13}}>{title}</Text>
       </>
     }
   </Pressable>
