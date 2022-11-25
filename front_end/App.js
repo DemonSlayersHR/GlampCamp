@@ -17,7 +17,8 @@ export default function App() {
         {/* comment out below */}
         <Stack.Screen
           name='messaging'
-          component={Messaging} ></Stack.Screen>
+          component={Messaging}
+          options={{ headerShown: false }} ></Stack.Screen>
         {/* comment out above */}
         <Stack.Screen name='homepage' component={Homepage}></Stack.Screen>
         <Stack.Screen
@@ -33,7 +34,7 @@ export default function App() {
           component={Register}
           options={{ headerShown: false }}></Stack.Screen>
       </Stack.Navigator>
-    </NavigationContainer>
+    </NavigationContainer >
   );
 }
 

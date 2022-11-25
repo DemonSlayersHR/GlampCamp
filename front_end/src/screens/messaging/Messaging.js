@@ -1,6 +1,7 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Button, Image, Text, TextInput, View, ScrollView } from 'react-native';
+import { Button, Image, Text, TextInput, View, ScrollView, StyleSheet } from 'react-native';
 import { io } from 'socket.io-client';
+import BackArrow from 'react-native-vector-icons/Feather'
 import axios from 'axios';
 import SingleCampsite from '../campsite/SingleCampsite.js';
 
@@ -15,7 +16,7 @@ const Messaging = ({ }) => {
   const reserve_id = useRef(2)
 
   // toggles ping pong test
-  const connectionTest = true
+  const connectionTest = false
 
   // set up socket connection (must be first)
   const socket = io.connect("http://192.168.0.116:3000",
@@ -84,15 +85,21 @@ const Messaging = ({ }) => {
   // ------------------------------ DIV ------------------------------
   return (
     <View>
-      {user_type.current === 'host' && <Button title="Confirm Reservation" onPress={confirmRes}></Button>}
-      {user_type.current === 'client' && <Text>Reservation not yet confirmed</Text>}
-      <ScrollView>
+      <View style={styles.header} >
+        <BackArrow name='chevron-left' size={'5vh'} color={'grey'}></BackArrow>
+        <Text></Text>
+        {user_type.current === 'host' && <Button title="Confirm Reservation" onPress={confirmRes} style={styles.confirmBtn}></Button>}
+        {user_type.current === 'client' && <Text>Reservation not yet confirmed</Text>}
+      </View>
+      <ScrollView style={styles.messages}>
         {messages.map(entry => {
           if (entry.reserve_id === reserve_id.current) return <Text key={count++}>{entry.messages}</Text>
         })}
       </ScrollView>
-      <TextInput value={text} onChange={(e) => setText(e.target.value)}></TextInput>
-      <Button title='Send' onPress={sendMessage}></Button>
+      <View style={styles.form}>
+        <TextInput value={text} onChange={(e) => setText(e.target.value)} style={styles.input}></TextInput>
+        <Button title='Send' onPress={sendMessage}></Button>
+      </View>
       {connectionTest && <View>
         <p>Connected: {'' + isConnected}</p>
         <p>Last pong: {lastPong || '-'}</p>
@@ -101,5 +108,33 @@ const Messaging = ({ }) => {
     </View>
   );
 };
+
+{/* <View style={styles.container}></View> */ }
+const styles = StyleSheet.create({
+  messages: {
+    height: '89vh',
+    'border-top': '1px solid black'
+  },
+  form: {
+    display: 'grid',
+    'grid-template-columns': '9fr 1fr',
+    height: '5vh'
+  },
+  input: {
+    border: '1px solid black'
+  },
+  header: {
+    display: 'grid',
+    'grid-template-columns': '2fr 6fr 2fr',
+    height: '5vh',
+    // 'border-bottom': '2px solid black',
+    'margin-bottom': '1vh'
+  },
+  confirmBtn: {
+    color: 'green',
+    height: '100%'
+  }
+}
+)
 
 export default Messaging;
