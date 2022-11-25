@@ -14,7 +14,7 @@ import BackArrow from 'react-native-vector-icons/Feather';
 import { authentication } from '../../../../Firebase/firebase.js';
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { URL } from '../../../../config.js';
-import ImagePicker from '../ImagePicker.js';
+import ImageUploader from '../ImageUploader.js';
 const formState = {
   username: '',
   first_name: '',
@@ -126,9 +126,11 @@ const Register = ({ navigation }) => {
             style={styles.TextInput}
             secureTextEntry={true}
           />
-          <TouchableOpacity style={styles.PhotoUploadProfile}>
-            <Text style={styles.ButtonText}>Upload Profile Photo</Text>
-          </TouchableOpacity>
+
+          <ImageUploader
+            signUpForm={signUpForm}
+            setSignUpForm={setSignUpForm}></ImageUploader>
+          {/* <Text style={styles.ButtonText}>Upload Profile Photo</Text> */}
 
           <TouchableOpacity style={styles.Button}>
             <Text style={styles.ButtonText}>Sign Up</Text>
@@ -212,7 +214,7 @@ const styles = StyleSheet.create({
     width: '50%',
     height: 52,
     backgroundColor: '#5B8E7D',
-    borderRadius: 10,
+    borderRadius: 15,
     justifyContent: 'center',
     alignItems: 'center',
     marginTop: 20,
