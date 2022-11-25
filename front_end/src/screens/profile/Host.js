@@ -14,6 +14,7 @@ export default function Host({user_id}) {
 
   const [displayAddCampsite, setDisplayAddCampsite] = useState(false)
   const [displayHostCampsites, setDisplayHostCampsites] = useState(true)
+  const [displayUpcomingReservations, setDisplayUpcomingReservations] = useState(false)
 
   useEffect(() => {
     getHostCampsites()
@@ -48,11 +49,33 @@ export default function Host({user_id}) {
 
       <View>
         <View style={styles.dropDown}>
-          <TouchableOpacity style={styles.dropDownText}>
+          <TouchableOpacity style={styles.dropDownText} onPress={() => {setDisplayUpcomingReservations(!displayUpcomingReservations)}}>
             <Text style={styles.title}>Upcoming Reservations</Text>
-            <Icon name='angle-down' size={30}/>
+            {displayUpcomingReservations ? <Icon name='angle-up' size={30}/> : <Icon name='angle-down' size={30} />}
           </TouchableOpacity>
         </View>
+
+        {displayUpcomingReservations ?
+          <View>
+            {hostCampsites.map((campsite, index)=>(
+              <View key={index}>
+                {console.log(campsite)}
+                <Text>{campsite.camp_name}</Text>
+                {campsite.dates.map((date) => {
+                  if(date.reserved) {
+                    return (
+                      <View>
+                        <Text>{date.date}</Text>
+                        <Text>{date.client}</Text>
+                      </View>
+                    )
+                  }
+                })}
+                {/* <HostCampsite campsite={campsite} key={index} getHostCampsites={getHostCampsites}/> */}
+              </View>
+            ))}
+          </View>
+        : null}
 
         <View style={styles.dropDown}>
           <TouchableOpacity style={styles.dropDownText} onPress={() => {setDisplayAddCampsite(!displayAddCampsite)}}>

@@ -5,8 +5,6 @@ import AddPhotosCloudinary from './AddPhotosCloudinary.js';
 
 export default function EditCampsite ({campsite, setShowOptions, setEditViewVisible, getHostCampsites}) {
 
-  console.log(campsite)
-
   const [campsiteName, setCampsiteName] = useState();
   const [location, setLocation] = useState();
   const [description, setDescription] = useState();
@@ -25,7 +23,7 @@ export default function EditCampsite ({campsite, setShowOptions, setEditViewVisi
       .then(() => {
         axios.put(`http://192.168.86.36:3000/campsites/photos`, {
           photo_id: campsite.photos[0].photo_id,
-          photo_url: photo
+          photo_url: photosArray[photosArray.length - 1]
         })
       })
       .then(() => {
@@ -33,7 +31,7 @@ export default function EditCampsite ({campsite, setShowOptions, setEditViewVisi
         setLocation(null)
         setDescription(null)
         setPrice(null)
-        setPhoto()
+        setPhotosArray([])
         getHostCampsites();
         setShowOptions(false);
         setEditViewVisible(false);
@@ -48,10 +46,11 @@ export default function EditCampsite ({campsite, setShowOptions, setEditViewVisi
       <TextInput placeholder='location' value={location} style={styles.input} onChangeText={text => setLocation(text)} />
       <TextInput placeholder='price' value={price} style={styles.input} onChangeText={text => setPrice(text)} />
 
-      <View style={styles.photoContainer}>
-        {photosArray &&
-          <Image source={{uri: photosArray[photosArray.length - 1]}} resizeMode={'cover'} style={styles.photo}/>}
-      </View>
+      {(photosArray.length > 0) ?
+        <View style={styles.photoContainer}>
+          <Image source={{uri: photosArray[photosArray.length - 1]}} resizeMode={'cover'} style={styles.photo}/>
+        </View>
+      : null}
 
       <View style={styles.btns}>
         <AddPhotosCloudinary photosArray={photosArray} setPhotosArray={setPhotosArray} />
