@@ -14,7 +14,7 @@ import BackArrow from 'react-native-vector-icons/Feather';
 import { authentication } from '../../../../Firebase/firebase.js';
 import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { URL } from '../../../../config.js';
-import ImageUploader from '../ImageUploader.js';
+import bcrypt from 'bcryptjs';
 const formState = {
   username: '',
   first_name: '',
@@ -23,6 +23,8 @@ const formState = {
   location: '',
   user_photo: '',
 };
+
+const salt = bcrypt.genSaltSync(10);
 const Register = ({ navigation }) => {
   const [signUpForm, setSignUpForm] = useState(formState);
 
@@ -30,29 +32,41 @@ const Register = ({ navigation }) => {
     navigation.navigate('login');
   };
 
-  const signInWithGoogle = () => {
-    const provider = new GoogleAuthProvider();
-    signInWithPopup(authentication, provider)
-      .then((re) => {
-        console.log(re);
-      })
-      .catch((err) => {
-        console.log(err);
-      });
-  };
+  //Uncomment for google sign in option
+  // const signInWithGoogle = () => {
+  //   const provider = new GoogleAuthProvider();
+  //   signInWithPopup(authentication, provider)
+  //     .then((re) => {
+  //       console.log(re);
+  //     })
+  //     .catch((err) => {
+  //       console.log(err);
+  //     });
+  // };
 
   const handleUserRegister = () => {
+    const hashedPassword = bcrypt.hashSync(signUpForm.password, salt);
     let query = {
       username: signUpForm.username,
       first_name: signUpForm.first_name,
       last_name: signUpForm.last_name,
-      password: signUpForm.password,
+      password: hashedPassword,
       location: signUpForm.location,
       user_photo: '',
     };
+    // setSignUpForm(formState);
+    // console.log(JSON.stringify(query));
     axios
       .post(`http://${URL}:3000/user`, query)
-      .then(() => console.log('yert'))
+      .then((res) => {
+        console.log(res.data.user_id);
+        // axios
+        //   .get(`http://${URL}:3000/user?${res.data.user_id}`)
+        //   .then((res) => console.log(res))
+        //   .catch((error) => {
+        //     console.log(error);
+        //   });
+      })
       .catch((error) => console.log(error));
   };
 
@@ -120,19 +134,15 @@ const Register = ({ navigation }) => {
             secureTextEntry={true}
           />
           <TextInput
-            value={signUpForm.password}
             placeholder={'Confirm Password*'}
             placeholderTextColor={'#fff'}
             style={styles.TextInput}
             secureTextEntry={true}
           />
 
-          <ImageUploader
-            signUpForm={signUpForm}
-            setSignUpForm={setSignUpForm}></ImageUploader>
           {/* <Text style={styles.ButtonText}>Upload Profile Photo</Text> */}
 
-          <TouchableOpacity style={styles.Button}>
+          <TouchableOpacity onPress={handleUserRegister} style={styles.Button}>
             <Text style={styles.ButtonText}>Sign Up</Text>
           </TouchableOpacity>
         </View>
