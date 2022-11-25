@@ -3,7 +3,7 @@ import CalendarPicker from 'react-native-calendar-picker';
 import { StyleSheet, Text, View, Button, Image, ScrollView, FlatList, TouchableOpacity, Modal, Alert, Pressable } from 'react-native';
 import axios from 'axios';
 
-export default function AvailabilityModal ({campsite, modalVisible, setModalVisible}) {
+export default function AvailabilityModal ({campsite, getHostCampsites, modalVisible, setModalVisible}) {
 
   const [selectedStartDate, setSelectedStartDate] = useState();
   const [selectedEndDate, setSelectedEndDate] = useState();
@@ -53,11 +53,7 @@ export default function AvailabilityModal ({campsite, modalVisible, setModalVisi
         camp_id: campsite.camp_id,
         dates: daylist
       })
-        .then((res) => {
-          axios.get(`http://192.168.86.36:3000/campsites?camp_id=${campsite.camp_id}`)
-            .then((res) => {createCustomDatesStyle(res.data[0])})
-            .catch((err) => {console.log(err)})
-        })
+        .then(getHostCampsites)
         .catch((err) => {console.log(err)})
     } else {
       Alert.alert('Alert', 'must select start and end date' )
@@ -67,15 +63,11 @@ export default function AvailabilityModal ({campsite, modalVisible, setModalVisi
   const removeAvailableDates = () => {
     if (selectedStartDate && selectedEndDate) {
       let daylist = getDaysArray(new Date(selectedStartDate),new Date(selectedEndDate));
-      axios.delete(`http://192.168.86.36:3000/campsites/dates`, {
+      axios.delete(`http://192.168.86.36:3000/campsites/dates`, { data: {
         camp_id: campsite.camp_id,
         dates: daylist
-      })
-        .then((res) => {
-          axios.get(`http://192.168.86.36:3000/campsites?camp_id=${campsite.camp_id}`)
-            .then((res) => {createCustomDatesStyle(res.data[0])})
-            .catch((err) => {console.log(err)})
-        })
+      }})
+        .then(getHostCampsites)
         .catch((err) => {console.log(err)})
     } else {
       Alert.alert('Alert', 'must select start and end date' )
@@ -120,7 +112,7 @@ export default function AvailabilityModal ({campsite, modalVisible, setModalVisi
 
             <TouchableOpacity
               style={styles.button}
-              // onPress={removeAvailableDates}
+              onPress={removeAvailableDates}
             >
               <Text style={styles.textStyle} > Remove Dates </Text>
             </TouchableOpacity>

@@ -41,9 +41,7 @@ export default function Host({user_id}) {
             <Text>{hostInfo.location}</Text>
           </View>
           <View style={styles.profilePictureContainer}>
-              {hostInfo.user_photo ?
-                <Image source={{uri: hostInfo.user_photo}} resizeMode={'cover'} style={styles.profilePicture} />
-              : null}
+              <Image source={{uri: hostInfo.user_photo || 'https://i.postimg.cc/gjFHrzW3/image-4.png'}} resizeMode={'cover'} style={styles.profilePicture} />
           </View>
         </View>
       </View>

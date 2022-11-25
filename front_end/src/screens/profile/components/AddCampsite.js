@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, TextInput, TouchableOpacity, Platform, Image} from 'react-native';
 import axios from 'axios';
-import AddPhotoCloudinary from './AddPhotoCloudinary.js'
+import AddPhotosCloudinary from './AddPhotosCloudinary.js'
 
 export default function AddCampsite ({host_id, getHostCampsites}) {
 
@@ -54,7 +54,7 @@ export default function AddCampsite ({host_id, getHostCampsites}) {
 
 
       <View style={styles.btns}>
-        <AddPhotoCloudinary photosArray={photosArray} setPhotosArray={setPhotosArray} />
+        <AddPhotosCloudinary photosArray={photosArray} setPhotosArray={setPhotosArray} />
         <TouchableOpacity style={styles.btn} onPress={postCampsite}>
           <Text style={styles.btnText}> Add Campsite </Text>
         </TouchableOpacity>
