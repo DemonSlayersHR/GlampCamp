@@ -12,6 +12,8 @@ export default function Campsite ({ campsite, navigation }) {
     }
   }, [])
 
+  console.log(campsite)
+
   return (
     <View style={styles.container}>
       <View style={{borderRadius:20, marginBottom:10}}>

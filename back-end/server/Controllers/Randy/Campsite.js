@@ -7,14 +7,10 @@ const campsite = {
     const client = await pool.connect()
 
     // create parameters
-    let queryArgs = [req.query.count || 10]
+    // let queryArgs = [req.query.sort || 'camp_id', req.query.count || 10]
 
     // check which query to use
-    if (req.query.camp_id) {
-      queryArgs = [req.query.camp_id]
-    } else if (req.query.host_id) {
-      queryArgs = [req.query.host_id]
-    }
+    // if (req.query.camp_id) queryArgs = [req.query.camp_id]
 
     let query = `SELECT camp_id, camp_name, (SELECT username FROM users WHERE user_id = camps.host_id) as host, price,
     (SELECT AVG(star_rating) FROM reviews WHERE camp_id = camps.camp_id) as star_rating, location, description,
@@ -32,6 +28,7 @@ const campsite = {
       'review_id', review_id,
       'reviewer', (SELECT username FROM users WHERE user_id = reviews.client_id),
       'star_rating', star_rating,
+      'review_photo', review_photo,
       'review', review
     )) FROM reviews WHERE camp_id = camps.camp_id) as reviews,
     (SELECT json_agg(json_build_object(
@@ -41,13 +38,17 @@ const campsite = {
     )) FROM reservations WHERE camp_id = camps.camp_id) as reservations
     FROM camps `
 
-    if (req.query.camp_id) query += `WHERE camp_id = $1`
-    else if (req.query.host_id) query += `WHERE host_id = $1`
-    else query += `LIMIT $1`
+    if (req.query.camp_id) query += `WHERE camp_id = ${req.query.camp_id}`
+    else {
+      if (req.query.host_id) query += `WHERE host_id = ${req.query.host_id} `
+      if (req.query.sort) query += `ORDER BY ${req.query.sort} `
+      if (req.query.desc) query += `DESC `
+      query += `LIMIT ${req.query.count || 10}`
+    }
 
     // try query
     try {
-      const result = await client.query(query, queryArgs)
+      const result = await client.query(query)
 
       // reformat response and send
       res.status(200)

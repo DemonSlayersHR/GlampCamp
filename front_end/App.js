@@ -7,6 +7,7 @@ import Register from './src/screens/login_signup/Register.js';
 import Host from './src/screens/profile/Host.js'
 import Homepage from './src/screens/homepage/Homepage.js';
 import Search from './src/screens/search/Search'
+import Messaging from './src/screens/messaging/Messaging.js';
 
 const Stack = createNativeStackNavigator();
 
@@ -28,7 +29,7 @@ export default function App() {
           component={Register}
           options={{ headerShown: false }}></Stack.Screen>
       </Stack.Navigator>
-    </NavigationContainer>
+    </NavigationContainer >
   );
 }
 
@@ -39,3 +40,4 @@ const styles = StyleSheet.create({
     justifyContent: 'center',
   },
 });
+
