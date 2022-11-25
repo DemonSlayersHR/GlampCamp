@@ -22,7 +22,7 @@ export default function Homepage ({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Search/>
+      <Search navigation={navigation}/>
       <Filter setFilter={setFilter} filter={filter}/>
       <Feed campsites={campsites}/>
       <Nav navigation={navigation}/>

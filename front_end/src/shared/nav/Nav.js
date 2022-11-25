@@ -31,7 +31,7 @@ function IconFormat({iconName, title, selected, setSelected, navigation}){
   return (
     <Pressable style={styles.icon} onPress={navigate}>
       <Text>
-        <Icon name={iconName} size={20} color={title===selected? "#da5864":"#757675"}/>
+        <Icon name={iconName} size={25} color={title===selected? "#e80050":"#757675"}/>
       </Text>
       <View>
         <Text style={title===selected? styles.iconTitleClicked : styles.iconTitle}>{title}</Text>
