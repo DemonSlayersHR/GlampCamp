@@ -6,7 +6,7 @@ export default function AddPhotoCloudinary ({photosArray, setPhotosArray}) {
   useEffect(() => {
     async () => {
       if (Platform.OS !== 'web') {
-        const {status} = await ImagePicker.requestMediaLibraryPermissionAsync();
+        const {status} = await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (status !== 'granted') {
           alert('Permission denied!')
         }

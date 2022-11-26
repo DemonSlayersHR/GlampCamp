@@ -12,7 +12,7 @@ export default function HostCampsite ({campsite, getHostCampsites}) {
 
   function deleteCampsite () {
     setShowOptions(false)
-    axios.delete(`http://192.168.86.36:3000/campsites?camp_id=${campsite.camp_id}`)
+    axios.delete(`http://192.168.1.3:3000/campsites?camp_id=${campsite.camp_id}`)
       .then(getHostCampsites)
       .catch((err)=>{console.log(err)})
   }

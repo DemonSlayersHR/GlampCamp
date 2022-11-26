@@ -13,12 +13,18 @@ const Reviews = () => {
   const [reviewPressed, setReviewPressed] = useState(false);
   const [hadVisited, setHadVisited] = useState(false);
   const [rating, setRating] = useState(5);
+  const [date, setDate] = useState('');
+
 
   useEffect(() => {
+    // my url...you're probably gonna have to change it
     axios.get('http://192.168.1.3:3000/campsites')
       .then((results) => {
         console.log('results from axios get request to get campsites', results.data);
         setCampsites(results.data);
+      })
+      .then(() => {
+        getDates(campsites)
 
       })
       .catch((error) => {
@@ -26,7 +32,24 @@ const Reviews = () => {
       })
   }, []);
 
-  // https://bobbyhadz.com/blog/javascript-check-if-date-is-before-today
+  useEffect(() => {
+    let campsite = campsites[5];
+    const image = {
+      uri: campsite?.photos[0].photo_url
+    }
+    let dates = campsite?.dates;
+    if (dates) {
+      for (let i = 0; i < dates.length; i++) {
+        if (isBeforeToday(dates[i].date)) {
+          setHadVisited(true);
+          setDate(dates[i].date);
+          break;
+        }
+      }
+    }
+  })
+
+  // Check to see if user has visited this campsite before
   const isBeforeToday = (date) => {
     const newDate = new Date(date);
     const today = new Date();
@@ -34,30 +57,22 @@ const Reviews = () => {
     return newDate <= today;
   }
 
-  let campsite = campsites[5];
-  if (campsite) {
-    const image = {
-      uri: campsite?.photos[0].photo_url
-    }
-    console.log('campsite', campsite);
-    let dates = campsite.dates;
-    for (let i = 0; i < dates.length; i++) {
-      if (isBeforeToday(dates[i].date)) {
-        setHadVisited(true);
-        break;
-      }
-    }
-  }
-
   const leaveAReview = () => {
     setReviewPressed(!reviewPressed)
   }
 
   const submitReview = () => {
-    console.log('star rating', rating);
-    console.log('review', review);
-    // axios.post reviews
     setReviewPressed(!reviewPressed);
+    // my url...you're probably gonna have to change it
+    axios.post('http://192.168.1.3:3000/campsites/reviews', {
+      camp_id: 1,
+      client_id: 2,
+      star_rating: rating,
+      review: review
+    })
+      .then((result) => {
+        console.log('result from successful axios post request to add a review', result)
+      })
   }
 
   const styles = StyleSheet.create({
@@ -101,16 +116,14 @@ const Reviews = () => {
 
   return (
     <>
-      {/* {!reviewPressed && hadVisited && <View style={styles.buttonRow}> */}
-
-      {!reviewPressed && <View style={styles.buttonRow}>
+      {!reviewPressed && hadVisited &&
+      <View style={styles.buttonRow}>
         <TouchableOpacity style={styles.button}>
           <Text style={styles.buttonText} onPress={leaveAReview}> Leave a Review </Text>
         </TouchableOpacity>
-      </View>}
-      {/* {reviewPressed && hadVisited && */}
-
-      {reviewPressed &&
+      </View>
+      }
+      {reviewPressed && hadVisited &&
         <View style={{alignItems:'center'}}>
           <Text style={{fontSize:25}}>
             Leave a Rating
@@ -141,7 +154,7 @@ const Reviews = () => {
             </Text>
             {hadVisited &&
             <Text>
-              Dates Visited: {campsite.dates[0].date}
+              Date Last Visited: {date}
             </Text>}
           </View>
           <Image source={require('../../../assets/glampsite.jpeg')} style={{marginBottom:20, width:390, height:275}} />
