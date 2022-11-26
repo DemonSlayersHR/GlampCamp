@@ -7,7 +7,7 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import CalendarPicker from 'react-native-calendar-picker';
-import {URL} from '../../../config.js';
+import {URL} from '../../../../config.js';
 
 const Calendar = ({campsite, loggedIn}) => {
 

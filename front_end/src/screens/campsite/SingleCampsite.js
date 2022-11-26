@@ -1,11 +1,12 @@
 import React, {useEffect, useState} from 'react';
 import { Button, Image, Text, View, ScrollView, StyleSheet } from 'react-native';
 import axios from 'axios';
-import Calendar from './Calendar.js';
+import Calendar from './components/Calendar.js';
+import Overview from './components/Overview';
 
-const SingleCampsite = ({route, navigation}) => {
+export default function SingleCampsite ({route, navigation}){
 
-  let campsite = route.params.campsite
+  const { campsite } = route.params
 
   console.log('campsite', campsite);
   // we want camp_id to do a get request to get the reviews for the campsite
@@ -20,8 +21,11 @@ const SingleCampsite = ({route, navigation}) => {
   }
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={{justifyContent: "center", alignItems: "center"}} >
+    <View style={styles.container}>
+      <ScrollView>
+        <Overview campsite={campsite}/>
+      </ScrollView>
+      {/* <View style={{justifyContent: "center", alignItems: "center"}} >
         <Image source={image} style={{width: 400, height: 400}} />
         <Text style={{fontSize: 20, padding:5, fontWeight: "bold", textAlign: "left", marginLeft:50,  marginRight:37}}>
           {campsite.camp_name} - {campsite.description}
@@ -38,17 +42,15 @@ const SingleCampsite = ({route, navigation}) => {
           onPress={showCalendar}
         />
         {availabilityButtonClicked && <Calendar campsite={campsite}/>}
-      </View>
-    </ScrollView>
+      </View> */}
+    </View>
   );
 }
-
-
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    backgroundColor: 'white',
   },
-});
 
-export default SingleCampsite;
+});
