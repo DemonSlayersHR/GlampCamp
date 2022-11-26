@@ -2,11 +2,12 @@ import { useEffect, useState } from 'react';
 import { Text, View, StyleSheet } from 'react-native';
 import axios from 'axios';
 import Search from './components/Search';
-import Filter from './components/Filter'
+import Filter from './components/Filter';
 import Nav from '../../shared/nav/Nav.js';
 import Feed from './components/Feed';
+import { URL } from '../../../config.js';
 
-export default function Homepage ({ navigation }) {
+export default function Homepage({ navigation }) {
   const [campsites, setCampsites] = useState([]);
   const [filter, setFilter] = useState('Discover');
 
@@ -28,12 +29,11 @@ export default function Homepage ({ navigation }) {
       <Nav navigation={navigation}/>
     </View>
   );
-};
+}
 
 const styles = StyleSheet.create({
   container: {
-    flex:1,
-    backgroundColor: 'white'
+    flex: 1,
+    backgroundColor: 'white',
   },
 });
-
