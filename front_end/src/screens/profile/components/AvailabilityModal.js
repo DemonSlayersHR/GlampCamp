@@ -14,6 +14,7 @@ import {
   Pressable,
 } from 'react-native';
 import axios from 'axios';
+import {URL} from '../../../../config.js';
 
 export default function AvailabilityModal({
   campsite,
@@ -77,7 +78,7 @@ export default function AvailabilityModal({
       );
       console.log(daylist);
       axios
-        .post(`http://192.168.86.36:3000/campsites/dates`, {
+        .post(`http://${URL}:3000/campsites/dates`, {
           camp_id: campsite.camp_id,
           dates: daylist,
         })
@@ -97,7 +98,7 @@ export default function AvailabilityModal({
         new Date(selectedEndDate)
       );
       axios
-        .delete(`http://192.168.1.3:3000/campsites/dates`, {
+        .delete(`http://${URL}:3000/campsites/dates`, {
           data: {
             camp_id: campsite.camp_id,
             dates: daylist,

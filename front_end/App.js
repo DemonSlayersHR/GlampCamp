@@ -11,6 +11,8 @@ import Reviews from './src/screens/reviews/Reviews.js';
 import StarRating from './src/screens/reviews/StarRating.js';
 import Search from './src/screens/search/Search';
 import Messaging from './src/screens/messaging/Messaging.js';
+import SingleCampsite from './src/screens/campsite/SingleCampsite.js';
+
 import { useState } from 'react';
 const Stack = createNativeStackNavigator();
 
