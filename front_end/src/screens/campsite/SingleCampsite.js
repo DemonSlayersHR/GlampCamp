@@ -3,7 +3,55 @@ import { Button, Image, Text, View, ScrollView } from 'react-native';
 import axios from 'axios';
 import Calendar from './Calendar.js';
 
-const SingleCampsite = ({campsite}) => {
+const SingleCampsite = () => {
+
+  let campsite = {
+    "camp_id": 1,
+    "camp_name": "Camp Expensive",
+    "host": "test1",
+    "price": "200",
+    "star_rating": null,
+    "location": "Mountain View",
+    "description": "Cozy AF",
+    "dates": [
+        {
+            "date_id": "date_id",
+            "client": null,
+            "date": "2022-12-23",
+            "reserved": false
+        },
+        {
+            "date_id": "date_id",
+            "client": null,
+            "date": "2022-12-24",
+            "reserved": false
+        },
+        {
+            "date_id": "date_id",
+            "client": null,
+            "date": "2022-12-25",
+            "reserved": false
+        }
+    ],
+    "photos": [
+        {
+            "photo_id": 1,
+            "photo_url": "https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,g_auto,h_630,q_60,w_1200/v1652453103/campground-photos/shgam6kwlyuu7cvblkth.jpg"
+        },
+        {
+            "photo_id": 8,
+            "photo_url": "https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,g_auto,h_630,q_60,w_1200/v1652453103/campground-photos/shgam6kwlyuu7cvblkth.jpg"
+        }
+    ],
+    "reviews": null,
+    "reservations": [
+        {
+            "reserve_id": 2,
+            "client_id": 3,
+            "confirmed": false
+        }
+    ]
+}
 
   const [availabilityButtonClicked, setAvailabilityButtonClicked] = useState(false);
 

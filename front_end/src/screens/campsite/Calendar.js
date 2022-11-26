@@ -16,7 +16,6 @@ const Calendar = ({campsite, loggedIn}) => {
   const [allowRangeSelection, setAllowRangeSelection] = useState(false);
   const [dates, setDates] = useState([]);
 
-  // from stack overflow: https://stackoverflow.com/questions/4413590/javascript-get-array-of-dates-between-2-dates
   const getDaysArray = (start, end) => {
     for(var arr=[(new Date(start - 24*60*60*1000)).toISOString().slice(0, 10)], dt = new Date(start); dt < new Date(end); dt.setDate(dt.getDate()+1)){
         arr.push(new Date(dt).toISOString().slice(0, 10));
