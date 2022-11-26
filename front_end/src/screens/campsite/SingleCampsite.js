@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import { Button, Image, Text, View, ScrollView } from 'react-native';
+import { Button, Image, Text, View, ScrollView, StyleSheet } from 'react-native';
 import axios from 'axios';
 import Calendar from './Calendar.js';
 
@@ -7,6 +7,8 @@ const SingleCampsite = ({route, navigation}) => {
 
   let campsite = route.params.campsite
 
+  console.log('campsite', campsite);
+  // we want camp_id to do a get request to get the reviews for the campsite
   const [availabilityButtonClicked, setAvailabilityButtonClicked] = useState(false);
 
   const image = {
@@ -18,7 +20,7 @@ const SingleCampsite = ({route, navigation}) => {
   }
 
   return (
-    <ScrollView style={{padding: 69, flex: 1}}>
+    <ScrollView style={styles.container}>
       <View style={{justifyContent: "center", alignItems: "center"}} >
         <Image source={image} style={{width: 400, height: 400}} />
         <Text style={{fontSize: 20, padding:5, fontWeight: "bold", textAlign: "left", marginLeft:50,  marginRight:37}}>
@@ -40,5 +42,13 @@ const SingleCampsite = ({route, navigation}) => {
     </ScrollView>
   );
 }
+
+
+
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+  },
+});
 
 export default SingleCampsite;
