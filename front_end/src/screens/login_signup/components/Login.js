@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Text,
   StyleSheet,
@@ -8,9 +8,14 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-import UserContext from '../../../context/UserContext.js';
+import { UserContext } from '../../../context/UserContext.js';
 import Nav from './../../../shared/nav/Nav.js';
+
 function Login({ navigation }) {
+  const { user, setUser } = useContext(UserContext);
+
+  // setUser(user=> {...user, })
+
   const navigate = () => {
     navigation.navigate('register');
   };

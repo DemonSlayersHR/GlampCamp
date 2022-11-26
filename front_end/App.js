@@ -4,7 +4,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from './src/screens/login_signup/components/Login.js';
 import Register from './src/screens/login_signup/components/Register.js';
 // import Calendar from './src/screens/campsite/Calendar.js';
-import UserContext from './src/context/UserContext.js';
+import { UserContext } from './src/context/UserContext.js';
 import Host from './src/screens/profile/Host.js';
 import Homepage from './src/screens/homepage/Homepage.js';
 import Search from './src/screens/search/Search';
