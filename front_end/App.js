@@ -6,6 +6,8 @@ import Login from './src/screens/login_signup/Login.js';
 import Register from './src/screens/login_signup/Register.js';
 import Host from './src/screens/profile/Host.js'
 import Homepage from './src/screens/homepage/Homepage.js';
+import Reviews from './src/screens/reviews/Reviews.js';
+import StarRating from './src/screens/reviews/StarRating.js';
 import Search from './src/screens/search/Search'
 import Messaging from './src/screens/messaging/Messaging.js';
 
@@ -15,6 +17,10 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
+        <Stack.Screen
+          name='Campsites Visited/Plans to Visit'
+          component={Reviews}>
+        </Stack.Screen>
         <Stack.Screen name='host' component={Host}></Stack.Screen>
         <Stack.Screen name='search' component={Search}></Stack.Screen>
         <Stack.Screen name='homepage' component={Homepage}></Stack.Screen>

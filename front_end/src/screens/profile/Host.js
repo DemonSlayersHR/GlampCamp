@@ -24,13 +24,13 @@ export default function Host({user_id}) {
   }, [user_id])
 
   function getHostCampsites () {
-    axios.get(`http://192.168.86.36:3000/campsites/?host_id=${user_id}`)
+    axios.get(`http://192.168.1.3:3000/campsites/?host_id=${user_id}`)
     .then((response) => {setHostCampsites(response.data)})
     .catch((err) => {console.log(err)})
   }
 
   function getHostInfo () {
-    axios.get(`http://192.168.86.36:3000/user/?user_id=${user_id}`)
+    axios.get(`http://192.168.1.3:3000/user/?user_id=${user_id}`)
     .then((response) => {setHostInfo(response.data)})
     .catch((err) => {console.log(err)})
   }

@@ -49,8 +49,12 @@ export default function AvailabilityModal ({campsite, getHostCampsites, modalVis
   const addAvailableDates = () => {
     if (selectedStartDate && selectedEndDate) {
       let daylist = getDaysArray(new Date(selectedStartDate),new Date(selectedEndDate));
+<<<<<<< HEAD
+      axios.post(`http://192.168.1.3:3000/campsites/dates`, {
+=======
       console.log(daylist)
       axios.post(`http://192.168.86.36:3000/campsites/dates`, {
+>>>>>>> main
         camp_id: campsite.camp_id,
         dates: daylist
       })
@@ -64,7 +68,7 @@ export default function AvailabilityModal ({campsite, getHostCampsites, modalVis
   const removeAvailableDates = () => {
     if (selectedStartDate && selectedEndDate) {
       let daylist = getDaysArray(new Date(selectedStartDate),new Date(selectedEndDate));
-      axios.delete(`http://192.168.86.36:3000/campsites/dates`, { data: {
+      axios.delete(`http://192.168.1.3:3000/campsites/dates`, { data: {
         camp_id: campsite.camp_id,
         dates: daylist
       }})
@@ -95,7 +99,7 @@ export default function AvailabilityModal ({campsite, getHostCampsites, modalVis
 
           <CalendarPicker
             onDateChange={(date, startOrEnd) => onDateChange(date, startOrEnd)}
-            disabledDates={disableSelectingPast}
+            // disabledDates={disableSelectingPast}
             allowRangeSelection={true}
             textStyle={{color: 'black'}}
             // todayTextStyle={{color: 'red'}}

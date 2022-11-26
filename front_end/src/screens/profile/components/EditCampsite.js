@@ -13,7 +13,7 @@ export default function EditCampsite ({campsite, setShowOptions, setEditViewVisi
   const [photosArray, setPhotosArray] = useState([]);
 
   function editCampsite () {
-    axios.put(`http://192.168.86.36:3000/campsites`, {
+    axios.put(`http://192.168.1.3:3000/campsites`, {
       camp_id: campsite.camp_id,
       camp_name: campsiteName,
       price: price,
@@ -21,12 +21,19 @@ export default function EditCampsite ({campsite, setShowOptions, setEditViewVisi
       description: description
     })
       .then(() => {
+<<<<<<< HEAD
+        axios.put(`http://192.168.1.3:3000/campsites/photos`, {
+          photo_id: campsite.photos[0].photo_id,
+          photo_url: photosArray[photosArray.length - 1]
+        })
+=======
         if (photosArray) {
           axios.put(`http://192.168.86.36:3000/campsites/photos`, {
             photo_id: campsite.photos[0].photo_id,
             photo_url: photosArray[photosArray.length - 1]
           })
         }
+>>>>>>> main
       })
       .then(() => {
         setCampsiteName(null)
