@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import CalendarPicker from 'react-native-calendar-picker';
+import {URL} from '../../../config.js';
 
 const Calendar = ({campsite, loggedIn}) => {
 
@@ -38,7 +39,7 @@ const Calendar = ({campsite, loggedIn}) => {
     if (dates.length === 2) {
       var daylist = getDaysArray(new Date(dates[0]), new Date(dates[1]));
       setDates(daylist);
-      axios.post('http://192.168.1.3:3000/reservation', {camp_id: campsite.camp_id, client_id: 3, dates: daylist})
+      axios.post(`http://${URL}:3000/reservation`, {camp_id: campsite.camp_id, client_id: 3, dates: daylist})
         .then((results) => {
           console.log('results from successful axios request to add a reservation', results);
         })

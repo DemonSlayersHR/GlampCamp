@@ -9,6 +9,7 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import AddPhotosCloudinary from './AddPhotosCloudinary.js';
+import {URL} from '../../../../config.js';
 
 export default function EditCampsite({
   campsite,
@@ -25,7 +26,7 @@ export default function EditCampsite({
 
   function editCampsite() {
     axios
-      .put(`http://192.168.1.3:3000/campsites`, {
+      .put(`http://${URL}:3000/campsites`, {
         camp_id: campsite.camp_id,
         camp_name: campsiteName,
         price: price,
@@ -34,7 +35,7 @@ export default function EditCampsite({
       })
       .then(() => {
         if (photosArray) {
-          axios.put(`http://192.168.86.36:3000/campsites/photos`, {
+          axios.put(`http://${URL}:3000/campsites/photos`, {
             photo_id: campsite.photos[0].photo_id,
             photo_url: photosArray[photosArray.length - 1],
           });

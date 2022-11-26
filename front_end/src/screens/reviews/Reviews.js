@@ -3,6 +3,7 @@ import { Button, Image, Text, TextInput, TouchableOpacity, StyleSheet, View, Scr
 import axios from 'axios';
 import ImageUploader from './ImageUploader.js';
 import StarRating from './StarRating.js';
+import {URL} from '../../../config.js';
 
 const Reviews = () => {
 
@@ -18,9 +19,9 @@ const Reviews = () => {
 
   useEffect(() => {
     // my url...you're probably gonna have to change it
-    axios.get('http://192.168.1.3:3000/campsites')
+    axios.get(`http://${URL}:3000/campsites`)
       .then((results) => {
-        console.log('results from axios get request to get campsites', results.data);
+        // console.log('results from axios get request to get campsites', results.data);
         setCampsites(results.data);
       })
       .then(() => {
@@ -64,7 +65,7 @@ const Reviews = () => {
   const submitReview = () => {
     setReviewPressed(!reviewPressed);
     // my url...you're probably gonna have to change it
-    axios.post('http://192.168.1.3:3000/campsites/reviews', {
+    axios.post(`http://${URL}:3000/campsites/reviews`, {
       camp_id: 1,
       client_id: 2,
       star_rating: rating,

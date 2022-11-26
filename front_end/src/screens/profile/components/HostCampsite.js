@@ -3,6 +3,7 @@ import { StyleSheet, Text, View, Button, Image, ScrollView, FlatList, TouchableO
 import axios from 'axios';
 import EditCampsite from './EditCampsite.js';
 import AvailabilityModal from './AvailabilityModal.js'
+import {URL} from '../../../../config.js';
 
 export default function HostCampsite ({campsite, getHostCampsites}) {
 
@@ -12,7 +13,7 @@ export default function HostCampsite ({campsite, getHostCampsites}) {
 
   function deleteCampsite () {
     setShowOptions(false)
-    axios.delete(`http://192.168.1.3:3000/campsites?camp_id=${campsite.camp_id}`)
+    axios.delete(`http://${URL}:3000/campsites?camp_id=${campsite.camp_id}`)
       .then(getHostCampsites)
       .catch((err)=>{console.log(err)})
   }

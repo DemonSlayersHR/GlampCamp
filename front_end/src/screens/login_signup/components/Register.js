@@ -61,8 +61,8 @@ const Register = ({ navigation }) => {
     axios
       .post(`http://${URL}:3000/user`, query)
       .then((res) => {
-        console.log(res.data);
-        console.log(`http://${URL}:3000/user?user_id=${res.data.user_id}`);
+        // console.log(res.data);
+        // console.log(`http://${URL}:3000/user?user_id=${res.data.user_id}`);
         // axios
         //   .get(`http://${URL}:3000/user?user_id=${res.data.user_id}`)
         //   .then((res) => console.log(res))

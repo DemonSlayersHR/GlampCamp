@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { StyleSheet, Text, View, Button, Image } from 'react-native';
 import axios from 'axios';
 import ImageUploader from './components/ImageUploader.js';
+import {URL} from '../../../config.js';
 
 export default function Profile({user_id}) {
 
@@ -12,7 +13,7 @@ export default function Profile({user_id}) {
 
   console.log(userData)
   useEffect(() => {
-    axios.get(`http://192.168.1.3:3000/user/?user_id=${user_id}`)
+    axios.get(`http://${URL}:3000/user/?user_id=${user_id}`)
       .then((response) => {setUserData(response.data)})
   }, [user_id])
 
