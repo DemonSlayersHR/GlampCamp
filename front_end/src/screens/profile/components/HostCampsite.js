@@ -44,7 +44,7 @@ export default function HostCampsite ({campsite, getHostCampsites}) {
       </View>
       : null}
       {editViewVisible ? <EditCampsite setEditViewVisible={setEditViewVisible} setShowOptions={setShowOptions} getHostCampsites={getHostCampsites} campsite={campsite} /> : null }
-      {modalVisible ? <AvailabilityModal campsite={campsite} modalVisible={modalVisible} setModalVisible={setModalVisible} getHostCampsites={getHostCampsites}/> : null}
+      {modalVisible ? <AvailabilityModal campsite={campsite} modalVisible={modalVisible} setModalVisible={setModalVisible} getHostCampsites={getHostCampsites} setShowOptions={setShowOptions}/> : null}
     </>
   )
 }

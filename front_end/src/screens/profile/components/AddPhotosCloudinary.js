@@ -1,12 +1,16 @@
 import React, {useState, useEffect} from 'react';import {Text, StyleSheet, TouchableOpacity, Platform, Image, Alert} from 'react-native';
 import * as ImagePicker from 'expo-image-picker'
+import axios from 'axios'
 
 export default function AddPhotoCloudinary ({photosArray, setPhotosArray}) {
 
+  const [progress, setProgress] = useState('Upload Photo')
+
   useEffect(() => {
     async () => {
+      console.log(Platform)
       if (Platform.OS !== 'web') {
-        const {status} = await ImagePicker.requestMediaLibraryPermissionAsync();
+        const {status} = await ImagePicker.requestMediaLibraryPermissionsAsync();
         if (status !== 'granted') {
           alert('Permission denied!')
         }
@@ -19,11 +23,19 @@ export default function AddPhotoCloudinary ({photosArray, setPhotosArray}) {
     data.append('file', photo)
     data.append('upload_preset', 'gmuceony')
     data.append('cloud_name', 'deb1jjsn0')
-    fetch('https://api.cloudinary.com/v1_1/deb1jjsn0/image/upload', {
-      method: 'post',
-      body: data
-    }).then(res => res.json())
-      .then(data => {setPhotosArray([...photosArray, data.secure_url])})
+
+    const config = {
+      onUploadProgress: (e) => {
+        const {loaded, total} = e
+        setProgress(`Uploading: ${Math.round(loaded/total*100)}%`)
+      }
+    }
+
+    axios.post('https://api.cloudinary.com/v1_1/deb1jjsn0/image/upload', data, config)
+      .then(data => {
+        setPhotosArray([...photosArray, data.data.secure_url]);
+        setProgress('Upload Photo');
+      })
       .catch(err => {Alert.alert('An Error Occured While Uploading'); console.log(err)})
 
   }
@@ -50,7 +62,7 @@ export default function AddPhotoCloudinary ({photosArray, setPhotosArray}) {
 
   return (
     <TouchableOpacity style={styles.btn} onPress={pickImage}>
-      <Text style={styles.btnText}> Upload Photo </Text>
+      <Text style={styles.btnText}>{progress}</Text>
     </TouchableOpacity>
   )
 }
