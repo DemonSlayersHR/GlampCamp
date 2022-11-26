@@ -21,10 +21,19 @@ export default function EditCampsite ({campsite, setShowOptions, setEditViewVisi
       description: description
     })
       .then(() => {
+<<<<<<< HEAD
         axios.put(`http://192.168.1.3:3000/campsites/photos`, {
           photo_id: campsite.photos[0].photo_id,
           photo_url: photosArray[photosArray.length - 1]
         })
+=======
+        if (photosArray) {
+          axios.put(`http://192.168.86.36:3000/campsites/photos`, {
+            photo_id: campsite.photos[0].photo_id,
+            photo_url: photosArray[photosArray.length - 1]
+          })
+        }
+>>>>>>> main
       })
       .then(() => {
         setCampsiteName(null)

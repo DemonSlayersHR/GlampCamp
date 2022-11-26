@@ -3,7 +3,7 @@ import CalendarPicker from 'react-native-calendar-picker';
 import { StyleSheet, Text, View, Button, Image, ScrollView, FlatList, TouchableOpacity, Modal, Alert, Pressable } from 'react-native';
 import axios from 'axios';
 
-export default function AvailabilityModal ({campsite, getHostCampsites, modalVisible, setModalVisible}) {
+export default function AvailabilityModal ({campsite, getHostCampsites, modalVisible, setModalVisible, setShowOptions}) {
 
   const [selectedStartDate, setSelectedStartDate] = useState();
   const [selectedEndDate, setSelectedEndDate] = useState();
@@ -49,7 +49,12 @@ export default function AvailabilityModal ({campsite, getHostCampsites, modalVis
   const addAvailableDates = () => {
     if (selectedStartDate && selectedEndDate) {
       let daylist = getDaysArray(new Date(selectedStartDate),new Date(selectedEndDate));
+<<<<<<< HEAD
       axios.post(`http://192.168.1.3:3000/campsites/dates`, {
+=======
+      console.log(daylist)
+      axios.post(`http://192.168.86.36:3000/campsites/dates`, {
+>>>>>>> main
         camp_id: campsite.camp_id,
         dates: daylist
       })
@@ -119,7 +124,7 @@ export default function AvailabilityModal ({campsite, getHostCampsites, modalVis
 
             <TouchableOpacity
               style={styles.button}
-              onPress={() => setModalVisible(!modalVisible)}
+              onPress={() => {setShowOptions(false); setModalVisible(!modalVisible)}}
             >
               <Text style={styles.textStyle} > Hide Calendar </Text>
             </TouchableOpacity>
