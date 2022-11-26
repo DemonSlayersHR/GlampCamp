@@ -12,7 +12,9 @@ export default function Campsite ({ campsite, navigation }) {
     }
   }, [])
 
-  console.log(campsite)
+  const navigateSingleCampsite = () => {
+    navigation.navigate('single campsite', {campsite: campsite})
+  }
 
   return (
     <View style={styles.container}>
@@ -27,7 +29,7 @@ export default function Campsite ({ campsite, navigation }) {
       </View>
 
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-        <Text style={{fontSize:16, fontWeight: 'semibold', marginBottom:2}}>
+        <Text style={{fontSize:16, fontWeight: 'semibold', marginBottom:2}} onPress={navigateSingleCampsite}>
           {campsite.camp_name}
         </Text>
         <Text style={{fontSize: 13}}>

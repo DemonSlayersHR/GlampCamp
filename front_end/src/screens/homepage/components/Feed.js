@@ -11,7 +11,7 @@ export default function Feed ({ campsites, navigation }) {
         {
           campsites.map((campsite, i) =>
             <View key={i} style={{height: 400, padding: 5}}>
-              <Campsite campsite={campsite}/>
+              <Campsite navigation={navigation} campsite={campsite}/>
             </View>
             )
         }

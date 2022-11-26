@@ -3,7 +3,9 @@ import { Button, Image, Text, View, ScrollView } from 'react-native';
 import axios from 'axios';
 import Calendar from './Calendar.js';
 
-const SingleCampsite = ({campsite}) => {
+const SingleCampsite = ({route, navigation}) => {
+
+  let campsite = route.params.campsite
 
   const [availabilityButtonClicked, setAvailabilityButtonClicked] = useState(false);
 

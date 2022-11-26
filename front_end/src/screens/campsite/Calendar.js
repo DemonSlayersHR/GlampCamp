@@ -7,6 +7,7 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import CalendarPicker from 'react-native-calendar-picker';
+import {URL} from '../../../config.js';
 
 const Calendar = ({campsite, loggedIn}) => {
 
@@ -16,7 +17,6 @@ const Calendar = ({campsite, loggedIn}) => {
   const [allowRangeSelection, setAllowRangeSelection] = useState(false);
   const [dates, setDates] = useState([]);
 
-  // from stack overflow: https://stackoverflow.com/questions/4413590/javascript-get-array-of-dates-between-2-dates
   const getDaysArray = (start, end) => {
     for(var arr=[(new Date(start - 24*60*60*1000)).toISOString().slice(0, 10)], dt = new Date(start); dt < new Date(end); dt.setDate(dt.getDate()+1)){
         arr.push(new Date(dt).toISOString().slice(0, 10));
@@ -39,7 +39,7 @@ const Calendar = ({campsite, loggedIn}) => {
     if (dates.length === 2) {
       var daylist = getDaysArray(new Date(dates[0]), new Date(dates[1]));
       setDates(daylist);
-      axios.post('http://192.168.1.3:3000/reservation', {camp_id: campsite.camp_id, client_id: 3, dates: daylist})
+      axios.post(`http://${URL}:3000/reservation`, {camp_id: campsite.camp_id, client_id: 3, dates: daylist})
         .then((results) => {
           console.log('results from successful axios request to add a reservation', results);
         })
