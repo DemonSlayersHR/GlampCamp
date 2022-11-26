@@ -26,9 +26,7 @@ export default function App() {
           <Stack.Screen name='search' component={Search}></Stack.Screen>
           <Stack.Screen name='homepage' component={Homepage}></Stack.Screen>
           <Stack.Screen name='login' component={Login}></Stack.Screen>
-          <Stack.Screen
-            name='Campsites Visited/Plans to Visit'
-            component={Reviews}></Stack.Screen>
+          <Stack.Screen name='Campsites Visited/Plans to Visit' component={Reviews}></Stack.Screen>
         </Stack.Navigator>
       </NavigationContainer>
     </UserContext.Provider>
