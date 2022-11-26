@@ -15,8 +15,8 @@ export default function App() {
   return (
     <NavigationContainer>
       <Stack.Navigator>
-        <Stack.Screen name='homepage' component={Homepage}></Stack.Screen>
-        <Stack.Screen name='search' component={Search}></Stack.Screen>
+        <Stack.Screen name='homepage' component={Homepage} options={{ headerShown: false }}></Stack.Screen>
+        <Stack.Screen name='search' component={Search} options={{ headerShown: false }}></Stack.Screen>
         <Stack.Screen
           name='host'
           component={Host}></Stack.Screen>
