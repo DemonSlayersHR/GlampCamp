@@ -6,6 +6,7 @@ import AddCampsite from './components/AddCampsite.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
 import UpcomingReservations from './components/UpcomingReservations.js';
 import Nav from '../../shared/nav/Nav.js'
+import {URL} from '../../../config.js';
 
 export default function Host({user_id}) {
   user_id = user_id || 1
@@ -24,13 +25,13 @@ export default function Host({user_id}) {
   }, [user_id])
 
   function getHostCampsites () {
-    axios.get(`http://192.168.1.19:3000/campsites/?host_id=${user_id}`)
+    axios.get(`http://${URL}:3000/campsites/?host_id=${user_id}`)
     .then((response) => {setHostCampsites(response.data)})
     .catch((err) => {console.log(err)})
   }
 
   function getHostInfo () {
-    axios.get(`http://192.168.1.19:3000/user/?user_id=${user_id}`)
+    axios.get(`http://${URL}:3000/user/?user_id=${user_id}`)
     .then((response) => {setHostInfo(response.data)})
     .catch((err) => {console.log(err)})
   }

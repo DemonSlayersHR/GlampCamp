@@ -2,6 +2,7 @@ import React, {useState, useEffect} from 'react';
 import {View, Text, StyleSheet, TextInput, TouchableOpacity, Platform, Image} from 'react-native';
 import axios from 'axios';
 import AddPhotosCloudinary from './AddPhotosCloudinary.js'
+import {URL} from '../../../../config.js';
 
 export default function AddCampsite ({host_id, getHostCampsites}) {
 
@@ -14,7 +15,7 @@ export default function AddCampsite ({host_id, getHostCampsites}) {
   const [photosArray, setPhotosArray] = useState([])
 
   function postCampsite () {
-    axios.post(`http://192.168.86.36:3000/campsites`, {
+    axios.post(`http://${URL}:3000/campsites`, {
       camp_name: campsiteName,
       host_id: host_id,
       price: price,
@@ -22,7 +23,7 @@ export default function AddCampsite ({host_id, getHostCampsites}) {
       description: description
     })
       .then((res) => {
-        axios.post(`http://192.168.86.36:3000/campsites/photos` , {
+        axios.post(`http://${URL}:3000/campsites/photos` , {
           camp_id: res.data.camp_id,
           photos: photosArray
         })

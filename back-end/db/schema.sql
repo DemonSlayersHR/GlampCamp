@@ -1,11 +1,11 @@
-DROP TABLE IF EXISTS users, camps, reservations, photos, camp_dates, reserves_dates,chats, reviews;
+DROP TABLE IF EXISTS camp_dates, reserves_dates, reservations, photos, camps, chats, reviews, users CASCADE;
 
 CREATE TABLE IF NOT EXISTS users(
   user_id SERIAL PRIMARY KEY NOT NULL,
   username VARCHAR(50),
   first_name VARCHAR(50),
   last_name  VARCHAR(50),
-  password VARCHAR(50),
+  password TEXT,
   location VARCHAR(50),
   user_photo VARCHAR(200)
 );
@@ -82,7 +82,7 @@ INSERT INTO camps(host_id, camp_name, price, star_rating, location, description)
 INSERT INTO reservations(camp_id, client_id, confirmed) VALUES
   (3, 2, FALSE),
   (1, 3, FALSE),
-  (6, 1, FALSE),
+  (6, 1, TRUE),
   (4, 2, FALSE)
   ON CONFLICT DO NOTHING;
 
@@ -95,9 +95,9 @@ INSERT INTO camp_dates(camp_id ,client_id ,dates ,reserved ) VALUES
   (3, null, '2023-02-14', FALSE),
   (4, null, '2023-02-14', FALSE),
   (5, null, '2022-12-25', FALSE),
-  (6, 1, '2020-10-10', FALSE),
-  (6, 1, '2020-10-11', FALSE),
-  (6, 1, '2023-01-01', TRUE)
+  (6, 1, '2023-01-01', TRUE),
+  (6, 1, '2020-10-10', TRUE),
+  (6, 1, '2020-10-11', TRUE)
   ON CONFLICT DO NOTHING;
 
 INSERT INTO reserves_dates(reserve_id,dates) VALUES
@@ -106,7 +106,8 @@ INSERT INTO reserves_dates(reserve_id,dates) VALUES
   (2, '2022-12-24'),
   (2, '2022-12-25'),
   (3, '2020-10-10'),
-  (3, '2020-10-11')
+  (3, '2020-10-11'),
+  (3, '2023-01-01')
   ON CONFLICT DO NOTHING;
 
 INSERT INTO photos(camp_id, photo_url) VALUES
