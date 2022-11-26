@@ -8,7 +8,7 @@ import {
   Alert,
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
-
+import axios from 'axios';
 export default function AddPhotosCloudinary({
   photosArray,
   setPhotosArray,
@@ -16,8 +16,11 @@ export default function AddPhotosCloudinary({
   signUpForm,
   formType,
 }) {
+  const [progress, setProgress] = useState('Upload Photo');
+
   useEffect(() => {
     async () => {
+      console.log(Platform);
       if (Platform.OS !== 'web') {
         const { status } =
           await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -33,16 +36,27 @@ export default function AddPhotosCloudinary({
     data.append('file', photo);
     data.append('upload_preset', 'gmuceony');
     data.append('cloud_name', 'deb1jjsn0');
-    fetch('https://api.cloudinary.com/v1_1/deb1jjsn0/image/upload', {
-      method: 'post',
-      body: data,
-    })
-      .then((res) => res.json())
+
+    const config = {
+      onUploadProgress: (e) => {
+        const { loaded, total } = e;
+        setProgress(`Uploading: ${Math.round((loaded / total) * 100)}%`);
+      },
+    };
+
+    axios
+      .post(
+        'https://api.cloudinary.com/v1_1/deb1jjsn0/image/upload',
+        data,
+        config
+      )
       .then((data) => {
         if (formType === 'register') {
           setSignUpForm({ ...signUpForm, user_photo: data.secure_url });
+          setProgress('Upload Photo');
         } else {
           setPhotosArray([...photosArray, data.secure_url]);
+          setProgress('Upload Photo');
         }
       })
       .catch((err) => {
@@ -74,7 +88,7 @@ export default function AddPhotosCloudinary({
 
   return (
     <TouchableOpacity style={styles.btn} onPress={pickImage}>
-      <Text style={styles.btnText}> Upload Photo </Text>
+      <Text style={styles.btnText}>{progress}</Text>
     </TouchableOpacity>
   );
 }
@@ -86,7 +100,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     borderColor: '#eee',
-    // backgroundColor: '#FFADAD'
+    backgroundColor: '#FFADAD',
   },
   btnText: {
     // fontSize: 20,

@@ -4,6 +4,8 @@ import axios from 'axios';
 import HostCampsite from './components/HostCampsite.js';
 import AddCampsite from './components/AddCampsite.js';
 import Icon from 'react-native-vector-icons/FontAwesome';
+import UpcomingReservations from './components/UpcomingReservations.js';
+import Nav from '../../shared/nav/Nav.js'
 
 export default function Host({user_id}) {
   user_id = user_id || 1
@@ -22,83 +24,68 @@ export default function Host({user_id}) {
   }, [user_id])
 
   function getHostCampsites () {
-    axios.get(`http://192.168.86.36:3000/campsites/?host_id=${user_id}`)
+    axios.get(`http://192.168.1.3:3000/campsites/?host_id=${user_id}`)
     .then((response) => {setHostCampsites(response.data)})
     .catch((err) => {console.log(err)})
   }
 
   function getHostInfo () {
-    axios.get(`http://192.168.86.36:3000/user/?user_id=${user_id}`)
+    axios.get(`http://192.168.1.3:3000/user/?user_id=${user_id}`)
     .then((response) => {setHostInfo(response.data)})
     .catch((err) => {console.log(err)})
   }
 
   return (
-    <ScrollView style={styles.container}>
-      <View style={styles.userWelcome}>
-        <View style={styles.userInfo}>
-          <View style={styles.greeting}>
-            <Text style={styles.greetingText}>Hi, {hostInfo.first_name}!</Text>
-            <Text>{hostInfo.location}</Text>
+    <View style={styles.container}>
+      <ScrollView style={styles.scrollContainer}>
+        <View style={styles.userWelcome}>
+          <View style={styles.userInfo}>
+            <View style={styles.greeting}>
+              <Text style={styles.greetingText}>Hi, {hostInfo.first_name}!</Text>
+              <Text>{hostInfo.location}</Text>
+            </View>
+            <View style={styles.profilePictureContainer}>
+                <Image source={{uri: hostInfo.user_photo || 'https://i.postimg.cc/gjFHrzW3/image-4.png'}} resizeMode={'cover'} style={styles.profilePicture} />
+            </View>
           </View>
-          <View style={styles.profilePictureContainer}>
-              <Image source={{uri: hostInfo.user_photo || 'https://i.postimg.cc/gjFHrzW3/image-4.png'}} resizeMode={'cover'} style={styles.profilePicture} />
+        </View>
+
+        <View>
+          <View style={styles.dropDown}>
+            <TouchableOpacity style={styles.dropDownText} onPress={() => {setDisplayUpcomingReservations(!displayUpcomingReservations)}}>
+              <Text style={styles.title}>Upcoming Reservations</Text>
+              {displayUpcomingReservations ? <Icon name='angle-up' size={30}/> : <Icon name='angle-down' size={30} />}
+            </TouchableOpacity>
           </View>
-        </View>
-      </View>
 
-      <View>
-        <View style={styles.dropDown}>
-          <TouchableOpacity style={styles.dropDownText} onPress={() => {setDisplayUpcomingReservations(!displayUpcomingReservations)}}>
-            <Text style={styles.title}>Upcoming Reservations</Text>
-            {displayUpcomingReservations ? <Icon name='angle-up' size={30}/> : <Icon name='angle-down' size={30} />}
-          </TouchableOpacity>
-        </View>
+          {displayUpcomingReservations ?
+            <UpcomingReservations hostCampsites={hostCampsites}/>
+          : null}
 
-        {displayUpcomingReservations ?
-          <View>
-            {hostCampsites.map((campsite, index)=>(
-              <View key={index}>
-                {console.log(campsite)}
-                <Text>{campsite.camp_name}</Text>
-                {campsite.dates.map((date) => {
-                  if(date.reserved) {
-                    return (
-                      <View>
-                        <Text>{date.date}</Text>
-                        <Text>{date.client}</Text>
-                      </View>
-                    )
-                  }
-                })}
-                {/* <HostCampsite campsite={campsite} key={index} getHostCampsites={getHostCampsites}/> */}
-              </View>
-            ))}
+          <View style={styles.dropDown}>
+            <TouchableOpacity style={styles.dropDownText} onPress={() => {setDisplayAddCampsite(!displayAddCampsite)}}>
+              <Text style={styles.title}>Add Campsites</Text>
+              {displayAddCampsite ? <Icon name='angle-up' size={30}/> : <Icon name='angle-down' size={30} />}
+            </TouchableOpacity>
           </View>
-        : null}
 
-        <View style={styles.dropDown}>
-          <TouchableOpacity style={styles.dropDownText} onPress={() => {setDisplayAddCampsite(!displayAddCampsite)}}>
-            <Text style={styles.title}>Add Campsites</Text>
-            {displayAddCampsite ? <Icon name='angle-up' size={30}/> : <Icon name='angle-down' size={30} />}
-          </TouchableOpacity>
+          {displayAddCampsite ? <AddCampsite getHostCampsites={getHostCampsites} setHostCampsites={setHostCampsites}/> : null}
+
+          <View style={styles.dropDown}>
+            <TouchableOpacity style={styles.dropDownText} onPress={() => {setDisplayHostCampsites(!displayHostCampsites)}}>
+              <Text style={styles.title}>Your Campsites</Text>
+              {displayHostCampsites ? <Icon name='angle-up' size={30}/> : <Icon name='angle-down' size={30} />}
+            </TouchableOpacity>
+          </View>
+
+          {displayHostCampsites ? hostCampsites.map((campsite, index)=>(
+            <HostCampsite campsite={campsite} key={index} getHostCampsites={getHostCampsites}/>
+          )) : null}
+
         </View>
-
-        {displayAddCampsite ? <AddCampsite getHostCampsites={getHostCampsites} setHostCampsites={setHostCampsites}/> : null}
-
-        <View style={styles.dropDown}>
-          <TouchableOpacity style={styles.dropDownText} onPress={() => {setDisplayHostCampsites(!displayHostCampsites)}}>
-            <Text style={styles.title}>Your Campsites</Text>
-            {displayHostCampsites ? <Icon name='angle-up' size={30}/> : <Icon name='angle-down' size={30} />}
-          </TouchableOpacity>
-        </View>
-
-        {displayHostCampsites ? hostCampsites.map((campsite, index)=>(
-          <HostCampsite campsite={campsite} key={index} getHostCampsites={getHostCampsites}/>
-        )) : null}
-
-      </View>
-    </ScrollView>
+      </ScrollView>
+      <Nav />
+    </View>
   );
 }
 
@@ -142,6 +129,11 @@ const styles = StyleSheet.create({
     fontSize: 20,
   },
   container: {
+    flex: 1,
+    backgroundColor: '#fff',
+  },
+  scrollContainer: {
+    marginBottom: 80,
     flex: 1,
     backgroundColor: '#fff',
   },
