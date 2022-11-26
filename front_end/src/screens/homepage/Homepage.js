@@ -25,7 +25,7 @@ export default function Homepage({ navigation }) {
     <View style={styles.container}>
       <Search navigation={navigation}/>
       <Filter setFilter={setFilter} filter={filter}/>
-      <Feed campsites={campsites}/>
+      <Feed navigation={navigation} campsites={campsites}/>
       <Nav navigation={navigation}/>
     </View>
   );
