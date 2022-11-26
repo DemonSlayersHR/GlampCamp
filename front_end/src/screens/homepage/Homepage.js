@@ -12,13 +12,11 @@ export default function Homepage ({ navigation }) {
 
   useEffect(() => {
     axios.get('http://192.168.1.19:3000/campsites')
-      .then((results) => {
-        setCampsites(results.data);
-      })
-      .catch((error) => {
-        console.log('error', error);
-      });
+      .then((results) => setCampsites(results.data))
+      .catch((error) => console.log('error', error));
   }, [filter]);
+
+  console.log(campsites[0])
 
   return (
     <View style={styles.container}>

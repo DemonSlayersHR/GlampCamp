@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react'
 import { StyleSheet, Text, View, Button, Image, ScrollView, FlatList, TouchableOpacity, Modal, Alert, Pressable } from 'react-native';
 import axios from 'axios';
 import EditCampsite from './EditCampsite.js';
+import AvailabilityModal from './AvailabilityModal.js'
 
 export default function HostCampsite ({campsite, getHostCampsites}) {
 
@@ -10,7 +11,8 @@ export default function HostCampsite ({campsite, getHostCampsites}) {
   const [editViewVisible, setEditViewVisible] = useState(false)
 
   function deleteCampsite () {
-    axios.delete(`http://192.168.86.36:3000/campsites?camp_id=${campsite.camp_id}`)
+    setShowOptions(false)
+    axios.delete(`http://192.168.1.19:3000/campsites?camp_id=${campsite.camp_id}`)
       .then(getHostCampsites)
       .catch((err)=>{console.log(err)})
   }
@@ -27,8 +29,8 @@ export default function HostCampsite ({campsite, getHostCampsites}) {
           <View style={styles.campDetails}>
             <Text style={styles.listItemTextHead}>{campsite.camp_name}</Text>
             <Text>{campsite.description}</Text>
-            <Text>Location: {campsite.location}</Text>
-            <Text>Price: ${campsite.price}</Text>
+            <Text>{campsite.location}</Text>
+            <Text>${campsite.price} a night</Text>
           </View>
         </View>
       </TouchableOpacity>
@@ -41,28 +43,8 @@ export default function HostCampsite ({campsite, getHostCampsites}) {
         </View>
       </View>
       : null}
-      {editViewVisible ? <EditCampsite setEditViewVisible={setEditViewVisible} setShowOptions={setShowOptions} getHostCampsites={getHostCampsites} camp_id={campsite.camp_id} /> : null }
-      <Modal
-        animationType="slide"
-        transparent={true}
-        visible={modalVisible}
-        onRequestClose={() => {
-          Alert.alert("Modal has been closed.");
-          setModalVisible(!modalVisible);
-        }}
-      >
-        <View style={styles.centeredView}>
-          <View style={styles.modalView}>
-            <Text style={styles.modalText}>Hello World!</Text>
-            <Pressable
-              style={[styles.button, styles.buttonClose]}
-              onPress={() => setModalVisible(!modalVisible)}
-            >
-              <Text style={styles.textStyle} >Hide Modal</Text>
-            </Pressable>
-          </View>
-        </View>
-      </Modal>
+      {editViewVisible ? <EditCampsite setEditViewVisible={setEditViewVisible} setShowOptions={setShowOptions} getHostCampsites={getHostCampsites} campsite={campsite} /> : null }
+      {modalVisible ? <AvailabilityModal campsite={campsite} modalVisible={modalVisible} setModalVisible={setModalVisible} getHostCampsites={getHostCampsites}/> : null}
     </>
   )
 }
@@ -95,45 +77,4 @@ const styles = StyleSheet.create({
     fontSize: 20,
     fontWeight: 'bold'
   },
-  centeredView: {
-    flex: 1,
-    justifyContent: "center",
-    alignItems: "center",
-    marginTop: 22
-  },
-  modalView: {
-    margin: 20,
-    backgroundColor: "white",
-    borderRadius: 20,
-    padding: 35,
-    alignItems: "center",
-    shadowColor: "#000",
-    shadowOffset: {
-      width: 0,
-      height: 2
-    },
-    shadowOpacity: 0.25,
-    shadowRadius: 4,
-    elevation: 5
-  },
-  button: {
-    borderRadius: 20,
-    padding: 10,
-    elevation: 2
-  },
-  buttonOpen: {
-    backgroundColor: "#F194FF",
-  },
-  buttonClose: {
-    backgroundColor: "#2196F3",
-  },
-  textStyle: {
-    color: "white",
-    fontWeight: "bold",
-    textAlign: "center"
-  },
-  modalText: {
-    marginBottom: 15,
-    textAlign: "center"
-  }
 });
