@@ -27,6 +27,7 @@ export default function App() {
           <Stack.Screen name='host' component={Host}></Stack.Screen>
           <Stack.Screen name='search' component={Search}></Stack.Screen>
           <Stack.Screen name='homepage' component={Homepage}></Stack.Screen>
+          <Stack.Screen name='single campsite' component={SingleCampsite}></Stack.Screen>
           <Stack.Screen name='login' component={Login}></Stack.Screen>
           <Stack.Screen
             name='Campsites Visited/Plans to Visit'

@@ -16,17 +16,12 @@ const Reviews = () => {
   const [rating, setRating] = useState(5);
   const [date, setDate] = useState('');
 
-
   useEffect(() => {
     // my url...you're probably gonna have to change it
     axios.get(`http://${URL}:3000/campsites`)
       .then((results) => {
         // console.log('results from axios get request to get campsites', results.data);
         setCampsites(results.data);
-      })
-      .then(() => {
-        getDates(campsites)
-
       })
       .catch((error) => {
         console.log('error - cannot get campsites', error);
