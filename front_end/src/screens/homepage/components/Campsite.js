@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button, Image, Text, View, ScrollView, StyleSheet } from 'react-native';
+import { Button, Image, Text, View, ScrollView, StyleSheet, Pressable } from 'react-native';
 import { ImageSlider } from "react-native-image-slider-banner";
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
@@ -12,14 +12,18 @@ export default function Campsite ({ campsite, navigation }) {
     }
   }, [])
 
+  console.log(campsite)
+
   return (
-    <View style={styles.container}>
+    <Pressable style={styles.container} onPress={() => navigation.navigate('campsite', {'campsite': campsite})}>
       <View style={{borderRadius:20, marginBottom:10}}>
         <ImageSlider
             data={images}
             autoPlay={false}
             closeIconColor="#fff"
             caroselImageStyle={{ resizeMode: 'cover', width: 348}}
+            preview={false}
+            onClick={() => navigation.navigate('campsite', {'campsite': campsite})}
         />
       </View>
 
@@ -34,7 +38,7 @@ export default function Campsite ({ campsite, navigation }) {
 
       <Text style={{marginBottom:2, color:'gray'}}>{campsite.location}</Text>
       <Text><Text style={{fontWeight: 'bold', marginBottom:2}}>${campsite.price}</Text> a night</Text>
-    </View>
+    </Pressable>
   );
 };
 

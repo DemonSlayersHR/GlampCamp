@@ -1,57 +1,12 @@
 import React, {useEffect, useState} from 'react';
-import { Button, Image, Text, View, ScrollView } from 'react-native';
+import { Button, Image, Text, View, ScrollView, StyleSheet } from 'react-native';
 import axios from 'axios';
-import Calendar from './Calendar.js';
+import Calendar from './components/Calendar.js';
+import Overview from './components/Overview';
 
-const SingleCampsite = ({}) => {
+export default function SingleCampsite ({route, navigation}){
 
-  let campsite = {
-    "camp_id": 1,
-    "camp_name": "Camp Expensive",
-    "host": "test1",
-    "price": "200",
-    "star_rating": null,
-    "location": "Mountain View",
-    "description": "Cozy AF",
-    "dates": [
-        {
-            "date_id": "date_id",
-            "client": null,
-            "date": "2022-12-23",
-            "reserved": false
-        },
-        {
-            "date_id": "date_id",
-            "client": null,
-            "date": "2022-12-24",
-            "reserved": false
-        },
-        {
-            "date_id": "date_id",
-            "client": null,
-            "date": "2022-12-25",
-            "reserved": false
-        }
-    ],
-    "photos": [
-        {
-            "photo_id": 1,
-            "photo_url": "https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,g_auto,h_630,q_60,w_1200/v1652453103/campground-photos/shgam6kwlyuu7cvblkth.jpg"
-        },
-        {
-            "photo_id": 8,
-            "photo_url": "https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,g_auto,h_630,q_60,w_1200/v1652453103/campground-photos/shgam6kwlyuu7cvblkth.jpg"
-        }
-    ],
-    "reviews": null,
-    "reservations": [
-        {
-            "reserve_id": 2,
-            "client_id": 3,
-            "confirmed": false
-        }
-    ]
-  }
+  const { campsite } = route.params
 
   const [availabilityButtonClicked, setAvailabilityButtonClicked] = useState(false);
 
@@ -64,8 +19,11 @@ const SingleCampsite = ({}) => {
   }
 
   return (
-    <ScrollView style={{padding: 69, flex: 1}}>
-      <View style={{justifyContent: "center", alignItems: "center"}} >
+    <View style={styles.container}>
+      <ScrollView>
+        <Overview campsite={campsite}/>
+      </ScrollView>
+      {/* <View style={{justifyContent: "center", alignItems: "center"}} >
         <Image source={image} style={{width: 400, height: 400}} />
         <Text style={{fontSize: 20, padding:5, fontWeight: "bold", textAlign: "left", marginLeft:50,  marginRight:37}}>
           {campsite.camp_name} - {campsite.description}
@@ -82,9 +40,15 @@ const SingleCampsite = ({}) => {
           onPress={showCalendar}
         />
         {availabilityButtonClicked && <Calendar campsite={campsite}/>}
-      </View>
-    </ScrollView>
+      </View> */}
+    </View>
   );
 }
 
-export default SingleCampsite;
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    backgroundColor: 'white',
+  },
+
+});

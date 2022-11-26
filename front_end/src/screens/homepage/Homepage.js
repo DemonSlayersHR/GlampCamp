@@ -16,13 +16,11 @@ export default function Homepage ({ navigation }) {
       .catch((error) => console.log('error', error));
   }, [filter]);
 
-  console.log(campsites[0])
-
   return (
     <View style={styles.container}>
       <Search navigation={navigation}/>
       <Filter setFilter={setFilter} filter={filter}/>
-      <Feed campsites={campsites}/>
+      <Feed campsites={campsites} navigation={navigation}/>
       <Nav navigation={navigation}/>
     </View>
   );

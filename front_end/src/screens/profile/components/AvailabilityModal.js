@@ -3,7 +3,7 @@ import CalendarPicker from 'react-native-calendar-picker';
 import { StyleSheet, Text, View, Button, Image, ScrollView, FlatList, TouchableOpacity, Modal, Alert, Pressable } from 'react-native';
 import axios from 'axios';
 
-export default function AvailabilityModal ({campsite, getHostCampsites, modalVisible, setModalVisible}) {
+export default function AvailabilityModal ({campsite, getHostCampsites, modalVisible, setModalVisible, setShowOptions}) {
 
   const [selectedStartDate, setSelectedStartDate] = useState();
   const [selectedEndDate, setSelectedEndDate] = useState();
@@ -49,6 +49,7 @@ export default function AvailabilityModal ({campsite, getHostCampsites, modalVis
   const addAvailableDates = () => {
     if (selectedStartDate && selectedEndDate) {
       let daylist = getDaysArray(new Date(selectedStartDate),new Date(selectedEndDate));
+      console.log(daylist)
       axios.post(`http://192.168.86.36:3000/campsites/dates`, {
         camp_id: campsite.camp_id,
         dates: daylist
@@ -63,7 +64,7 @@ export default function AvailabilityModal ({campsite, getHostCampsites, modalVis
   const removeAvailableDates = () => {
     if (selectedStartDate && selectedEndDate) {
       let daylist = getDaysArray(new Date(selectedStartDate),new Date(selectedEndDate));
-      axios.delete(`http://192.168.86.36:3000/campsites/dates`, { data: {
+      axios.delete(`http://192.168.1.3:3000/campsites/dates`, { data: {
         camp_id: campsite.camp_id,
         dates: daylist
       }})
@@ -94,7 +95,7 @@ export default function AvailabilityModal ({campsite, getHostCampsites, modalVis
 
           <CalendarPicker
             onDateChange={(date, startOrEnd) => onDateChange(date, startOrEnd)}
-            disabledDates={disableSelectingPast}
+            // disabledDates={disableSelectingPast}
             allowRangeSelection={true}
             textStyle={{color: 'black'}}
             // todayTextStyle={{color: 'red'}}
@@ -119,7 +120,7 @@ export default function AvailabilityModal ({campsite, getHostCampsites, modalVis
 
             <TouchableOpacity
               style={styles.button}
-              onPress={() => setModalVisible(!modalVisible)}
+              onPress={() => {setShowOptions(false); setModalVisible(!modalVisible)}}
             >
               <Text style={styles.textStyle} > Hide Calendar </Text>
             </TouchableOpacity>
