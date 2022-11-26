@@ -5,7 +5,7 @@ CREATE TABLE IF NOT EXISTS users(
   username VARCHAR(50),
   first_name VARCHAR(50),
   last_name  VARCHAR(50),
-  password VARCHAR(50),
+  password TEXT,
   location VARCHAR(50),
   user_photo VARCHAR(200)
 );

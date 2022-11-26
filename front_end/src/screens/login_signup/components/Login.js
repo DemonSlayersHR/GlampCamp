@@ -8,6 +8,7 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
+import UserContext from '../../../context/UserContext.js';
 import Nav from './../../../shared/nav/Nav.js';
 function Login({ navigation }) {
   const navigate = () => {

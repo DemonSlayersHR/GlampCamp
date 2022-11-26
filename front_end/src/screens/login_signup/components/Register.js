@@ -11,10 +11,11 @@ import {
   ScrollView,
 } from 'react-native';
 import BackArrow from 'react-native-vector-icons/Feather';
-import { authentication } from '../../../../Firebase/firebase.js';
-import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
+// import { authentication } from '../../../../Firebase/firebase.js';
+// import { signInWithPopup, GoogleAuthProvider } from 'firebase/auth';
 import { URL } from '../../../../config.js';
-import bcrypt from 'bcryptjs';
+// import bcrypt from 'bcryptjs';
+
 const formState = {
   username: '',
   first_name: '',
@@ -24,7 +25,9 @@ const formState = {
   user_photo: '',
 };
 
-const salt = bcrypt.genSaltSync(10);
+import AddPhotosCloudinary from '../../profile/components/AddPhotosCloudinary.js';
+
+// const salt = bcrypt.genSaltSync(10);
 const Register = ({ navigation }) => {
   const [signUpForm, setSignUpForm] = useState(formState);
 
@@ -45,12 +48,12 @@ const Register = ({ navigation }) => {
   // };
 
   const handleUserRegister = () => {
-    const hashedPassword = bcrypt.hashSync(signUpForm.password, salt);
+    // const hashedPassword = bcrypt.hashSync(signUpForm.password, salt);
     let query = {
       username: signUpForm.username,
       first_name: signUpForm.first_name,
       last_name: signUpForm.last_name,
-      password: hashedPassword,
+      password: signUpForm.password,
       location: signUpForm.location,
       user_photo: '',
     };
@@ -58,9 +61,10 @@ const Register = ({ navigation }) => {
     axios
       .post(`http://${URL}:3000/user`, query)
       .then((res) => {
-        console.log(res.data.user_id);
+        console.log(res.data);
+        console.log(`http://${URL}:3000/user?user_id=${res.data.user_id}`);
         // axios
-        //   .get(`http://${URL}:3000/user?${res.data.user_id}`)
+        //   .get(`http://${URL}:3000/user?user_id=${res.data.user_id}`)
         //   .then((res) => console.log(res))
         //   .catch((error) => {
         //     console.log(error);
@@ -139,6 +143,11 @@ const Register = ({ navigation }) => {
             style={styles.TextInput}
             secureTextEntry={true}
           />
+
+          <AddPhotosCloudinary
+            signUpForm={signUpForm}
+            setSignUpForm={setSignUpForm}
+            formType={'register'}></AddPhotosCloudinary>
 
           {/* <Text style={styles.ButtonText}>Upload Profile Photo</Text> */}
 

@@ -28,7 +28,7 @@ var getUser = (req, res) => {
 
 var postUser = (req, res) => {
   var userInfo = req.body;
-  console.log('REQ BODY', userInfo);
+  console.log(userInfo);
   if (userInfo.username === undefined) {
     res.status(400);
     res.send('your username can not be undefined');
@@ -52,9 +52,7 @@ var postUser = (req, res) => {
       client
         .query(model.postUser(userInfo))
         .then((response) => {
-          client;
-          console
-            .log(response)
+          client
             .query(model.getMaxUserId())
             .then((response) => {
               client.release();
@@ -62,6 +60,7 @@ var postUser = (req, res) => {
               res.send({ user_id: response['rows'][0].max });
             })
             .catch((err) => {
+              console.log('LOOK HERE', err);
               res.send(err);
             });
         })
