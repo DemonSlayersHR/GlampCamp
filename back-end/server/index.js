@@ -23,9 +23,10 @@ const io = new Server(server, {
   cors: {
     origin: "http://localhost:19006",
     methods: ["GET", "POST"],
-    allowedHeaders: ["my-custom-header"],
+    transports: ['websocket', 'polling'],
     credentials: true
-  }
+  },
+  allowEIO3: true
   // origins: '*:*'
 });
 
