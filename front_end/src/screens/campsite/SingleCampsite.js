@@ -10,8 +10,8 @@ export default function SingleCampsite ({route, navigation}){
   const { campsite } = route.params
 
   console.log('campsite', campsite);
-  // we want camp_id to do a get request to get the reviews for the campsite
   const [availabilityButtonClicked, setAvailabilityButtonClicked] = useState(false);
+  const [reviewsClicked, setReviewsClicked] = useState(false);
 
   const image = {
     uri: campsite.photos[0]?.photo_url
@@ -21,33 +21,40 @@ export default function SingleCampsite ({route, navigation}){
     setAvailabilityButtonClicked(!availabilityButtonClicked);
   }
 
+  const showReviews = () => {
+    setReviewsClicked(!reviewsClicked);
+  }
+
   return (
     <View style={styles.container}>
       <ScrollView>
         <Overview campsite={campsite}/>
-        <Text>
-          {campsite.price} night, {Math.round(campsite.star_rating)} stars
+        <Text style={{textAlign:"center", paddingBottom:20}}>
+          Price: {Number(campsite.price) || 100}/night
         </Text>
 
-        {availabilityButtonClicked && <Calendar campsite={campsite}/>}
+        {availabilityButtonClicked && <Calendar setAvailabilityButtonClicked={setAvailabilityButtonClicked} campsite={campsite}/>}
+        {!availabilityButtonClicked &&
         <View style={styles.btnContainer}>
           <TouchableOpacity style={styles.btn} onPress={showCalendar} >
             <Text style={styles.btnText}>Show Availability</Text>
           </TouchableOpacity>
         </View>
+        }
 
-        <TouchableOpacity>
-
-        </TouchableOpacity>
-          {campsite?.reviews &&
+        {!reviewsClicked &&
+        <TouchableOpacity style={{paddingTop:20, textAlign:"center"}}>
+          <Text onPress={showReviews}>
+            Average Rating: {Math.round(campsite?.star_rating) || 3} ⭐️'s, {campsite.reviews?.length || 0} Reviews
+          </Text>
+        </TouchableOpacity>}
+          {campsite?.reviews && reviewsClicked &&
             <ScrollView horizontal={true} style={styles.reviewsContainer}>
-              {campsite.reviews.map((review) => {
-                return < SingleReview review={review}/>
+              {campsite.reviews.map((review, index) => {
+                return < SingleReview key={index} review={review}/>
               })}
             </ScrollView>
           }
-
-
       </ScrollView>
     </View>
   );
@@ -55,7 +62,8 @@ export default function SingleCampsite ({route, navigation}){
 
 const styles = StyleSheet.create({
   reviewsContainer: {
-    flexDirection: 'row'
+    flexDirection: 'row',
+    paddingTop:10
   },
   container: {
     flex: 1,

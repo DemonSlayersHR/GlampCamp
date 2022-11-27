@@ -10,7 +10,7 @@ export default function Overview ({campsite}){
       <View style={styles.overviewContainer}>
         <View style={styles.infoBox}>
           <Text style={{fontSize: 28, fontWeight: '700'}}>{campsite.camp_name}</Text>
-          {campsite.star_rating && <Text>{campsite.star_rating}</Text>}
+          {campsite.star_rating && <Text>{Math.round(campsite.star_rating)}.0</Text>}
           <Text>{campsite.location}</Text>
 
           {/* divider */}

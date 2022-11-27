@@ -12,16 +12,20 @@ export default function Campsite ({ campsite, navigation }) {
     }
   }, [])
 
+  const navigateSingleCampsite = () => {
+    navigation.navigate('campsite', {campsite: campsite})
+  }
+
   return (
     <Pressable style={styles.container} onPress={() => navigation.navigate('campsite', {'campsite': campsite})}>
       <View style={{borderRadius:20, marginBottom:10}}>
         <ImageSlider
-            data={images}
-            autoPlay={false}
-            closeIconColor="#fff"
-            caroselImageStyle={{ resizeMode: 'cover', width: 348}}
-            preview={false}
-            onClick={() => navigation.navigate('campsite', {'campsite': campsite})}
+          data={images}
+          autoPlay={false}
+          closeIconColor="#fff"
+          caroselImageStyle={{ resizeMode: 'cover', width: 348}}
+          preview={false}
+          onClick={() => navigation.navigate('campsite', {'campsite': campsite})}
         />
       </View>
 

@@ -22,17 +22,6 @@ export default function App() {
     <UserContext.Provider value={{ user, setUser }}>
       <NavigationContainer>
         <Stack.Navigator>
-<<<<<<< HEAD
-          <Stack.Screen name='register' component={Register}></Stack.Screen>
-          <Stack.Screen name='host' component={Host}></Stack.Screen>
-          <Stack.Screen name='search' component={Search}></Stack.Screen>
-          <Stack.Screen name='homepage' component={Homepage}></Stack.Screen>
-          <Stack.Screen name='single campsite' component={SingleCampsite}></Stack.Screen>
-          <Stack.Screen name='login' component={Login}></Stack.Screen>
-          <Stack.Screen
-            name='Campsites Visited/Plans to Visit'
-            component={Reviews}></Stack.Screen>
-=======
           <Stack.Screen name='homepage' component={Homepage} options={{ headerShown: false }}/>
           <Stack.Screen name='register' component={Register} options={{ headerShown: false }}/>
           <Stack.Screen name='host' component={Host} options={{ headerShown: false }}/>
@@ -40,7 +29,6 @@ export default function App() {
           <Stack.Screen name='campsite' component={SingleCampsite}/>
           <Stack.Screen name='login' component={Login} options={{ headerShown: false }}/>
           <Stack.Screen name='Campsites Visited/Plans to Visit' component={Reviews} options={{ headerShown: false }}/>
->>>>>>> main
         </Stack.Navigator>
       </NavigationContainer>
     </UserContext.Provider>
