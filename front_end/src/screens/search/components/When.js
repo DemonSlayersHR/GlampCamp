@@ -1,9 +1,19 @@
 import { StyleSheet, Text, View, Pressable, Button, ScrollView } from 'react-native';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
+import CalendarPicker from 'react-native-calendar-picker';
 
 export default function When({setSelected}) {
   const [toggle, setToggle] = useState('Choose')
+  const [selectedStartDate, setSelectedStartDate] = useState();
+  const [selectedEndDate, setSelectedEndDate] = useState();
+
+  const dates = [
+    ["selectedStartDate", selectedStartDate],
+    ["selectedEndDate", selectedEndDate]
+  ]
+
+  console.table(dates)
 
   return (
     <View style={styles.container}>
@@ -12,7 +22,7 @@ export default function When({setSelected}) {
           When's your trip?
         </Text>
         <Toggle toggle={toggle} setToggle={setToggle}/>
-        { toggle === 'Choose'? <Calendar/> : <Flexible/> }
+        { toggle === 'Choose'? <Calendar setSelectedStartDate={setSelectedStartDate} setSelectedEndDate={setSelectedEndDate}/> : <Flexible/> }
       </View>
       <Footer setSelected={setSelected}/>
     </View>
@@ -94,26 +104,48 @@ const toggleStyles = StyleSheet.create({
   },
 })
 
-function Calendar(){
+function Calendar({setSelectedStartDate, setSelectedEndDate}){
+
+  function disableSelectingPast(date){
+    const today = new Date()
+    return date < today
+  }
+
+  function onDateChange(date, startOrEnd){
+    let string = null;
+    if (date) {
+      string = date._d.toISOString().slice(0,10);
+    }
+    if (startOrEnd === 'START_DATE') {
+      setSelectedStartDate(string)
+    } else {
+      setSelectedEndDate(string)
+    }
+  }
+
   return (
     <View style={calendarStyles.container}>
-      <ScrollView>
-      <Text>
-        Insert calendar stuff here
-      </Text>
-      </ScrollView>
+      <CalendarPicker
+            selectedDayColor="#f7f7f7"
+            onDateChange={(date, startOrEnd) => onDateChange(date, startOrEnd)}
+            disabledDates={disableSelectingPast}
+            allowRangeSelection={true}
+            textStyle={{color: 'black'}}
+            todayBackgroundColor='none'
+            width={360}
+          />
     </View>
   )
 }
 
 const calendarStyles = StyleSheet.create({
   container: {
+    paddingTop: 20,
     paddingLeft: 20,
     paddingRight: 20,
     height: '75%',
     borderBottomWidth: .5,
     borderColor: 'rgba(0, 0, 0, .1)'
-
   }
 })
 

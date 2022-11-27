@@ -13,17 +13,23 @@ var getMaxUserId = () => {
   )
 }
 var postUser = (userObj) => {
+  var sha1 = require('sha1');
+  var plainPassword = userObj.password;
+  var hashedPassword = sha1(plainPassword);
   return (`
    INSERT INTO users (username, first_name, last_name, password,location,user_photo)VALUES
-   ('${userObj.username}','${userObj.first_name}','${userObj.last_name}','${userObj.password}','${userObj.location}','${userObj.user_photo}')
+   ('${userObj.username}','${userObj.first_name}','${userObj.last_name}','${hashedPassword}','${userObj.location}','${userObj.user_photo}')
   `)
 }
 
 var userAuth = (userObj) => {
+  var sha1 = require('sha1');
+  var plainPassword = userObj.password;
+  var hashedPassword = sha1(plainPassword);
   return (`SELECT
    *
   FROM users
-  WHERE username = '${userObj.username}' and password = '${userObj.password}'
+  WHERE username = '${userObj.username}' and password = '${hashedPassword}'
   `)
 }
 

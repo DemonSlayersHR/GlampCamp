@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { Button, Text, View, StyleSheet, Pressable } from 'react-native';
+import { Text, View, StyleSheet, Pressable } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialIcons';
 
 export default function Filter ({ filter, setFilter }) {
