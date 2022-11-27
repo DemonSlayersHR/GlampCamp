@@ -12,6 +12,10 @@ export default function Campsite ({ campsite, navigation }) {
     }
   }, [])
 
+  const navigateSingleCampsite = () => {
+    navigation.navigate('single campsite', {campsite: campsite})
+  }
+
   return (
     <Pressable style={styles.container} onPress={() => navigation.navigate('campsite', {'campsite': campsite})}>
       <View style={{borderRadius:20, marginBottom:10}}>
@@ -30,7 +34,7 @@ export default function Campsite ({ campsite, navigation }) {
           {campsite.camp_name}
         </Text>
         <Text style={{fontSize: 13}}>
-          ★ 5.0
+          ★ {campsite.star_rating? parseInt(campsite.star_rating).toFixed(1) : 0 }
         </Text>
       </View>
 
