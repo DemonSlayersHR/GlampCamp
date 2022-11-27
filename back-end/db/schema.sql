@@ -124,7 +124,7 @@ INSERT INTO photos(camp_id, photo_url) VALUES
 
 INSERT INTO reviews(camp_id , client_id, star_rating, review_photo, review) VALUES
   (6, 1, 5, 'https://cdn.thewirecutter.com/wp-content/media/2022/06/summer-camp-2048px-1199232997-2x1-1.jpg?auto=webp&quality=75&crop=2:1&width=1024', 'Awesome place! Out of this world!!')
-  ON CONFLICT DO NOTHING;;
+  ON CONFLICT DO NOTHING;
 
 -- Create a database called glampcamp on postgres, then running the following code below
 -- psql -d glampcamp -a -f db/schema.sql

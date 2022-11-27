@@ -167,7 +167,7 @@ const Reviews = () => {
             source={require('../../../assets/glampsite.jpeg')}
             style={{ marginBottom: 20, width: 390, height: 275 }}
           />
-          <ImageUploader />
+          <ImageUploader campsites={campsites} />
         </ScrollView>
       </View>
     </>

@@ -55,7 +55,12 @@ export default function App() {
           <Stack.Screen
             name='Campsites Visited/Plans to Visit'
             component={Reviews}
-            // options={{ headerShown: false }}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name='messaging'
+            component={Messaging}
+            option={{ headerShown: false }}
           />
         </Stack.Navigator>
       </NavigationContainer>
