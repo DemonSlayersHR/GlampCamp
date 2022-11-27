@@ -40,7 +40,8 @@ function Login({ route, navigation }) {
       .catch((error) => {
         console.log(error);
       });
-    setLogin(loginForm);
+    console.log(login);
+    // setLogin(loginForm);
   };
 
   return (
@@ -58,6 +59,7 @@ function Login({ route, navigation }) {
             onChangeText={(newText) => {
               setLogin({ ...login, username: newText });
             }}
+            value={login.username}
             placeholder={'Username'}
             placeholderTextColor={'#fff'}
             style={styles.TextInput}
@@ -66,6 +68,7 @@ function Login({ route, navigation }) {
             onChangeText={(newText) => {
               setLogin({ ...login, password: newText });
             }}
+            value={login.password}
             placeholder={'Password'}
             placeholderTextColor={'#fff'}
             style={styles.TextInput}
@@ -73,7 +76,9 @@ function Login({ route, navigation }) {
           />
 
           <TouchableOpacity
-            onPress={checkUserCredentials}
+            onPress={() => {
+              checkUserCredentials();
+            }}
             style={styles.Button}>
             <Text style={styles.ButtonText}>Sign In</Text>
           </TouchableOpacity>
@@ -82,7 +87,7 @@ function Login({ route, navigation }) {
         <TouchableOpacity onPress={navigate} style={styles.TextButton}>
           <Text style={styles.SignUpText}>Sign Up</Text>
         </TouchableOpacity>
-        {/* <Nav navigation={navigation} /> */}
+        <Nav navigation={navigation} />
       </View>
     </View>
   );
@@ -98,14 +103,14 @@ const styles = StyleSheet.create({
   },
   TopView: {
     width: '100%',
-    height: '20%',
+    height: '15%',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
   },
   BottomView: {
     width: '100%',
-    height: '80%',
+    height: '85%',
     backgroundColor: '#000',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,

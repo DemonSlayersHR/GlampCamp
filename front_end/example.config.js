@@ -1,1 +1,1 @@
-module.exports = { URL: 'UPDATE ME' };
+module.exports = {URL: 'edit me'}
