@@ -23,6 +23,11 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
+            name='login'
+            component={Login}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
             name='homepage'
             component={Homepage}
             options={{ headerShown: false }}
@@ -43,11 +48,6 @@ export default function App() {
             options={{ headerShown: false }}
           />
           <Stack.Screen name='campsite' component={SingleCampsite} />
-          <Stack.Screen
-            name='login'
-            component={Login}
-            options={{ headerShown: false }}
-          />
           <Stack.Screen
             name='Campsites Visited/Plans to Visit'
             component={Reviews}
