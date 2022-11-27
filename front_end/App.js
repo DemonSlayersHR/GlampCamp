@@ -42,11 +42,7 @@ export default function App() {
             component={Search}
             options={{ headerShown: false }}
           />
-          <Stack.Screen
-            name='campsite'
-            component={SingleCampsite}
-            options={{ headerShown: false }}
-          />
+          <Stack.Screen name='campsite' component={SingleCampsite} />
           <Stack.Screen
             name='login'
             component={Login}
