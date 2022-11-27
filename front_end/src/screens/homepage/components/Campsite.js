@@ -13,24 +13,24 @@ export default function Campsite ({ campsite, navigation }) {
   }, [])
 
   const navigateSingleCampsite = () => {
-    navigation.navigate('single campsite', {campsite: campsite})
+    navigation.navigate('campsite', {campsite: campsite})
   }
 
   return (
     <Pressable style={styles.container} onPress={() => navigation.navigate('campsite', {'campsite': campsite})}>
       <View style={{borderRadius:20, marginBottom:10}}>
         <ImageSlider
-            data={images}
-            autoPlay={false}
-            closeIconColor="#fff"
-            caroselImageStyle={{ resizeMode: 'cover', width: 348}}
-            preview={false}
-            onClick={() => navigation.navigate('campsite', {'campsite': campsite})}
+          data={images}
+          autoPlay={false}
+          closeIconColor="#fff"
+          caroselImageStyle={{ resizeMode: 'cover', width: 348}}
+          preview={false}
+          onClick={() => navigation.navigate('campsite', {'campsite': campsite})}
         />
       </View>
 
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-        <Text style={{fontSize:16, fontWeight: 'semibold', marginBottom:2}}>
+        <Text style={{fontSize:16, fontWeight: 'semibold', marginBottom:2}} onPress={navigateSingleCampsite}>
           {campsite.camp_name}
         </Text>
         <Text style={{fontSize: 13}}>

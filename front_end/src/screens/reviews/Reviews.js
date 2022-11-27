@@ -103,6 +103,7 @@ const Reviews = () => {
     buttonRow: {
       flexDirection: 'row',
       justifyContent: 'center',
+      paddingTop:30
     },
     buttonText: {
       fontSize: 20,

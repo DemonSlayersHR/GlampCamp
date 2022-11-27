@@ -2,7 +2,9 @@ import React, { useState } from 'react';
 import { Button, StyleSheet, Text, View } from 'react-native';
 import axios from 'axios';
 import CalendarPicker from 'react-native-calendar-picker';
-import { URL } from '../../../../config.js';
+import {URL} from '../../../../config.js';
+
+const Calendar = ({campsite, loggedIn, setAvailabilityButtonClicked}) => {
 
 const Calendar = ({ campsite, loggedIn }) => {
   loggedIn = loggedIn || true;
@@ -52,10 +54,15 @@ const Calendar = ({ campsite, loggedIn }) => {
           dates: daylist,
         })
         .then((results) => {
+<<<<<<< HEAD
+          console.log('results from successful axios request to add a reservation', results);
+          setAvailabilityButtonClicked(false);
+=======
           console.log(
             'results from successful axios request to add a reservation',
             results
           );
+>>>>>>> main
         })
         .catch((error) => {
           console.log('error', error);
