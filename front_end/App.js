@@ -47,7 +47,11 @@ export default function App() {
             component={Search}
             options={{ headerShown: false }}
           />
-          <Stack.Screen name='campsite' component={SingleCampsite} />
+          <Stack.Screen
+            name='campsite'
+            component={SingleCampsite}
+            options={{ headerShown: false }}
+          />
           <Stack.Screen
             name='Campsites Visited/Plans to Visit'
             component={Reviews}
