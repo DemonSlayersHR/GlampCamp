@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native';
 import { useState } from 'react';
+import Icon from 'react-native-vector-icons/Feather';
 import Where from './components/Where'
 import When from './components/When'
 import Who from './components/Who'
@@ -15,6 +16,7 @@ export default function Search({navigation}) {
   if (selected === 'Where') {
     return (
       <>
+      <Back navigation={navigation}/>
       <View style={styles.container}>
         <Where setSelected={setSelected}/>
         <Extra title="When" subTitle="Add dates" setSelected={setSelected}/>
@@ -27,16 +29,20 @@ export default function Search({navigation}) {
 
   if (selected === 'When') {
     return (
+      <>
+      <Back navigation={navigation}/>
       <View style={styles.container}>
         <Extra title="Where" subTitle="I'm flexible" setSelected={setSelected}/>
         <When setSelected={setSelected}/>
       </View>
+      </>
     )
   }
 
   if (selected === 'Who') {
     return (
       <>
+      <Back navigation={navigation}/>
       <View style={styles.container}>
         <Extra title="Where" subTitle="I'm flexible" setSelected={setSelected}/>
         <Extra title="When" subTitle="Add guests" setSelected={setSelected}/>
@@ -51,6 +57,17 @@ export default function Search({navigation}) {
       </>
     )
   }
+}
+
+function Back({navigation}){
+  return (
+    <Icon
+    name='chevron-left'
+    style={{marginTop:50, marginLeft:10, borderRadius:20}}
+    size={20}
+    onPress={() => navigation.navigate('homepage')}
+    />
+  )
 }
 
 function Extra({title, subTitle, setSelected}){
