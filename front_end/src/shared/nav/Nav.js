@@ -36,8 +36,10 @@ export default function Nav({ navigation }) {
 
 function IconFormat({ iconName, title, selected, setSelected, navigation }) {
   function navigate() {
-    setSelected(title);
-
+    setSelected(title)
+    if(title === 'Explore'){
+      navigation.navigate('homepage')
+    }
     if (title === 'Log in') {
       navigation.navigate('login');
     }
