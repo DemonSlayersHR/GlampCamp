@@ -16,8 +16,6 @@ export default function Campsite ({ campsite, navigation }) {
     navigation.navigate('single campsite', {campsite: campsite})
   }
 
-  console.log(campsite)
-
   return (
     <Pressable style={styles.container} onPress={() => navigation.navigate('campsite', {'campsite': campsite})}>
       <View style={{borderRadius:20, marginBottom:10}}>
@@ -32,7 +30,7 @@ export default function Campsite ({ campsite, navigation }) {
       </View>
 
       <View style={{flexDirection: 'row', justifyContent: 'space-between'}}>
-        <Text style={{fontSize:16, fontWeight: 'semibold', marginBottom:2}} onPress={navigateSingleCampsite}>
+        <Text style={{fontSize:16, fontWeight: 'semibold', marginBottom:2}}>
           {campsite.camp_name}
         </Text>
         <Text style={{fontSize: 13}}>
