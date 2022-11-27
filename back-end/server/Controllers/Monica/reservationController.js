@@ -31,12 +31,19 @@ var deleteReservations = (req, res) => {
     .then((response) => {
       // console.log(response);
       // if (response[0]['rowCount'] !== 0) {
+      var totalRowCount = 0;
+      for(var i = 0; i < response.length; i++) {
+        totalRowCount = totalRowCount+response[i]['rowCount']
+      }
+      if(totalRowCount === 0) {
+        client.release();
+        res.status(204);
+        res.send()
+      } else {
+        client.release();
         res.status(200);
-      // } else {
-      //   res.status(204);
-      // }
-      client.release();
-      res.send(`Reservation with id=${reserve_id} has been deleted`)
+        res.send(`Reservation with id=${reserve_id} has been deleted`)
+      }
     })
     .catch(err => {
       client.release()
@@ -45,8 +52,8 @@ var deleteReservations = (req, res) => {
     })
   })
   .catch((err) => {
-    client.release()
     res.status(204)
+    console.log(err)
     res.send(err)
   })
 }

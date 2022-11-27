@@ -4,6 +4,7 @@ import { io } from 'socket.io-client';
 import BackArrow from 'react-native-vector-icons/Feather'
 import axios from 'axios';
 import SingleCampsite from '../campsite/SingleCampsite.js';
+import { URL } from '../../../config.js';
 
 
 const Messaging = ({ }) => {
@@ -17,14 +18,14 @@ const Messaging = ({ }) => {
   const connectionTest = true
 
   // set up socket connection (must be first)
-  const socket = io.connect("http://localhost:3000",
-    {
-      withCredentials: true,
-    });
+  // const socket = io.connect(`http://${URL}:3000`,
+  //   {
+  //     withCredentials: true,
+  //   });
 
   //set up states
-  const [isConnected, setIsConnected] = useState(socket.connected);
-  const [lastPong, setLastPong] = useState(null);
+  // const [isConnected, setIsConnected] = useState(socket.connected);
+  // const [lastPong, setLastPong] = useState(null);
   const [messages, setMessages] = useState([])
   const [text, setText] = useState('')
   const meta = useRef(null)
@@ -34,52 +35,57 @@ const Messaging = ({ }) => {
   const [user_id, setUser_id] = useState(1)
 
   useEffect(() => {
-    axios.get(`http://192.168.0.116:3000/chats/meta?reserve_id=${reserve_id.current}`)
+    axios.get(`http://${URL}:3000/chats/meta?reserve_id=${reserve_id.current}`)
       .then(result => meta.current = result.data)
 
-    axios.get(`http://192.168.0.116:3000/chats?reserve_id=${reserve_id.current}`)
+    axios.get(`http://${URL}:3000/chats?reserve_id=${reserve_id.current}`)
       .then(result => setMessages(result.data))
 
-    socket.on('connect', () => {
-      setIsConnected(true);
-    });
+    setInterval(async () => {
+      const result = await axios.get(`http://${URL}:3000/chats?reserve_id=${reserve_id.current}`)
+      setMessages(result.data)
+    }, 1000)
+    // socket.on('connect', () => {
+    //   setIsConnected(true);
+    // });
 
-    socket.on('disconnect', () => {
-      setIsConnected(false);
-    });
+    // socket.on('disconnect', () => {
+    //   setIsConnected(false);
+    // });
 
-    socket.on('pong', () => {
-      setLastPong(new Date().toISOString());
-    });
+    // socket.on('pong', () => {
+    //   setLastPong(new Date().toISOString());
+    // });
 
-    return () => {
-      socket.off('connect');
-      socket.off('disconnect');
-      socket.off('pong');
-    };
+    // return () => {
+    //   socket.off('connect');
+    //   socket.off('disconnect');
+    //   socket.off('pong');
+    // };
   }, []);
 
-  useEffect(() => {
-    socket.on('chat message', (msg) => {
-      setMessages([...messages, msg])
-    })
-  }, [socket, messages])
+  // useEffect(() => {
+  //   socket.on('chat message', (msg) => {
+  //     setMessages([...messages, msg])
+  //   })
+  // }, [socket, messages])
   // ------------------------------ FUNCTIONS ------------------------------
 
-  const sendPing = () => {
-    socket.emit('ping');
-  }
+  // const sendPing = () => {
+  //   socket.emit('ping');
+  // }
 
   const sendMessage = (e) => {
     e.preventDefault()
-    axios.post('http://192.168.0.116:3000/chats/', { messages: text, sender: user_id, reserve_id: reserve_id.current })
-    socket.emit('chat message', { messages: text, sender: user_id, reserve_id: reserve_id.current })
+    axios.post(`http://${URL}:3000/chats/`, { messages: text, sender: user_id, reserve_id: reserve_id.current })
+    setMessages([...messages, { messages: text, sender: user_id, reserve_id: reserve_id.current }])
+    // socket.emit('chat message', { messages: text, sender: user_id, reserve_id: reserve_id.current })
     setText('')
   }
 
   const confirmRes = (e) => {
     e.preventDefault()
-    axios.put('http://192.168.0.116:3000/reservation', { reserve_id: reserve_id.current })
+    axios.put(`http://${URL}:3000/reservation`, { reserve_id: reserve_id.current })
   }
 
   const changeType = (e) => {
@@ -119,9 +125,9 @@ const Messaging = ({ }) => {
         <Button title='Send' onPress={sendMessage}></Button>
       </View>
       {connectionTest && <View>
-        <p>Connected: {'' + isConnected}</p>
+        {/* <p>Connected: {'' + isConnected}</p>
         <p>Last pong: {lastPong || '-'}</p>
-        <button onClick={sendPing}>Send ping</button>
+        <button onClick={sendPing}>Send ping</button> */}
         <select onChange={changeType}>
           <option value='host'>host</option>
           <option value='client'>client</option>
@@ -131,7 +137,7 @@ const Messaging = ({ }) => {
   );
 };
 
-{/* <View style={styles.container}></View> */ }
+
 const styles = StyleSheet.create({
   messages: {
     height: '89vh',

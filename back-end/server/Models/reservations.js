@@ -19,8 +19,15 @@ var getReservations = (client_id) => {
 
 var deleteReservations = (reserve_id) => {
   return (`
-    DELETE FROM reserves_dates WHERE reserve_id = ${reserve_id};
-    DELETE FROM reservations WHERE reserve_id = ${reserve_id};
+  UPDATE camp_dates
+  SET reserved = false
+  WHERE dates in (SELECT
+   dates
+  FROM reserves_dates WHERE reserve_id = ${reserve_id}) and camp_id in (SELECT
+   camp_id
+  FROM reservations WHERE reserve_id = ${reserve_id});
+  DELETE FROM reserves_dates WHERE reserve_id = ${reserve_id};
+  DELETE FROM reservations WHERE reserve_id = ${reserve_id};
   `)
 }
 
@@ -69,6 +76,7 @@ var updateCampDates = (campid, dates) => {
   WHERE dates in (${"'" + dates.join("','")+"'"}) and camp_id = ${campid}
   `)
 }
+
 
 module.exports.addReservations = addReservations;
 module.exports.getReservations = getReservations;
