@@ -1,9 +1,12 @@
 import { StyleSheet, Text, View, Pressable } from 'react-native';
-import { useState } from 'react';
+import { useState, useContext } from 'react';
+import { UserContext } from '../../context/UserContext.js';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 export default function Nav({ navigation }) {
   const [selected, setSelected] = useState('Explore');
+
+  const { user, setUser } = useContext(UserContext);
 
   return (
     <View style={styles.container}>
@@ -22,13 +25,23 @@ export default function Nav({ navigation }) {
           setSelected={setSelected}
           navigation={navigation}
         />
-        <IconFormat
-          iconName='account'
-          title='Log in'
-          selected={selected}
-          setSelected={setSelected}
-          navigation={navigation}
-        />
+        {user.userInfo ? (
+          <IconFormat
+            iconName='account'
+            title='User'
+            selected={selected}
+            setSelected={setSelected}
+            navigation={navigation}
+          />
+        ) : (
+          <IconFormat
+            iconName='account'
+            title='Log in'
+            selected={selected}
+            setSelected={setSelected}
+            navigation={navigation}
+          />
+        )}
       </View>
     </View>
   );
@@ -36,9 +49,12 @@ export default function Nav({ navigation }) {
 
 function IconFormat({ iconName, title, selected, setSelected, navigation }) {
   function navigate() {
-    setSelected(title)
-    if(title === 'Explore'){
-      navigation.navigate('homepage')
+    setSelected(title);
+    if (title === 'Explore') {
+      navigation.navigate('homepage');
+    }
+    if (title === 'User') {
+      navigation.navigate('user');
     }
     if (title === 'Log in') {
       navigation.navigate('login');

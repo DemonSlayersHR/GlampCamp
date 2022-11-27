@@ -23,6 +23,11 @@ export default function App() {
       <NavigationContainer>
         <Stack.Navigator>
           <Stack.Screen
+            name='login'
+            component={Login}
+            options={{ headerShown: false }}
+          />
+          <Stack.Screen
             name='homepage'
             component={Homepage}
             options={{ headerShown: false }}
@@ -33,7 +38,7 @@ export default function App() {
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            name='host'
+            name='user'
             component={Host}
             options={{ headerShown: false }}
           />
@@ -42,16 +47,15 @@ export default function App() {
             component={Search}
             options={{ headerShown: false }}
           />
-          <Stack.Screen name='campsite' component={SingleCampsite} />
           <Stack.Screen
-            name='login'
-            component={Login}
+            name='campsite'
+            component={SingleCampsite}
             options={{ headerShown: false }}
           />
           <Stack.Screen
             name='Campsites Visited/Plans to Visit'
             component={Reviews}
-            options={{ headerShown: false }}
+            // options={{ headerShown: false }}
           />
         </Stack.Navigator>
       </NavigationContainer>

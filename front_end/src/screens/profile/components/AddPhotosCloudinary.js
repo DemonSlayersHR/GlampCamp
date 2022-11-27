@@ -45,7 +45,7 @@ export default function AddPhotosCloudinary({ photosArray, setPhotosArray }) {
         config
       )
       .then((data) => {
-        setPhotosArray([...photosArray, data.secure_url]);
+        setPhotosArray([...photosArray, data.data.secure_url]);
         setProgress('Upload Photo');
       })
       .catch((err) => {
