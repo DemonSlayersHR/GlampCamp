@@ -106,7 +106,6 @@ var userAuth = (req, res) => {
           }
         })
         .catch((err) => {
-          client.release();
           res.send(err);
         });
     })

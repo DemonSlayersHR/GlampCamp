@@ -34,7 +34,7 @@ export default function Campsite ({ campsite, navigation }) {
           {campsite.camp_name}
         </Text>
         <Text style={{fontSize: 13}}>
-          ★ 5.0
+          ★ {campsite.star_rating? parseInt(campsite.star_rating).toFixed(1) : 0 }
         </Text>
       </View>
 

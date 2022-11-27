@@ -9,12 +9,12 @@ import {
 } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
 import axios from 'axios';
-export default function AddPhotosCloudinary({ photosArray, setPhotosArray }) {
+export default function AddUserPhoto({ setSignUpForm, signUpForm }) {
   const [progress, setProgress] = useState('Upload Photo');
 
   useEffect(() => {
     async () => {
-      console.log(Platform);
+      // console.log(Platform);
       if (Platform.OS !== 'web') {
         const { status } =
           await ImagePicker.requestMediaLibraryPermissionsAsync();
@@ -45,7 +45,7 @@ export default function AddPhotosCloudinary({ photosArray, setPhotosArray }) {
         config
       )
       .then((data) => {
-        setPhotosArray([...photosArray, data.secure_url]);
+        setSignUpForm({ ...signUpForm, user_photo: data.data.secure_url });
         setProgress('Upload Photo');
       })
       .catch((err) => {
@@ -70,7 +70,7 @@ export default function AddPhotosCloudinary({ photosArray, setPhotosArray }) {
         type,
         name,
       };
-      console.log(source);
+      // console.log(source);
       cloudinaryUpload(source);
     }
   };
@@ -89,7 +89,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 10,
     borderColor: '#eee',
-    backgroundColor: 'white',
+    backgroundColor: '#FFADAD',
   },
   btnText: {
     // fontSize: 20,

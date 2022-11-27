@@ -1,16 +1,38 @@
 import React, {useEffect, useState} from 'react';
-import { Button, Image, Text, View, ScrollView, StyleSheet } from 'react-native';
+import { Button, Image, Text, View, ScrollView, StyleSheet, Pressable } from 'react-native';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
+import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import Ionicons from 'react-native-vector-icons/Ionicons';
 
-export default function Overview ({campsite}){
+export default function Overview ({campsite, navigation}){
 
   return (
     <View style={styles.container}>
       <Image style={styles.image} source={{uri: campsite.photos[0].photo_url}}/>
+
+      <View style={styles.nav}>
+        <View style={{width: '90%', flexDirection: 'row', justifyContent: 'space-between'}}>
+          <Pressable style={styles.iconContainer} onPress={() => navigation.navigate('homepage')}>
+            <MaterialIcons name="arrow-back-ios"/>
+          </Pressable>
+          <View style={{flexDirection: 'row'}}>
+            <View style={styles.iconContainer}>
+              <Ionicons name="ios-share-outline" size={18}/>
+            </View>
+            <View style={styles.iconContainer}>
+              <Ionicons name="ios-heart-outline" size={18}/>
+          </View>
+          </View>
+        </View>
+      </View>
+
       <View style={styles.overviewContainer}>
         <View style={styles.infoBox}>
-          <Text style={{fontSize: 28, fontWeight: '700'}}>{campsite.camp_name}</Text>
-          {campsite.star_rating && <Text>{Math.round(campsite.star_rating)}.0</Text>}
+          <Text style={{fontSize: 30, fontWeight: '700', marginBottom: 8}}>{campsite.camp_name}</Text>
+          <Text style={{marginBottom: 5}}>
+            ★ {campsite.star_rating? parseInt(campsite.star_rating).toFixed(1) : 0 } • num Reviews • Superhost •
+
+          </Text>
           <Text>{campsite.location}</Text>
 
           {/* divider */}
@@ -55,6 +77,9 @@ export default function Overview ({campsite}){
 
           <Text style={{fontSize: 20, fontWeight: '600', marginBottom:10}}>Where you'll be</Text>
           <Text></Text>
+
+          {/* divider */}
+          <View style={styles.divider}></View>
         </View>
       </View>
     </View>
@@ -77,11 +102,28 @@ function Features({name, feature, featureInfo}){
 
 const styles = StyleSheet.create({
   container: {
+    position: 'relative'
   },
   image: {
     height: 300,
     width: '100%',
     resizeMode: 'cover',
+  },
+  nav: {
+    position: 'absolute',
+    top: 35,
+    left: 25,
+    width: '100%'
+  },
+  iconContainer:{
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: 30,
+    width: 30,
+    backgroundColor: 'white',
+    borderRadius: 200,
+    marginRight: 10
   },
   overviewContainer: {
     padding: 20

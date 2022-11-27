@@ -1,9 +1,9 @@
 import React, {useEffect, useState} from 'react';
-import { Button, Image, Text, View, ScrollView, StyleSheet, TouchableOpacity } from 'react-native';
+import { Button, Image, Text, View, ScrollView, StyleSheet } from 'react-native';
 import axios from 'axios';
-import Calendar from './components/Calendar.js';
+import Calendar from './components/Calendar';
 import Overview from './components/Overview';
-import SingleReview from './SingleReview.js';
+import Footer from './components/Footer'
 
 export default function SingleCampsite ({route, navigation}){
 
@@ -12,10 +12,6 @@ export default function SingleCampsite ({route, navigation}){
   console.log('campsite', campsite);
   const [availabilityButtonClicked, setAvailabilityButtonClicked] = useState(false);
   const [reviewsClicked, setReviewsClicked] = useState(false);
-
-  const image = {
-    uri: campsite.photos[0]?.photo_url
-  }
 
   const showCalendar = () => {
     setAvailabilityButtonClicked(!availabilityButtonClicked);
@@ -66,27 +62,9 @@ const styles = StyleSheet.create({
     paddingTop:10
   },
   container: {
+    position: 'relative',
     flex: 1,
     backgroundColor: 'white',
-    paddingBottom: 50
   },
-  btnContainer: {
-    flex:1,
-    justifyContent: 'space-around',
-    alignItems: 'center',
-  },
-  btn: {
-    // backgroundColor: "#5B8E7D",
-    borderWidth: 1,
-    padding: 15,
-    borderRadius: 10,
-    width: '90%',
-    flexDirection: "row",
-    justifyContent: 'space-around',
-    alignItems: 'center',
 
-  },
-  btnText: {
-    fontWeight: 'bold'
-  }
 });
