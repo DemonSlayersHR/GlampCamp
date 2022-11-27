@@ -7,12 +7,12 @@ import SingleCampsite from '../campsite/SingleCampsite.js';
 import { URL } from '../../../config.js';
 
 
-const Messaging = ({ }) => {
+const Messaging = ({ route, navigation }) => {
   // ^ need {reserve_id, user_type}
   // ------------------------------ SET UP ------------------------------
 
   // test type, remove on production
-  const reserve_id = useRef(2)
+  const reserve_id = useRef(3)
 
   // toggles test
   const connectionTest = true

@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from 'react';
 import { TouchableOpacity, Text, StyleSheet, Button, Image, View, Platform } from 'react-native';
 import * as ImagePicker from 'expo-image-picker';
+import { useNavigation } from '@react-navigation/native'
 
-const ImageUploader = () => {
+const ImageUploader = ({ campsites }) => {
 
+  const navigation = useNavigation()
   const [image, setImage] = useState(null);
 
   const pickImage = async () => {
@@ -19,6 +21,11 @@ const ImageUploader = () => {
       setImage(result.assets[0].uri);
     }
   };
+
+  const navigate = () => {
+    navigation.navigate('messaging', { reserve_id: campsites[5].reservations[0].reserve_id, user_type: 'client' })
+  }
+
   const styles = StyleSheet.create({
     button: {
       padding: 10,
@@ -43,14 +50,14 @@ const ImageUploader = () => {
   return (
     <View style={styles.buttonRow}>
       {!image &&
-      <>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText} onPress={pickImage}> Upload Photo </Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={styles.button}>
-          <Text style={styles.buttonText}> Chat with Host</Text>
-        </TouchableOpacity>
-      </>}
+        <>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText} onPress={pickImage}> Upload Photo </Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={styles.button}>
+            <Text style={styles.buttonText} onPress={navigate}> Chat with Host</Text>
+          </TouchableOpacity>
+        </>}
       {image && <Image source={{ uri: image }} style={{ width: 390, height: 450 }} />}
     </View>
 

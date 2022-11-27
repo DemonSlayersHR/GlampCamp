@@ -12,17 +12,44 @@ export default function Homepage({ navigation }) {
   const [filter, setFilter] = useState('Discover');
 
   useEffect(() => {
-    axios.get(`http://${URL}:3000/campsites`)
-      .then((results) => {setCampsites(results.data);})
-      .catch((error) => {console.log('error', error);});
+    if (filter === 'Discover') {
+      axios
+        .get(`http://${URL}:3000/campsites`)
+        .then((results) => {
+          setCampsites(results.data);
+        })
+        .catch((error) => {
+          console.log('error', error);
+        });
+    }
+    if (filter === 'By price') {
+      axios
+        .get(`http://${URL}:3000/campsites?sort=price`)
+        .then((results) => {
+          setCampsites(results.data);
+        })
+        .catch((error) => {
+          console.log('error', error);
+        });
+    }
+    if (filter === 'By rating') {
+      axios
+        .get(`http://${URL}:3000/campsites?sort=star_rating`)
+        .then((results) => {
+          setCampsites(results.data);
+        })
+        .catch((error) => {
+          console.log('error', error);
+        });
+    }
   }, [filter]);
 
   return (
     <View style={styles.container}>
-      <Search navigation={navigation}/>
-      <Filter setFilter={setFilter} filter={filter}/>
-      <Feed campsites={campsites} navigation={navigation}/>
-      <Nav navigation={navigation}/>
+      <Search navigation={navigation} />
+      <Filter setFilter={setFilter} filter={filter} />
+      <Feed campsites={campsites} navigation={navigation} />
+      <Nav navigation={navigation} />
     </View>
   );
 }
@@ -31,6 +58,6 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: 'white',
-    paddingTop: 45
+    paddingTop: 45,
   },
 });
