@@ -12,64 +12,59 @@ import axios from 'axios';
 import Calendar from './components/Calendar';
 import Overview from './components/Overview';
 import Footer from './components/Footer';
+import SingleReview from './components/SingleReview.js';
 
-export default function SingleCampsite({ route, navigation }) {
+export default function SingleCampsite({
+  route,
+  navigation,
+  setAvailabilityButtonClicked,
+}) {
   const { campsite } = route.params;
 
-  const [availabilityButtonClicked, setAvailabilityButtonClicked] =
-    useState(false);
+  const [reviewsClicked, setReviewsClicked] = useState(false);
 
-  const showCalendar = () => {
-    setAvailabilityButtonClicked(!availabilityButtonClicked);
+  const showReviews = () => {
+    setReviewsClicked(!reviewsClicked);
   };
 
   return (
     <View style={styles.container}>
-      <ScrollView style={{ marginBottom: 80 }}>
+      <ScrollView style={{ marginBottom: 100 }}>
+        {/* overview */}
         <Overview campsite={campsite} navigation={navigation} />
-        {/* <Text>
-          {campsite.price} night, {Math.round(campsite.star_rating)} stars
-        </Text> */}
-
-        {availabilityButtonClicked && <Calendar campsite={campsite} />}
-        <View style={styles.btnContainer}>
-          <TouchableOpacity style={styles.btn} onPress={showCalendar}>
-            <Text style={styles.btnText}>Show Availability</Text>
+        {/* calendar */}
+        <Calendar
+          setAvailabilityButtonClicked={setAvailabilityButtonClicked}
+          campsite={campsite}
+        />
+        {/* reviews */}
+        <View style={styles.divider}></View>
+        {!reviewsClicked && (
+          <TouchableOpacity style={{ paddingTop: 20, textAlign: 'center' }}>
+            <Text onPress={showReviews}>
+              Average Rating: {Math.round(campsite?.star_rating) || 3} ⭐️'s,{' '}
+              {campsite.reviews?.length || 0} Reviews
+            </Text>
           </TouchableOpacity>
-        </View>
-
-        {campsite?.reviews && (
+        )}
+        {campsite?.reviews && reviewsClicked && (
           <ScrollView horizontal={true} style={styles.reviewsContainer}>
-            {campsite.reviews.map((review) => {
-              return <SingleReview review={review} />;
+            {campsite.reviews.map((review, index) => {
+              return <SingleReview key={index} review={review} />;
             })}
           </ScrollView>
         )}
       </ScrollView>
       <Footer campsite={campsite} />
-      {/* <View style={{justifyContent: "center", alignItems: "center"}} >
-        <Image source={image} style={{width: 400, height: 400}} />
-        <Text style={{fontSize: 20, padding:5, fontWeight: "bold", textAlign: "left", marginLeft:50,  marginRight:37}}>
-          {campsite.camp_name} - {campsite.description}
-        </Text>
-        <Text style={{textDecorationLine: "underline", textAlign: "center"}}>
-          {campsite.location}
-        </Text>
-        <Text>
-          {campsite.price} night, {Math.round(campsite.star_rating)} stars
-        </Text>
-        <Button
-          color="#5B8E7D"
-          title="Show Availability"
-          onPress={showCalendar}
-        />
-        {availabilityButtonClicked && <Calendar campsite={campsite}/>}
-      </View> */}
     </View>
   );
 }
 
 const styles = StyleSheet.create({
+  reviewsContainer: {
+    flexDirection: 'row',
+    paddingTop: 10,
+  },
   container: {
     position: 'relative',
     flex: 1,
@@ -84,7 +79,6 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   btn: {
-    // backgroundColor: "#5B8E7D",
     borderWidth: 1,
     padding: 15,
     borderRadius: 10,
@@ -95,5 +89,11 @@ const styles = StyleSheet.create({
   },
   btnText: {
     fontWeight: 'bold',
+  },
+  divider: {
+    paddingTop: 20,
+    marginBottom: 20,
+    borderBottomWidth: 1,
+    borderColor: 'rgba(158, 150, 150, .3)',
   },
 });

@@ -38,7 +38,7 @@ export default function App() {
             options={{ headerShown: false }}
           />
           <Stack.Screen
-            name='host'
+            name='user'
             component={Host}
             options={{ headerShown: false }}
           />
@@ -55,7 +55,7 @@ export default function App() {
           <Stack.Screen
             name='Campsites Visited/Plans to Visit'
             component={Reviews}
-            options={{ headerShown: false }}
+            // options={{ headerShown: false }}
           />
         </Stack.Navigator>
       </NavigationContainer>

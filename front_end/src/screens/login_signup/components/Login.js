@@ -33,8 +33,9 @@ function Login({ route, navigation }) {
         `http://${URL}:3000/user/auth?username=${login.username}&password=${login.password}`
       )
       .then((res) => {
+        console.log(res.data);
         res.data.isAuthenticated
-          ? (setUser(res.data.userInfo), navigateHome())
+          ? (setUser(res.data), navigateHome())
           : navigate();
       })
       .catch((error) => {

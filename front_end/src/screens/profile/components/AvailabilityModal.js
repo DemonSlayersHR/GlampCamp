@@ -14,7 +14,7 @@ import {
   Pressable,
 } from 'react-native';
 import axios from 'axios';
-import {URL} from '../../../../config.js';
+import { URL } from '../../../../config.js';
 
 export default function AvailabilityModal({
   campsite,
@@ -131,7 +131,7 @@ export default function AvailabilityModal({
         <View style={styles.modalView}>
           <CalendarPicker
             onDateChange={(date, startOrEnd) => onDateChange(date, startOrEnd)}
-            // disabledDates={disableSelectingPast}
+            disabledDates={disableSelectingPast}
             allowRangeSelection={true}
             textStyle={{ color: 'black' }}
             // todayTextStyle={{color: 'red'}}

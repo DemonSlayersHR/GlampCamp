@@ -9,7 +9,7 @@ import {
 } from 'react-native';
 import axios from 'axios';
 import AddPhotosCloudinary from './AddPhotosCloudinary.js';
-import {URL} from '../../../../config.js';
+import { URL } from '../../../../config.js';
 
 export default function EditCampsite({
   campsite,
@@ -98,7 +98,11 @@ export default function EditCampsite({
           photosArray={photosArray}
           setPhotosArray={setPhotosArray}
         />
-        <TouchableOpacity style={styles.btn} onPress={editCampsite}>
+        <TouchableOpacity
+          style={styles.btn}
+          onPress={() => {
+            editCampsite();
+          }}>
           <Text style={styles.btnText}> Edit Campsite </Text>
         </TouchableOpacity>
       </View>
