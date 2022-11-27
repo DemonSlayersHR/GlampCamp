@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import {
   Text,
   StyleSheet,
@@ -8,8 +8,14 @@ import {
   TextInput,
   TouchableOpacity,
 } from 'react-native';
-// import logo from '../../../assets/glampcamp.jpeg';
+import { UserContext } from '../../../context/UserContext.js';
+import Nav from './../../../shared/nav/Nav.js';
+
 function Login({ navigation }) {
+  const { user, setUser } = useContext(UserContext);
+
+  // setUser(user=> {...user, })
+
   const navigate = () => {
     navigation.navigate('register');
   };
@@ -23,14 +29,14 @@ function Login({ navigation }) {
       <View style={styles.TopView}>
         <Image
           style={styles.ImageStyle}
-          source={require('../../../assets/logo.png')}
+          source={require('../../../../assets/logo.png')}
         />
       </View>
       <View style={styles.BottomView}>
         <Text style={styles.Heading}>Welcome {'\n'}Back</Text>
         <View style={styles.FormView}>
           <TextInput
-            placeholder={'Email Address'}
+            placeholder={'Username'}
             placeholderTextColor={'#fff'}
             style={styles.TextInput}
           />
@@ -47,6 +53,7 @@ function Login({ navigation }) {
         <TouchableOpacity onPress={navigate} style={styles.TextButton}>
           <Text style={styles.SignUpText}>Sign Up</Text>
         </TouchableOpacity>
+        <Nav navigation={navigation} />
       </View>
     </View>
   );

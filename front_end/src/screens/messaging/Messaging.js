@@ -4,6 +4,7 @@ import { io } from 'socket.io-client';
 import BackArrow from 'react-native-vector-icons/Feather'
 import axios from 'axios';
 import SingleCampsite from '../campsite/SingleCampsite.js';
+import { URL } from '../../../config.js';
 
 
 const Messaging = ({ }) => {
@@ -19,7 +20,7 @@ const Messaging = ({ }) => {
   const connectionTest = false
 
   // set up socket connection (must be first)
-  const socket = io.connect("http://192.168.0.116:3000",
+  const socket = io.connect(`http://${URL}:3000`,
     {
       withCredentials: true,
     });
@@ -32,10 +33,10 @@ const Messaging = ({ }) => {
   const meta = useRef(null)
 
   useEffect(() => {
-    axios.get(`http://192.168.0.116:3000/chats/meta?reserve_id=${reserve_id.current}`)
+    axios.get(`http://${URL}:3000/chats/meta?reserve_id=${reserve_id.current}`)
       .then(result => meta.current = result.data)
 
-    axios.get(`http://192.168.0.116:3000/chats?reserve_id=${reserve_id.current}`)
+    axios.get(`http://${URL}:3000/chats?reserve_id=${reserve_id.current}`)
       .then(result => setMessages(result.data))
 
     socket.on('connect', () => {
@@ -70,14 +71,14 @@ const Messaging = ({ }) => {
 
   const sendMessage = async (e) => {
     e.preventDefault()
-    await axios.post('http://192.168.0.116:3000/chats/', { messages: text, sender: user_id, reserve_id: reserve_id.current })
+    await axios.post(`http://${URL}:3000/chats/`, { messages: text, sender: user_id, reserve_id: reserve_id.current })
     socket.emit('chat message', { messages: text, sender: user_id, reserve_id: reserve_id.current })
     setText('')
   }
 
   const confirmRes = (e) => {
     e.preventDefault()
-    axios.put('http://192.168.0.116:3000/reservation', { reserve_id: reserve_id.current })
+    axios.put(`http://${URL}:3000/reservation`, { reserve_id: reserve_id.current })
   }
   // literally here just to get react to shut up about keys
   var count = 0
