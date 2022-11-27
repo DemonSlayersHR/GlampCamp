@@ -1,8 +1,9 @@
 import React, {useEffect, useState} from 'react';
 import { Button, Image, Text, View, ScrollView, StyleSheet } from 'react-native';
 import axios from 'axios';
-import Calendar from './components/Calendar.js';
+import Calendar from './components/Calendar';
 import Overview from './components/Overview';
+import Footer from './components/Footer'
 
 export default function SingleCampsite ({route, navigation}){
 
@@ -10,19 +11,16 @@ export default function SingleCampsite ({route, navigation}){
 
   const [availabilityButtonClicked, setAvailabilityButtonClicked] = useState(false);
 
-  const image = {
-    uri: campsite.photos[0]?.photo_url
-  }
-
   const showCalendar = () => {
     setAvailabilityButtonClicked(!availabilityButtonClicked);
   }
 
   return (
     <View style={styles.container}>
-      <ScrollView>
-        <Overview campsite={campsite}/>
+      <ScrollView style={{marginBottom: 80}}>
+        <Overview campsite={campsite} navigation={navigation}/>
       </ScrollView>
+        <Footer campsite={campsite}/>
       {/* <View style={{justifyContent: "center", alignItems: "center"}} >
         <Image source={image} style={{width: 400, height: 400}} />
         <Text style={{fontSize: 20, padding:5, fontWeight: "bold", textAlign: "left", marginLeft:50,  marginRight:37}}>
@@ -47,6 +45,7 @@ export default function SingleCampsite ({route, navigation}){
 
 const styles = StyleSheet.create({
   container: {
+    position: 'relative',
     flex: 1,
     backgroundColor: 'white',
   },
