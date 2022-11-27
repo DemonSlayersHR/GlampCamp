@@ -1,4 +1,4 @@
-import React, { useContext } from 'react';
+import React, { useContext, useState } from 'react';
 import {
   Text,
   StyleSheet,
@@ -10,11 +10,14 @@ import {
 } from 'react-native';
 import { UserContext } from '../../../context/UserContext.js';
 import Nav from './../../../shared/nav/Nav.js';
+import axios from 'axios';
+import { URL } from '../../../../config.js';
 
-function Login({ navigation }) {
+const loginForm = { username: '', password: '' };
+
+function Login({ route, navigation }) {
   const { user, setUser } = useContext(UserContext);
-
-  // setUser(user=> {...user, })
+  const [login, setLogin] = useState(loginForm);
 
   const navigate = () => {
     navigation.navigate('register');
@@ -22,6 +25,22 @@ function Login({ navigation }) {
 
   const navigateHome = () => {
     navigation.navigate('homepage');
+  };
+
+  const checkUserCredentials = () => {
+    axios
+      .get(
+        `http://${URL}:3000/user/auth?username=${login.username}&password=${login.password}`
+      )
+      .then((res) => {
+        res.data.isAuthenticated
+          ? (setUser(res.data.userInfo), navigateHome())
+          : navigate();
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    setLogin(loginForm);
   };
 
   return (
@@ -36,24 +55,34 @@ function Login({ navigation }) {
         <Text style={styles.Heading}>Welcome {'\n'}Back</Text>
         <View style={styles.FormView}>
           <TextInput
+            onChangeText={(newText) => {
+              setLogin({ ...login, username: newText });
+            }}
             placeholder={'Username'}
             placeholderTextColor={'#fff'}
             style={styles.TextInput}
           />
           <TextInput
+            onChangeText={(newText) => {
+              setLogin({ ...login, password: newText });
+            }}
             placeholder={'Password'}
             placeholderTextColor={'#fff'}
             style={styles.TextInput}
             secureTextEntry={true}
           />
-          <TouchableOpacity onPress={navigateHome} style={styles.Button}>
+
+          <TouchableOpacity
+            onPress={checkUserCredentials}
+            style={styles.Button}>
             <Text style={styles.ButtonText}>Sign In</Text>
           </TouchableOpacity>
         </View>
+
         <TouchableOpacity onPress={navigate} style={styles.TextButton}>
           <Text style={styles.SignUpText}>Sign Up</Text>
         </TouchableOpacity>
-        <Nav navigation={navigation} />
+        {/* <Nav navigation={navigation} /> */}
       </View>
     </View>
   );
@@ -69,14 +98,14 @@ const styles = StyleSheet.create({
   },
   TopView: {
     width: '100%',
-    height: '30%',
+    height: '20%',
     display: 'flex',
     justifyContent: 'center',
     alignItems: 'center',
   },
   BottomView: {
     width: '100%',
-    height: '70%',
+    height: '80%',
     backgroundColor: '#000',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
