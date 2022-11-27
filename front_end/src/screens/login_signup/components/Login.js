@@ -40,8 +40,7 @@ function Login({ route, navigation }) {
       .catch((error) => {
         console.log(error);
       });
-    console.log(login);
-    // setLogin(loginForm);
+    setLogin(loginForm);
   };
 
   return (
