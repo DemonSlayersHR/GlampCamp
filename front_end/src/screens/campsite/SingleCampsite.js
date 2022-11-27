@@ -7,6 +7,8 @@ const SingleCampsite = ({route, navigation}) => {
 
   let campsite = route.params.campsite
 
+  console.log('campsite', campsite);
+
   const [availabilityButtonClicked, setAvailabilityButtonClicked] = useState(false);
 
   const image = {

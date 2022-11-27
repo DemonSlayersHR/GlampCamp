@@ -8,6 +8,8 @@ const starRating = ({setRating}) => {
     console.log('rating', rating);
   }
 
+// ⭐️ 5.0
+
   return (
     <AirbnbRating
       showRating={true}
