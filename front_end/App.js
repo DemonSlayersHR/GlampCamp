@@ -26,7 +26,7 @@ export default function App() {
           <Stack.Screen name='register' component={Register} options={{ headerShown: false }}/>
           <Stack.Screen name='host' component={Host} options={{ headerShown: false }}/>
           <Stack.Screen name='search' component={Search} options={{ headerShown: false }}/>
-          <Stack.Screen name='single campsite' component={SingleCampsite} options={{ headerShown: false }}/>
+          <Stack.Screen name='campsite' component={SingleCampsite}/>
           <Stack.Screen name='login' component={Login} options={{ headerShown: false }}/>
           <Stack.Screen name='Campsites Visited/Plans to Visit' component={Reviews} options={{ headerShown: false }}/>
         </Stack.Navigator>
