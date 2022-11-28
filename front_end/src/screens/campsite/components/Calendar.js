@@ -3,12 +3,16 @@ import { Button, StyleSheet, Text, View } from 'react-native';
 import axios from 'axios';
 import CalendarPicker from 'react-native-calendar-picker';
 
-const Calendar = ({ campsite, loggedIn, setAvailabilityButtonClicked }) => {
+const Calendar = ({ campsite, loggedIn, setAvailabilityButtonClicked, dates, setDates}) => {
   loggedIn = loggedIn || true;
 
   const [selectedStartDate, setSelectedStartDate] = useState();
   const [allowRangeSelection, setAllowRangeSelection] = useState(false);
-  const [dates, setDates] = useState([]);
+
+  function disableSelectingPast(date){
+    const today = new Date()
+    return date < today
+  }
 
   const getDaysArray = (start, end) => {
     for (
@@ -68,6 +72,8 @@ const Calendar = ({ campsite, loggedIn, setAvailabilityButtonClicked }) => {
       <CalendarPicker
         onDateChange={onDateChange}
         allowRangeSelection={true}
+        disabledDates={disableSelectingPast}
+        selectedDayColor="#f7f7f7"
         // selectedRangeStyle="F4A259"
       />
       <Button title='Reserve Dates' color='#BC4B51' onPress={reserveDates} />

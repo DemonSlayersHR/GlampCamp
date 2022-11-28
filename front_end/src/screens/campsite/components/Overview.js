@@ -30,7 +30,7 @@ export default function Overview ({campsite, navigation}){
         <View style={styles.infoBox}>
           <Text style={{fontSize: 30, fontWeight: '700', marginBottom: 8}}>{campsite.camp_name}</Text>
           <Text style={{marginBottom: 5}}>
-            ★ {campsite.star_rating? parseInt(campsite.star_rating).toFixed(1) : 0 } • num Reviews • Superhost •
+            <Text style={{fontSize:11}}>★</Text> {campsite.star_rating? parseInt(campsite.star_rating).toFixed(1) : 0 } • {campsite.reviews?.length || 0} Reviews • Superhost •
 
           </Text>
           <Text>{campsite.location}</Text>

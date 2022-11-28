@@ -1,14 +1,30 @@
 import React, {useEffect, useState} from 'react';
 import { Image, Text, View, ScrollView, StyleSheet, Pressable } from 'react-native';
 
-export default function Footer ({campsite}){
+export default function Footer ({campsite, dates}){
+  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+
+  function Dates(){
+    if (dates.length>1){
+      let start = `${months[dates[0].split('-')[1]-1]} ${dates[0].split('-')[2]}`
+      let end = `${months[dates[1].split('-')[1]-1]} ${dates[1].split('-')[2]}`
+
+      if (start.split(' ')[0] === end.split(' ')[0]){
+        return `${start.split(' ')[0]} ${start.split(' ')[1]} - ${end.split(' ')[1]}`
+      } else {
+        return `${start} - ${end}`
+      }
+    } else {
+      return 'Select dates'
+    }
+  }
 
   return (
     <View style={styles.container}>
       <View style={styles.footerItems}>
         <View>
           <Text style={{fontWeight: '600'}}>${campsite.price} <Text style={{color: 'gray'}}>/night</Text></Text>
-          <Text style={{fontSize: 13}}>Dates selected</Text>
+          <Text style={{fontSize: 13, textDecorationLine: 'underline'}}>{Dates()}</Text>
         </View>
         <Pressable>
           <View style={styles.reserveBtn}>

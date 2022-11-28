@@ -4,14 +4,11 @@ import { Button, Image, Text, View, ScrollView, StyleSheet, TouchableOpacity } f
 
 export default function SingleReview ({review}) {
 
-console.log('review', review);
-
 return (
   <>
   <View style={styles.boxSimple}>
-    <View>
-      <Text>{review.reviewer}</Text>
-      <Text> {review.star_rating} ★'s</Text>
+    <View style={{flexDirection: 'row'}}>
+      <Text>{review.reviewer} • {review.star_rating} ★'s</Text>
     </View>
     <View style={{paddingTop:10}}>
       <Text>
@@ -29,8 +26,10 @@ const styles = StyleSheet.create({
       width: 200,
       borderRadius: 4,
       borderWidth: 0.5,
-      borderColor: '#000',
-      paddingTop: 10,
-      margin: 20,
+      borderColor: 'rgba(158, 150, 150, .7)',
+      padding: 10,
+      marginRight: 20,
+      marginTop: 10,
+      minHeight: 150
   },
 })
