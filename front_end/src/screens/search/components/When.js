@@ -3,10 +3,8 @@ import { useState, useEffect } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 import CalendarPicker from 'react-native-calendar-picker';
 
-export default function When({setSelected}) {
+export default function When({setSelected, selectedStartDate, setSelectedStartDate, selectedEndDate, setSelectedEndDate}) {
   const [toggle, setToggle] = useState('Choose')
-  const [selectedStartDate, setSelectedStartDate] = useState();
-  const [selectedEndDate, setSelectedEndDate] = useState();
 
   const dates = [
     ["selectedStartDate", selectedStartDate],
@@ -251,7 +249,7 @@ function Footer({setSelected}){
     <View style={footerStyles.footer}>
       <View style={footerStyles.footerItems}>
         <Text style={footerStyles.skip}>Skip</Text>
-        <Pressable style={footerStyles.nextBtn} onPress={() => setSelected('Where')}>
+        <Pressable style={footerStyles.nextBtn} onPress={() => setSelected('Who')}>
           <Text style={{color: '#fff', fontWeight: 'bold'}}>Next</Text>
         </Pressable>
       </View>

@@ -7,7 +7,8 @@ import Nav from '../../shared/nav/Nav.js';
 import Feed from './components/Feed';
 import { URL } from '../../../config.js';
 
-export default function Homepage({ navigation }) {
+export default function Homepage({ route, navigation }) {
+  const { location } = route.params || { location: null };
   const [campsites, setCampsites] = useState([]);
   const [filter, setFilter] = useState('Discover');
 
@@ -46,9 +47,9 @@ export default function Homepage({ navigation }) {
 
   return (
     <View style={styles.container}>
-      <Search navigation={navigation} />
+      <Search navigation={navigation}/>
       <Filter setFilter={setFilter} filter={filter} />
-      <Feed campsites={campsites} navigation={navigation} />
+      <Feed campsites={campsites} navigation={navigation} location={location} />
       <Nav navigation={navigation} />
     </View>
   );

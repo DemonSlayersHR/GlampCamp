@@ -1,7 +1,7 @@
 import { Button, Image, Text, View, ScrollView, StyleSheet } from 'react-native';
 import Campsite from './Campsite'
 
-export default function Feed ({ campsites, navigation }) {
+export default function Feed ({ campsites, navigation, location }) {
 
   return (
     <View style={styles.container}>
@@ -9,7 +9,13 @@ export default function Feed ({ campsites, navigation }) {
       </View>
       <ScrollView style={styles.campsitesContainer}>
         {
-          campsites.map((campsite, i) =>
+          campsites.filter(campsite => {
+            if (location) {
+              return campsite.location.toLowerCase() === location.split(',')[0].toLowerCase()
+            } else {
+              return campsite
+            }
+          }).map((campsite, i) =>
             <View key={i} style={{height: 400, padding: 5}}>
               <Campsite campsite={campsite} navigation={navigation}/>
             </View>
