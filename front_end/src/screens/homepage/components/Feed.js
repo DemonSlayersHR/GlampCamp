@@ -11,7 +11,7 @@ export default function Feed ({ campsites, navigation, location }) {
         {
           campsites.filter(campsite => {
             if (location) {
-              return campsite.location.toLowerCase() === location.split(',')[0].toLowerCase()
+              return campsite.location.toLowerCase().includes(location.split(',')[0].toLowerCase())
             } else {
               return campsite
             }

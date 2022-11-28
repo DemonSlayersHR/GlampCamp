@@ -74,12 +74,6 @@ export default function Overview ({campsite, navigation}){
 
           {/* divider */}
           <View style={styles.divider}></View>
-
-          <Text style={{fontSize: 20, fontWeight: '600', marginBottom:10}}>Where you'll be</Text>
-          <Text></Text>
-
-          {/* divider */}
-          <View style={styles.divider}></View>
         </View>
       </View>
     </View>

@@ -62,6 +62,12 @@ export default function SingleCampsite({
           <View style={styles.divider}></View>
           <HostInfo navigation={navigation} campsite={campsite} />
         </View>
+
+        {/* Report this listing */}
+        <View style={styles.paddedDivider}>
+          <View style={styles.divider}></View>
+          <Text style={{fontSize: 12, fontWeight: '600', textDecorationLine: 'underline'}}>Report this listing</Text>
+        </View>
       </ScrollView>
 
       {/* footer */}
