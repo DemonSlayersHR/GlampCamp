@@ -65,18 +65,20 @@ CREATE TABLE IF NOT EXISTS reviews(
 );
 --password's orginal plain text value = '123'
 INSERT INTO users(username, first_name, last_name, password, location,user_photo) VALUES
-  ('test1','firstName1', 'lastName1','40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'Mountain View', 'https://asset.cloudinary.com/dqlxf5j8e/e04efc0f52a9dc45cd00402977f82334'),
-  ('test2','firstName2', 'lastName2','40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'Sunnyvale', 'https://asset.cloudinary.com/dqlxf5j8e/e04efc0f52a9dc45cd00402977f82334'),
-  ('test3','firstName3','lastName3','40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'Mars', 'https://asset.cloudinary.com/dqlxf5j8e/e04efc0f52a9dc45cd00402977f82334')
+  ('seanmccodes','Sean', 'Prez','40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'Petaluma', 'https://i0.wp.com/animegalaxyofficial.com/wp-content/uploads/2022/09/20220915_234250-min.jpg?resize=750%2C422&ssl=1'),
+  ('CrazySophiaVolunteered','Sophia', 'Speaker','40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'Sunnyvale', 'https://static.wikia.nocookie.net/kimetsu-no-yaiba/images/e/e5/Shinobu_anime.png/revision/latest/scale-to-width-down/1200?cb=20211119011810'),
+  ('PitchForks','Pitch','Forks','40bd001563085fc35165329ea1ff5c5ecbdbbeef', 'Mars', 'https://www.greenmangaming.com/blog/wp-content/uploads/2021/10/Demon-Slayer-Kimetsu-no-Yaiba-The-Hinokami-Chronicles.jpg')
   ON CONFLICT DO NOTHING;
 
 INSERT INTO camps(host_id, camp_name, price, star_rating, location, description) VALUES
-  (1, 'Camp Expensive', 200, 5, 'Mountain View', 'Cozy AF'),
-  (1, 'Camp Cheap', 100, 2, 'Mountain View', 'Not Cozy AF'),
-  (1, 'Camp Fake', 0, 0, 'Mountain View', 'Fake place, doesnt exist'),
-  (2, 'My Personal Camp', 215, 5, 'Sunnyvale', 'My special camp'),
-  (2, 'My Not Personal Camp', 150, 3, 'Palo Alto', 'Comes with free boba'),
-  (3, 'Camp Mars', 1000, 5, 'Mars', 'Greetings human')
+  (1, 'Camp Pristine', 600, 5, 'Mountain View', 'Great views in Mountain View'),
+  (1, 'Camp Privileged', 400, 4, 'Palo Alto', 'For the 1%'),
+  (1, 'GlampCamp with Character', 150, 2, 'Tenderloin, San Francisco', 'Not for the faint of heart'),
+  (2, 'Camp Flavor', 215, 5, 'East Oakland', 'Good Times had by all, come hear me out'),
+  (2, 'Hipster Paradise', 150, 3, 'Santa Clara', 'Comes with free boba'),
+  (3, 'Camp Mars', 1000, 5, 'Outer Space', 'Greetings human'),
+  (3, 'Camp Go Anywhere', 50, 5, 'Anywhere', 'Hello World')
+
   ON CONFLICT DO NOTHING;
 
 INSERT INTO reservations(camp_id, client_id, confirmed) VALUES
@@ -97,7 +99,8 @@ INSERT INTO camp_dates(camp_id ,client_id ,dates ,reserved ) VALUES
   (5, null, '2022-12-25', FALSE),
   (6, 1, '2023-01-01', TRUE),
   (6, 1, '2020-10-10', TRUE),
-  (6, 1, '2020-10-11', TRUE)
+  (6, 1, '2020-10-11', TRUE),
+  (1, null, '2022-11-10', FALSE)
   ON CONFLICT DO NOTHING;
 
 INSERT INTO reserves_dates(reserve_id,dates) VALUES
@@ -111,19 +114,24 @@ INSERT INTO reserves_dates(reserve_id,dates) VALUES
   ON CONFLICT DO NOTHING;
 
 INSERT INTO photos(camp_id, photo_url) VALUES
-  (1, 'https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,g_auto,h_630,q_60,w_1200/v1652453103/campground-photos/shgam6kwlyuu7cvblkth.jpg'),
-  (2, 'https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,g_auto,h_630,q_60,w_1200/v1652453103/campground-photos/shgam6kwlyuu7cvblkth.jpg'),
-  (3, 'https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,g_auto,h_630,q_60,w_1200/v1652453103/campground-photos/shgam6kwlyuu7cvblkth.jpg'),
-  (4, 'https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,g_auto,h_630,q_60,w_1200/v1652453103/campground-photos/shgam6kwlyuu7cvblkth.jpg'),
-  (5, 'https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,g_auto,h_630,q_60,w_1200/v1652453103/campground-photos/shgam6kwlyuu7cvblkth.jpg'),
-  (6, 'https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,g_auto,h_630,q_60,w_1200/v1652453103/campground-photos/shgam6kwlyuu7cvblkth.jpg'),
-  (6, 'https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,g_auto,h_630,q_60,w_1200/v1652453103/campground-photos/shgam6kwlyuu7cvblkth.jpg'),
-  (1, 'https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,g_auto,h_630,q_60,w_1200/v1652453103/campground-photos/shgam6kwlyuu7cvblkth.jpg'),
-  (6, 'https://hipcamp-res.cloudinary.com/image/upload/c_fill,f_auto,g_auto,h_630,q_60,w_1200/v1652453103/campground-photos/shgam6kwlyuu7cvblkth.jpg')
+  (1, 'https://travelsofsarahfay.com/wp-content/uploads/2020/10/GetawayHouseinFall-1080x675.jpg'),
+  (2, 'https://www.myglobalviewpoint.com/wp-content/uploads/2021/04/1a-Beautiful-Secluded-Log-Home-5-Minutes-from-Town.jpg'),
+  (3, 'https://images.unsplash.com/photo-1589129140837-67287c22521b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=701&q=80'),
+  (4, 'http://texastravel365.com/wp-content/uploads/2022/03/luxury-cabins-in-texas-a-frame-1.jpg'),
+  (5, 'https://www.livelikeitstheweekend.com/wp-content/uploads/2020/02/Best-Glamping-in-California_.jpg'),
+  (6, 'https://www.sunset.com/wp-content/uploads/medium_2x/1-getaway-los-angeles-outpost-pr-1118.jpg'),
+  (6, 'https://cdn.cnn.com/cnnnext/dam/assets/210428132426-getaway-house-window-full-169.jpg'),
+  (1, 'https://images.ctfassets.net/su91f9ruo9t2/2JVT9m4h5y4xAe4qYUs1Eh/22c582968999391b3292f82626979273/Website_CityPage__LA_01_Spring.jpg'),
+  (6, 'https://manofmany.com/wp-content/uploads/2021/11/GFC-Campers-V2-Back-lifestyle-sunset-1200x900.jpg')
   ON CONFLICT DO NOTHING;
 
 INSERT INTO reviews(camp_id , client_id, star_rating, review_photo, review) VALUES
-  (6, 1, 5, 'https://cdn.thewirecutter.com/wp-content/media/2022/06/summer-camp-2048px-1199232997-2x1-1.jpg?auto=webp&quality=75&crop=2:1&width=1024', 'Awesome place! Out of this world!!')
+  (3, 1, 5, 'https://cdn.thewirecutter.com/wp-content/media/2022/06/summer-camp-2048px-1199232997-2x1-1.jpg?auto=webp&quality=75&crop=2:1&width=1024', 'Awesome place! Out of this world!!'),
+  (2, 2, 5, 'https://images.squarespace-cdn.com/content/v1/59bb61daf6576ef9831f52be/1508890975637-2YBAC6JFZ4LZ533869N6/clayoquot.jpg', 'Best vacation ever!!'),
+  (1, 3, 5, 'https://res.cloudinary.com/deb1jjsn0/image/upload/v1669503129/yei6bf744vkpsihobqob.jpg', 'Amazing Glamping Experience! The Whole family enjoyed it!!'),
+  (3, 1, 4, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQvvt3lJNuD85yjk_qgFRrpurjBYlr3y4g3yg&usqp=CAU', 'Had a great time...definitely recommend to friends and family'),
+  (1, 3, 4, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTiJl247TjUt5f2s2Ldg-kcn9FhCcDF3YFlSg&usqp=CAU', 'Refreshing and revitalizing vacay...time and money well spent!'),
+  (2, 2, 1, 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTmlsRKYuRpZkAHfa22hF2REY_9mGr1Ejv02Q&usqp=CAU', 'I would have had more fun pitching a tent in my backyard...total ripoff')
   ON CONFLICT DO NOTHING;
 
 -- Create a database called glampcamp on postgres, then running the following code below

@@ -47,7 +47,7 @@ export default function Homepage({ route, navigation }) {
 
   return (
     <View style={styles.container}>
-      <Search navigation={navigation}/>
+      <Search navigation={navigation} />
       <Filter setFilter={setFilter} filter={filter} />
       <Feed campsites={campsites} navigation={navigation} location={location} />
       <Nav navigation={navigation} />

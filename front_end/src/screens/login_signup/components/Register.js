@@ -64,100 +64,92 @@ const Register = ({ navigation }) => {
 
   return (
     <View style={styles.mainView}>
-      <View style={styles.TopView}>
-        <Image
-          style={styles.ImageStyle}
-          source={require('../../../../assets/logo.png')}
+      {/* <ScrollView style={styles.BottomView}> */}
+      <BackArrow
+        onPress={navigate}
+        style={styles.Icon}
+        name='chevron-left'
+        size={48}
+        color={'#fff'}></BackArrow>
+      <Text style={styles.Heading}>Create Account</Text>
+      <View style={styles.FormView}>
+        <TextInput
+          onChangeText={(newText) =>
+            setSignUpForm({ ...signUpForm, first_name: newText })
+          }
+          value={signUpForm.first_name}
+          placeholder={'First Name*'}
+          placeholderTextColor={'#fff'}
+          style={styles.TextInput}
         />
+        <TextInput
+          onChangeText={(newText) =>
+            setSignUpForm({ ...signUpForm, last_name: newText })
+          }
+          value={signUpForm.last_name}
+          placeholder={'Last Name*'}
+          placeholderTextColor={'#fff'}
+          style={styles.TextInput}
+        />
+        <TextInput
+          onChangeText={(newText) =>
+            setSignUpForm({ ...signUpForm, username: newText })
+          }
+          value={signUpForm.username}
+          placeholder={'Username*'}
+          placeholderTextColor={'#fff'}
+          style={styles.TextInput}
+        />
+        <TextInput
+          onChangeText={(newText) =>
+            setSignUpForm({ ...signUpForm, location: newText })
+          }
+          value={signUpForm.location}
+          placeholder={'Street Address*'}
+          placeholderTextColor={'#fff'}
+          style={styles.TextInput}
+        />
+        <TextInput
+          onChangeText={(newText) =>
+            setSignUpForm({ ...signUpForm, password: newText })
+          }
+          value={signUpForm.password}
+          placeholder={'Password*'}
+          placeholderTextColor={'#fff'}
+          style={styles.TextInput}
+          secureTextEntry={true}
+        />
+        <TextInput
+          placeholder={'Confirm Password*'}
+          placeholderTextColor={'#fff'}
+          style={styles.TextInput}
+          secureTextEntry={true}
+        />
+        <AddUserPhoto
+          signUpForm={signUpForm}
+          setSignUpForm={setSignUpForm}></AddUserPhoto>
+        {/* <Text style={styles.ButtonText}>Upload Profile Photo</Text> */}
+        <TouchableOpacity
+          onPress={() => {
+            handleUserRegister();
+            navigate();
+          }}
+          style={styles.Button}>
+          <Text style={styles.ButtonText}>Sign Up</Text>
+        </TouchableOpacity>
       </View>
-      <ScrollView style={styles.BottomView}>
-        <BackArrow
-          onPress={navigate}
-          style={styles.Icon}
-          name='chevron-left'
-          size={60}
-          color={'#fff'}></BackArrow>
-        <Text style={styles.Heading}>Create {'\n'}Account</Text>
-        <View style={styles.FormView}>
-          <TextInput
-            onChangeText={(newText) =>
-              setSignUpForm({ ...signUpForm, first_name: newText })
-            }
-            value={signUpForm.first_name}
-            placeholder={'First Name*'}
-            placeholderTextColor={'#fff'}
-            style={styles.TextInput}
-          />
-          <TextInput
-            onChangeText={(newText) =>
-              setSignUpForm({ ...signUpForm, last_name: newText })
-            }
-            value={signUpForm.last_name}
-            placeholder={'Last Name*'}
-            placeholderTextColor={'#fff'}
-            style={styles.TextInput}
-          />
-          <TextInput
-            onChangeText={(newText) =>
-              setSignUpForm({ ...signUpForm, username: newText })
-            }
-            value={signUpForm.username}
-            placeholder={'Username*'}
-            placeholderTextColor={'#fff'}
-            style={styles.TextInput}
-          />
-          <TextInput
-            onChangeText={(newText) =>
-              setSignUpForm({ ...signUpForm, location: newText })
-            }
-            value={signUpForm.location}
-            placeholder={'Street Address*'}
-            placeholderTextColor={'#fff'}
-            style={styles.TextInput}
-          />
-          <TextInput
-            onChangeText={(newText) =>
-              setSignUpForm({ ...signUpForm, password: newText })
-            }
-            value={signUpForm.password}
-            placeholder={'Password*'}
-            placeholderTextColor={'#fff'}
-            style={styles.TextInput}
-            secureTextEntry={true}
-          />
-          <TextInput
-            placeholder={'Confirm Password*'}
-            placeholderTextColor={'#fff'}
-            style={styles.TextInput}
-            secureTextEntry={true}
-          />
-
-          <AddUserPhoto
-            signUpForm={signUpForm}
-            setSignUpForm={setSignUpForm}></AddUserPhoto>
-          {/* <Text style={styles.ButtonText}>Upload Profile Photo</Text> */}
-
-          <TouchableOpacity
-            onPress={() => {
-              handleUserRegister();
-              navigate();
-            }}
-            style={styles.Button}>
-            <Text style={styles.ButtonText}>Sign Up</Text>
-          </TouchableOpacity>
-        </View>
-      </ScrollView>
+      {/* </ScrollView> */}
     </View>
   );
 };
 
 const styles = StyleSheet.create({
   mainView: {
-    marginTop: 40,
     flex: 1,
+    display: 'flex',
     flexDirection: 'column',
     justifyContent: 'center',
-    alignItems: 'center',
+    backgroundColor: '#5b8e7d',
   },
   TopView: {
     width: '100%',
@@ -169,17 +161,16 @@ const styles = StyleSheet.create({
   BottomView: {
     width: '100%',
     height: '80%',
-
     backgroundColor: '#000',
     borderTopLeftRadius: 30,
     borderTopRightRadius: 30,
   },
   ImageStyle: { width: '60%', height: '60%', resizeMode: 'contain' },
   Heading: {
-    color: '#fff',
+    color: 'white',
     fontSize: 40,
     fontWeight: 'bold',
-    marginLeft: 30,
+    marginLeft: 46,
     marginTop: 5,
   },
   TextInput: {
@@ -204,7 +195,10 @@ const styles = StyleSheet.create({
     width: '90%',
     color: '#000',
     height: 52,
-    backgroundColor: 'grey',
+    // backgroundColor: 'lightgrey',
+    backgroundColor: '#F4E285',
+    // backgroundColor: '#f4a259',
+
     borderRadius: 10,
     marginTop: 20,
     display: 'flex',
@@ -230,8 +224,9 @@ const styles = StyleSheet.create({
     marginTop: 20,
   },
   Icon: {
-    marginLeft: 5,
-    marginTop: 10,
+    marginLeft: 10,
+    marginBottom: 25,
+    color: 'white',
   },
 });
 export default Register;

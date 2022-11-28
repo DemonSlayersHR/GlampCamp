@@ -12,7 +12,7 @@ import axios from 'axios';
 import Calendar from './components/Calendar';
 import Overview from './components/Overview';
 import Footer from './components/Footer';
-import HostInfo from './components/HostInfo'
+import HostInfo from './components/HostInfo';
 import SingleReview from './components/SingleReview.js';
 
 export default function SingleCampsite({
@@ -28,7 +28,7 @@ export default function SingleCampsite({
     <View style={styles.container}>
       <ScrollView style={{ marginBottom: 100 }}>
         {/* overview */}
-        <Overview campsite={campsite} navigation={navigation}/>
+        <Overview campsite={campsite} navigation={navigation} />
         {/* calendar */}
         <Calendar
           setAvailabilityButtonClicked={setAvailabilityButtonClicked}
@@ -40,29 +40,32 @@ export default function SingleCampsite({
         <View style={styles.paddedDivider}>
           <View style={styles.divider}></View>
           <TouchableOpacity style={{ paddingTop: 10 }}>
-            <Text style={{fontSize: 18, fontWeight: '600'}}>
-              ★ {parseInt(campsite.star_rating).toFixed(1) || 3}{' '}•{' '}
-              {campsite.reviews?.length || 0} Reviews
+            <Text style={{ fontSize: 18, fontWeight: '600' }}>
+              ★{' '}
+              {campsite.star_rating
+                ? parseInt(campsite.star_rating).toFixed(1)
+                : 0}{' '}
+              • {campsite.reviews?.length || 0} Reviews
             </Text>
           </TouchableOpacity>
-        {campsite?.reviews && (
-          <ScrollView horizontal={true} style={styles.reviewsContainer}>
-            {campsite.reviews.map((review, index) => {
-              return <SingleReview key={index} review={review} />;
-            })}
-          </ScrollView>
-        )}
+          {campsite?.reviews && (
+            <ScrollView horizontal={true} style={styles.reviewsContainer}>
+              {campsite.reviews.map((review, index) => {
+                return <SingleReview key={index} review={review} />;
+              })}
+            </ScrollView>
+          )}
         </View>
 
         {/* host */}
         <View style={styles.paddedDivider}>
           <View style={styles.divider}></View>
-          <HostInfo navigation={navigation} campsite={campsite}/>
+          <HostInfo navigation={navigation} campsite={campsite} />
         </View>
       </ScrollView>
 
       {/* footer */}
-      <Footer campsite={campsite} dates={dates}/>
+      <Footer campsite={campsite} dates={dates} navigation={navigation} />
     </View>
   );
 }
@@ -78,8 +81,8 @@ const styles = StyleSheet.create({
     paddingTop: 10,
   },
   paddedDivider: {
-    paddingLeft:20,
-    paddingRight:20,
+    paddingLeft: 20,
+    paddingRight: 20,
     paddingBottom: 10,
   },
   divider: {

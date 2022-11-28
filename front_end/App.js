@@ -11,6 +11,7 @@ import StarRating from './src/screens/reviews/StarRating.js';
 import Search from './src/screens/search/Search';
 import Messaging from './src/screens/messaging/Messaging.js';
 import SingleCampsite from './src/screens/campsite/SingleCampsite.js';
+import Reservation from './src/screens/reservation/Reservation';
 
 import { useState } from 'react';
 const Stack = createNativeStackNavigator();
@@ -60,6 +61,11 @@ export default function App() {
           <Stack.Screen
             name='messaging'
             component={Messaging}
+            option={{ headerShown: false }}
+          />
+          <Stack.Screen
+            name='Request to book'
+            component={Reservation}
             option={{ headerShown: false }}
           />
         </Stack.Navigator>
