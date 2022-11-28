@@ -1,174 +1,220 @@
 import React, { useEffect, useState, useRef } from 'react';
-import { Button, Image, Text, TextInput, View, ScrollView, StyleSheet } from 'react-native';
+import {
+  Button,
+  Image,
+  Text,
+  TextInput,
+  View,
+  ScrollView,
+  StyleSheet,
+} from 'react-native';
 import { io } from 'socket.io-client';
-import BackArrow from 'react-native-vector-icons/Feather'
+import BackArrow from 'react-native-vector-icons/Feather';
 import axios from 'axios';
 import SingleCampsite from '../campsite/SingleCampsite.js';
 import { URL } from '../../../config.js';
-
-
+import moment from 'moment';
 const Messaging = ({ route, navigation }) => {
   // ^ need {reserve_id, user_type}
   // ------------------------------ SET UP ------------------------------
 
   // test type, remove on production
-  const reserve_id = useRef(3)
+  const reserve_id = useRef(3);
 
   // toggles test
-  const connectionTest = true
+  const connectionTest = false;
 
-  // set up socket connection (must be first)
-  // const socket = io.connect(`http://${URL}:3000`,
-  //   {
-  //     withCredentials: true,
-  //   });
-
-  //set up states
-  // const [isConnected, setIsConnected] = useState(socket.connected);
-  // const [lastPong, setLastPong] = useState(null);
-  const [messages, setMessages] = useState([])
-  const [text, setText] = useState('')
-  const meta = useRef(null)
+  const [messages, setMessages] = useState([]);
+  const [text, setText] = useState('');
+  const meta = useRef(null);
 
   // remove these 2 states once we have actual props
-  const [user_type, setUser_type] = useState('host')
-  const [user_id, setUser_id] = useState(1)
+  const [user_type, setUser_type] = useState('host');
+  const [user_id, setUser_id] = useState(1);
 
   useEffect(() => {
-    axios.get(`http://${URL}:3000/chats/meta?reserve_id=${reserve_id.current}`)
-      .then(result => meta.current = result.data)
+    axios
+      .get(`http://${URL}:3000/chats/meta?reserve_id=${reserve_id.current}`)
+      .then((result) => (meta.current = result.data));
 
-    axios.get(`http://${URL}:3000/chats?reserve_id=${reserve_id.current}`)
-      .then(result => setMessages(result.data))
+    axios
+      .get(`http://${URL}:3000/chats?reserve_id=${reserve_id.current}`)
+      .then((result) => setMessages(result.data));
 
     setInterval(async () => {
-      const result = await axios.get(`http://${URL}:3000/chats?reserve_id=${reserve_id.current}`)
-      setMessages(result.data)
-    }, 1000)
-    // socket.on('connect', () => {
-    //   setIsConnected(true);
-    // });
-
-    // socket.on('disconnect', () => {
-    //   setIsConnected(false);
-    // });
-
-    // socket.on('pong', () => {
-    //   setLastPong(new Date().toISOString());
-    // });
-
-    // return () => {
-    //   socket.off('connect');
-    //   socket.off('disconnect');
-    //   socket.off('pong');
-    // };
+      const result = await axios.get(
+        `http://${URL}:3000/chats?reserve_id=${reserve_id.current}`
+      );
+      setMessages(result.data);
+    }, 1000);
   }, []);
 
-  // useEffect(() => {
-  //   socket.on('chat message', (msg) => {
-  //     setMessages([...messages, msg])
-  //   })
-  // }, [socket, messages])
   // ------------------------------ FUNCTIONS ------------------------------
 
-  // const sendPing = () => {
-  //   socket.emit('ping');
-  // }
-
   const sendMessage = (e) => {
-    e.preventDefault()
-    axios.post(`http://${URL}:3000/chats/`, { messages: text, sender: user_id, reserve_id: reserve_id.current })
-    setMessages([...messages, { messages: text, sender: user_id, reserve_id: reserve_id.current }])
-    // socket.emit('chat message', { messages: text, sender: user_id, reserve_id: reserve_id.current })
-    setText('')
-  }
+    e.preventDefault();
+
+    axios.post(`http://${URL}:3000/chats/`, {
+      messages: text,
+      sender: user_id,
+      reserve_id: reserve_id.current,
+    });
+    setMessages([
+      ...messages,
+      { messages: text, sender: user_id, reserve_id: reserve_id.current },
+    ]);
+    setText('');
+  };
 
   const confirmRes = (e) => {
-    e.preventDefault()
-    axios.put(`http://${URL}:3000/reservation`, { reserve_id: reserve_id.current })
-  }
+    e.preventDefault();
+    axios.put(`http://${URL}:3000/reservation`, {
+      reserve_id: reserve_id.current,
+    });
+  };
 
   const changeType = (e) => {
     if (e.target.value === 'client') {
-      setUser_type('client')
-      setUser_id(3)
+      setUser_type('client');
+      setUser_id(3);
     }
     if (e.target.value === 'host') {
-      setUser_type('host')
-      setUser_id(1)
+      setUser_type('host');
+      setUser_id(1);
     }
-  }
+  };
   // literally here just to get react to shut up about keys
-  var count = 0
+  var count = 0;
 
   // ------------------------------ DIV ------------------------------
   return (
-    <View>
-      <View style={styles.header} >
-        <BackArrow name='chevron-left' size={'5vh'} color={'grey'}></BackArrow>
+    <View style={styles.container}>
+      <View style={styles.header}>
+        <BackArrow name='chevron-left' size={'5%'} color={'grey'}></BackArrow>
         <Text></Text>
-        {user_type === 'host' && <Button title="Confirm Reservation" onPress={confirmRes} style={styles.confirmBtn}></Button>}
+        {user_type === 'host' && (
+          <Button
+            title='Confirm Reservation'
+            onPress={confirmRes}
+            style={styles.confirmBtn}></Button>
+        )}
       </View>
       <ScrollView style={styles.messages}>
-        {messages.map(entry => {
+        {messages.map((entry, index) => {
           if (entry.reserve_id === reserve_id.current) {
             if (user_id === entry.sender) {
-              return <Text key={count++} style={styles.sender}>{entry.messages}</Text>
+              return (
+                <View key={count++} style={styles.textBubbleSender}>
+                  <Text style={styles.sender}>{entry.messages}</Text>
+                  <Text
+                    style={{
+                      color: 'gray',
+                      fontSize: 11,
+                      marginTop: 2,
+                    }}>{`${moment(entry.created_on).fromNow()}`}</Text>
+                </View>
+              );
             } else {
-              return <Text key={count++} style={styles.reciever}>{entry.messages}</Text>
+              return (
+                <View key={count++} style={styles.textBubbleReceiver}>
+                  <Text style={styles.receiver}>{entry.messages}</Text>
+                  <Text
+                    style={{
+                      color: 'gray',
+                      fontSize: 11,
+                      marginTop: 2,
+                    }}>{`${moment(entry.created_on).fromNow()}`}</Text>
+                </View>
+              );
             }
           }
         })}
       </ScrollView>
       <View style={styles.form}>
-        <TextInput value={text} onChange={(e) => setText(e.target.value)} style={styles.input}></TextInput>
+        <TextInput
+          value={text}
+          onChangeText={(e) => {
+            setText(e);
+          }}
+          style={styles.input}></TextInput>
         <Button title='Send' onPress={sendMessage}></Button>
       </View>
-      {connectionTest && <View>
-        {/* <p>Connected: {'' + isConnected}</p>
-        <p>Last pong: {lastPong || '-'}</p>
-        <button onClick={sendPing}>Send ping</button> */}
-        <select onChange={changeType}>
-          <option value='host'>host</option>
-          <option value='client'>client</option>
-        </select>
-      </View>}
+      {connectionTest && (
+        <View>
+          <select onChange={changeType}>
+            <option value='host'>host</option>
+            <option value='client'>client</option>
+          </select>
+        </View>
+      )}
     </View>
   );
 };
 
-
 const styles = StyleSheet.create({
+  container: {
+    paddingBottom: 100,
+    padding: 20,
+    backgroundColor: 'white',
+  },
   messages: {
-    height: '89vh',
-    'border-top': '1px solid black'
+    height: '89%',
   },
   form: {
-    display: 'grid',
-    'grid-template-columns': '9fr 1fr',
-    height: '5vh'
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
+    height: '15%',
   },
   input: {
-    border: '1px solid black'
+    borderWidth: 1,
+    borderColor: 'rgba(158, 150, 150, .5)',
+    borderRadius: 20,
+    marginLeft: 20,
+    marginRight: 5,
+    height: 40,
+    width: '80%',
+    padding: 10,
+  },
+  textBubbleSender: {
+    alignItems: 'flex-end',
+    marginBottom: 5,
+  },
+  textBubbleReceiver: {
+    alignItems: 'flex-start',
+    marginBottom: 5,
   },
   header: {
-    display: 'grid',
-    'grid-template-columns': '2fr 6fr 2fr',
-    height: '5vh',
-    // 'border-bottom': '2px solid black',
-    'margin-bottom': '1vh'
+    height: '8%',
+    marginBottom: '1%',
   },
   confirmBtn: {
-    height: '100%',
-    float: 'right'
+    padding: 10,
+    margin: 10,
+    borderWidth: 1,
+    borderRadius: 10,
+    borderColor: '#F4A259',
+    backgroundColor: '#F4A259',
   },
   sender: {
-    textAlign: 'right'
+    textAlign: 'right',
+    borderWidth: 1,
+    borderRadius: 20,
+    borderColor: 'rgba(158, 150, 150, .5)',
+    padding: 10,
+    backgroundColor: 'lightpink',
+    overflow: 'hidden',
+    marginLeft: 100,
   },
-  reciever: {
-
-  }
-}
-)
+  receiver: {
+    borderWidth: 1,
+    borderRadius: 20,
+    padding: 10,
+    backgroundColor: 'lightblue',
+    borderColor: 'rgba(158, 150, 150, .5)',
+    overflow: 'hidden',
+    marginRight: 100,
+  },
+});
 
 export default Messaging;
