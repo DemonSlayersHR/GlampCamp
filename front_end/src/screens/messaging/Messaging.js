@@ -15,28 +15,38 @@ import SingleCampsite from '../campsite/SingleCampsite.js';
 import { URL } from '../../../config.js';
 import moment from 'moment';
 const Messaging = ({ route, navigation }) => {
-  // ^ need {reserve_id, user_type}
   // ------------------------------ SET UP ------------------------------
 
   // test type, remove on productions
-  // const reserve_id = route.params.campsite.camp_id || useRef(3);
-  const reserve_id = useRef(3);
+  const reserve_id = useRef(route.params.reserve_id) || useRef(3);
+  // const reserve_id = useRef(3);
 
   // toggles test
   const connectionTest = false;
 
   const [messages, setMessages] = useState([]);
   const [text, setText] = useState('');
+  const [reserved, setReserved] = useState(false);
   const meta = useRef(null);
 
   // remove these 2 states once we have actual props
-  const [user_type, setUser_type] = useState('host');
+  const [user_type, setUser_type] = useState(
+    route.params.user_type || 'client'
+  );
   const [user_id, setUser_id] = useState(1);
 
   useEffect(() => {
     axios
       .get(`http://${URL}:3000/chats/meta?reserve_id=${reserve_id.current}`)
-      .then((result) => (meta.current = result.data));
+      .then((result) => {
+        setReserved(result.data.confirmed);
+        if (user_type === 'client') {
+          setUser_id(result.data.client_id);
+        } else {
+          setUser_id(result.data.host_id);
+        }
+        meta.current = result.data;
+      });
 
     axios
       .get(`http://${URL}:3000/chats?reserve_id=${reserve_id.current}`)
@@ -93,12 +103,16 @@ const Messaging = ({ route, navigation }) => {
       <View style={styles.header}>
         <BackArrow name='chevron-left' size={'5%'} color={'grey'}></BackArrow>
         <Text></Text>
-        {user_type === 'host' && (
+        {user_type === 'host' && reserved === false && (
           <Button
             title='Confirm Reservation'
             onPress={confirmRes}
             style={styles.confirmBtn}></Button>
         )}
+        {user_type === 'host' && reserved === true && (
+          <Text>Reservation confirmed!</Text>
+        )}
+        {user_type === 'client' && <Text>Reservation Pending...</Text>}
       </View>
       <ScrollView style={styles.messages}>
         {messages.map((entry, index) => {
@@ -107,24 +121,30 @@ const Messaging = ({ route, navigation }) => {
               return (
                 <View key={count++} style={styles.textBubbleSender}>
                   <Text style={styles.sender}>{entry.messages}</Text>
-                  <Text
-                    style={{
-                      color: 'gray',
-                      fontSize: 11,
-                      marginTop: 2,
-                    }}>{`${moment(entry.created_on).fromNow()}`}</Text>
+                  {index === messages.length - 1 ||
+                  messages[index + 1].sender !== user_id ? (
+                    <Text
+                      style={{
+                        color: 'gray',
+                        fontSize: 11,
+                        marginTop: 2,
+                      }}>{`${moment(entry.created_on).fromNow()}`}</Text>
+                  ) : null}
                 </View>
               );
             } else {
               return (
                 <View key={count++} style={styles.textBubbleReceiver}>
                   <Text style={styles.receiver}>{entry.messages}</Text>
-                  <Text
-                    style={{
-                      color: 'gray',
-                      fontSize: 11,
-                      marginTop: 2,
-                    }}>{`${moment(entry.created_on).fromNow()}`}</Text>
+                  {index === messages.length - 1 ||
+                  messages[index + 1].sender === user_id ? (
+                    <Text
+                      style={{
+                        color: 'gray',
+                        fontSize: 11,
+                        marginTop: 2,
+                      }}>{`${moment(entry.created_on).fromNow()}`}</Text>
+                  ) : null}
                 </View>
               );
             }
@@ -174,7 +194,7 @@ const styles = StyleSheet.create({
     marginLeft: 20,
     marginRight: 5,
     height: 40,
-    width: '80%',
+    width: '85%',
     padding: 10,
   },
   textBubbleSender: {
@@ -203,7 +223,7 @@ const styles = StyleSheet.create({
     borderRadius: 20,
     borderColor: 'rgba(158, 150, 150, .5)',
     padding: 10,
-    backgroundColor: 'lightpink',
+    backgroundColor: '#FFE6EE',
     overflow: 'hidden',
     marginLeft: 100,
   },
@@ -211,7 +231,7 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderRadius: 20,
     padding: 10,
-    backgroundColor: 'lightblue',
+    backgroundColor: '#DBF3FA',
     borderColor: 'rgba(158, 150, 150, .5)',
     overflow: 'hidden',
     marginRight: 100,

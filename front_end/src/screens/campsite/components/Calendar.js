@@ -3,15 +3,32 @@ import { Button, StyleSheet, Text, View } from 'react-native';
 import axios from 'axios';
 import CalendarPicker from 'react-native-calendar-picker';
 
-const Calendar = ({ campsite, loggedIn, setAvailabilityButtonClicked, dates, setDates}) => {
+const Calendar = ({
+  campsite,
+  loggedIn,
+  setAvailabilityButtonClicked,
+  dates,
+  setDates,
+}) => {
   loggedIn = loggedIn || true;
 
   const [selectedStartDate, setSelectedStartDate] = useState();
   const [allowRangeSelection, setAllowRangeSelection] = useState(false);
 
-  function disableSelectingPast(date){
-    const today = new Date()
-    return date < today
+  function disableSelectingPast(date) {
+    const today = new Date();
+    const availableDates = [];
+    campsite.dates?.forEach((campDates) => {
+      if (!campDates.reserved) {
+        availableDates.push(
+          new Date(campDates.date).toISOString().slice(0, 10)
+        );
+      }
+    });
+    return (
+      date < today &&
+      !availableDates.includes(new Date(date).toISOString().slice(0, 10))
+    );
   }
 
   const getDaysArray = (start, end) => {
@@ -30,12 +47,7 @@ const Calendar = ({ campsite, loggedIn, setAvailabilityButtonClicked, dates, set
 
   // change to date format yyyy-mm-dd for axios post request
   const convertToDateFormat = (date) => {
-    let stringDate =
-      date._i.year +
-      '-' +
-      (Number(date._i.month) + 1).toString() +
-      '-' +
-      (Number(date._i.day) + 1).toString();
+    let stringDate = date._d.toISOString().slice(0, 10);
     return stringDate;
   };
 
@@ -44,39 +56,17 @@ const Calendar = ({ campsite, loggedIn, setAvailabilityButtonClicked, dates, set
     setDates([...dates, string]);
   };
 
-  const reserveDates = () => {
-    if (dates.length === 2) {
-      var daylist = getDaysArray(new Date(dates[0]), new Date(dates[1]));
-      setDates(daylist);
-      axios
-        .post(`http://${URL}:3000/reservation`, {
-          camp_id: campsite.camp_id,
-          client_id: 3,
-          dates: daylist,
-        })
-        .then((results) => {
-          console.log(
-            'results from successful axios request to add a reservation',
-            results
-          );
-          setAvailabilityButtonClicked(false);
-        })
-        .catch((error) => {
-          console.log('error', error);
-        });
-    }
-  };
-
   return (
     <View style={styles.container}>
       <CalendarPicker
-        onDateChange={onDateChange}
+        onDateChange={(date, startOrEnd) => {
+          onDateChange(date, startOrEnd);
+        }}
         allowRangeSelection={true}
         disabledDates={disableSelectingPast}
-        selectedDayColor="#f7f7f7"
+        selectedDayColor='#f7f7f7'
         // selectedRangeStyle="F4A259"
       />
-      <Button title='Reserve Dates' color='#BC4B51' onPress={reserveDates} />
     </View>
   );
 };

@@ -1,21 +1,50 @@
-import React, {useEffect, useState} from 'react';
-import { Image, Text, View, ScrollView, StyleSheet, Pressable } from 'react-native';
+import React, { useEffect, useState, useContext } from 'react';
+import { UserContext } from '../../../context/UserContext';
+import {
+  Image,
+  Text,
+  View,
+  ScrollView,
+  StyleSheet,
+  Pressable,
+} from 'react-native';
 
-export default function Footer ({campsite, dates}){
-  const months = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+export default function Footer({ campsite, dates, navigation, guests }) {
+  const { user, setUser } = useContext(UserContext);
 
-  function Dates(){
-    if (dates.length>1){
-      let start = `${months[dates[0].split('-')[1]-1]} ${dates[0].split('-')[2]}`
-      let end = `${months[dates[1].split('-')[1]-1]} ${dates[1].split('-')[2]}`
+  const months = [
+    'Jan',
+    'Feb',
+    'Mar',
+    'Apr',
+    'May',
+    'Jun',
+    'Jul',
+    'Aug',
+    'Sep',
+    'Oct',
+    'Nov',
+    'Dec',
+  ];
 
-      if (start.split(' ')[0] === end.split(' ')[0]){
-        return `${start.split(' ')[0]} ${start.split(' ')[1]} - ${end.split(' ')[1]}`
+  function Dates() {
+    if (dates.length > 1) {
+      let start = `${months[dates[0]?.split('-')[1] - 1]} ${
+        dates[0]?.split('-')[2]
+      }`;
+      let end = `${months[dates[1]?.split('-')[1] - 1]} ${
+        dates[1].split('-')[2]
+      }`;
+
+      if (start.split(' ')[0] === end.split(' ')[0]) {
+        return `${start.split(' ')[0]} ${start.split(' ')[1]} - ${
+          end.split(' ')[1]
+        }`;
       } else {
-        return `${start} - ${end}`
+        return `${start} - ${end}`;
       }
     } else {
-      return 'Select dates'
+      return 'Select dates';
     }
   }
 
@@ -23,12 +52,29 @@ export default function Footer ({campsite, dates}){
     <View style={styles.container}>
       <View style={styles.footerItems}>
         <View>
-          <Text style={{fontWeight: '600'}}>${campsite.price} <Text style={{color: 'gray'}}>/night</Text></Text>
-          <Text style={{fontSize: 13, textDecorationLine: 'underline'}}>{Dates()}</Text>
+          <Text style={{ fontWeight: '600' }}>
+            ${campsite.price} <Text style={{ color: 'gray' }}>/night</Text>
+          </Text>
+          <Text style={{ fontSize: 13, textDecorationLine: 'underline' }}>
+            {Dates()}
+          </Text>
         </View>
-        <Pressable>
+        <Pressable
+          onPress={() => {
+            if (Object.keys(user).length > 0) {
+              if (dates.length > 0) {
+                navigation.navigate('Request to book', {
+                  campsite: campsite,
+                  dates: dates,
+                  guests: guests,
+                });
+              }
+            } else {
+              navigation.navigate('login');
+            }
+          }}>
           <View style={styles.reserveBtn}>
-            <Text style={{color: 'white', fontWeight: '600'}}>Reserve</Text>
+            <Text style={{ color: 'white', fontWeight: '600' }}>Reserve</Text>
           </View>
         </Pressable>
       </View>
@@ -42,7 +88,7 @@ const styles = StyleSheet.create({
     bottom: 0,
     height: 80,
     width: '100%',
-    borderTopWidth: .8,
+    borderTopWidth: 0.8,
     borderColor: 'rgba(158, 150, 150, .3)',
     backgroundColor: 'white',
   },
@@ -50,7 +96,7 @@ const styles = StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     height: '100%',
-    padding: 20
+    padding: 20,
   },
   reserveBtn: {
     backgroundColor: '#e80050',
@@ -59,6 +105,6 @@ const styles = StyleSheet.create({
     width: 90,
     flexDirection: 'row',
     justifyContent: 'center',
-    alignItems: 'center'
-  }
+    alignItems: 'center',
+  },
 });

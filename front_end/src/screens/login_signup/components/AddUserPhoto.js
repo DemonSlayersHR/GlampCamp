@@ -84,15 +84,17 @@ export default function AddUserPhoto({ setSignUpForm, signUpForm }) {
 
 const styles = StyleSheet.create({
   btn: {
-    padding: 9,
-    margin: 10,
-    borderWidth: 1,
+    padding: 15,
+    marginTop: 20,
+    // borderWidth: 1,
     borderRadius: 10,
+    width: '90%',
     borderColor: '#eee',
-    backgroundColor: '#FFADAD',
+    backgroundColor: 'lightgrey',
   },
   btnText: {
-    // fontSize: 20,
+    fontSize: 17,
+    color: 'black',
     textAlign: 'center',
     fontWeight: 'bold',
   },
