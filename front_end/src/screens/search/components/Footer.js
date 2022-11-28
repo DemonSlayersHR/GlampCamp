@@ -2,16 +2,18 @@ import { StyleSheet, Text, View, Pressable, Button } from 'react-native';
 import { useState } from 'react';
 import Icon from 'react-native-vector-icons/Ionicons';
 
-export default function Footer({navigation}) {
+export default function Footer({navigation, location, setLocation}) {
   const [selected, setSelected] = useState('Explore')
 
   return (
     <View style={styles.container}>
-        <Text style={styles.clearAll}>Clear all</Text>
-        <View style={styles.searchBtn}>
+        <Pressable onPress={() => setLocation(null)}>
+          <Text style={styles.clearAll}>Clear all</Text>
+        </Pressable>
+        <Pressable style={styles.searchBtn} onPress={() => navigation.navigate('homepage', {location: location})}>
           <Icon name="search" size={18} style={{marginRight: 10, color: '#fff'}}/>
           <Text style={{color: '#fff', fontWeight: 'bold'}}>Search</Text>
-        </View>
+        </Pressable>
     </View>
   );
 }

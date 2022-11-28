@@ -12,17 +12,36 @@ export default function Search({navigation}) {
   const [children, setChildren] = useState(0)
   const [infants, setInfants] = useState(0)
   const [pets, setPets] = useState(0)
+  const [location, setLocation] = useState(null)
+  const [selectedStartDate, setSelectedStartDate] = useState(null);
+  const [selectedEndDate, setSelectedEndDate] = useState(null);
+
+  function whenSubTitle(){
+    const month = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+    if (selectedStartDate && selectedEndDate) {
+      let start = `${month[parseInt(selectedStartDate.split('-')[1])-1]} ${selectedStartDate.split('-')[2]}`
+      let end = `${month[parseInt(selectedEndDate.split('-')[1])-1]} ${selectedEndDate.split('-')[2]}`
+
+      if (start.split(' ')[0] === end.split(' ')[0]){
+        return `${start.split(' ')[0]} ${start.split(' ')[1]} - ${end.split(' ')[1]}`
+      } else {
+        return `${start} - ${end}`
+      }
+    } else {
+      return 'Add dates'
+    }
+  }
 
   if (selected === 'Where') {
     return (
       <>
       <Back navigation={navigation}/>
       <View style={styles.container}>
-        <Where setSelected={setSelected}/>
-        <Extra title="When" subTitle="Add dates" setSelected={setSelected}/>
+        <Where setSelected={setSelected} setLocation={setLocation} setSelected={setSelected}/>
+        <Extra title="When" subTitle={whenSubTitle()} setSelected={setSelected} setSelected={setSelected}/>
         <Extra title="Who" subTitle="Add guests" setSelected={setSelected}/>
       </View>
-        <Footer/>
+        <Footer location={location} navigation={navigation} setLocation={setLocation}/>
       </>
     )
   }
@@ -32,8 +51,8 @@ export default function Search({navigation}) {
       <>
       <Back navigation={navigation}/>
       <View style={styles.container}>
-        <Extra title="Where" subTitle="I'm flexible" setSelected={setSelected}/>
-        <When setSelected={setSelected}/>
+        <Extra title="Where" subTitle={location ? location : "I'm flexible"} setSelected={setSelected}/>
+        <When setSelected={setSelected} selectedStartDate={selectedStartDate} setSelectedStartDate={setSelectedStartDate} selectedEndDate={selectedEndDate} setSelectedEndDate={setSelectedEndDate}/>
       </View>
       </>
     )
@@ -44,8 +63,9 @@ export default function Search({navigation}) {
       <>
       <Back navigation={navigation}/>
       <View style={styles.container}>
-        <Extra title="Where" subTitle="I'm flexible" setSelected={setSelected}/>
-        <Extra title="When" subTitle="Add guests" setSelected={setSelected}/>
+        <Extra title="Where"
+          subTitle={location ? location : "I'm flexible"} setSelected={setSelected}/>
+        <Extra title="When" subTitle={whenSubTitle()} setSelected={setSelected} />
         <Who
           adults={adults} setAdults={setAdults}
           children={children} setChildren={setChildren}
@@ -53,7 +73,7 @@ export default function Search({navigation}) {
           pets={pets} setPets={setPets}
           />
       </View>
-        <Footer/>
+        <Footer location={location} navigation={navigation} setLocation={setLocation}/>
       </>
     )
   }

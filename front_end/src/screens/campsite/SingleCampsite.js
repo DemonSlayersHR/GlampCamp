@@ -12,6 +12,7 @@ import axios from 'axios';
 import Calendar from './components/Calendar';
 import Overview from './components/Overview';
 import Footer from './components/Footer';
+import HostInfo from './components/HostInfo'
 import SingleReview from './components/SingleReview.js';
 
 export default function SingleCampsite({
@@ -38,8 +39,9 @@ export default function SingleCampsite({
           campsite={campsite}
         />
         {/* reviews */}
-        <View style={styles.divider}></View>
-        {!reviewsClicked && (
+        <View style={styles.paddedDivider}>
+          <View style={styles.divider}></View>
+          {!reviewsClicked && (
           <TouchableOpacity style={{ paddingTop: 20, textAlign: 'center' }}>
             <Text onPress={showReviews}>
               Average Rating: {Math.round(campsite?.star_rating) || 3} ⭐️'s,{' '}
@@ -54,6 +56,14 @@ export default function SingleCampsite({
             })}
           </ScrollView>
         )}
+        </View>
+
+
+        {/* host */}
+        <View style={styles.paddedDivider}>
+          <View style={styles.divider}></View>
+          <HostInfo/>
+        </View>
       </ScrollView>
       <Footer campsite={campsite} />
     </View>
@@ -89,6 +99,9 @@ const styles = StyleSheet.create({
   },
   btnText: {
     fontWeight: 'bold',
+  },
+  paddedDivider: {
+    padding:20
   },
   divider: {
     paddingTop: 20,
