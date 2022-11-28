@@ -15,6 +15,10 @@ const Calendar = ({
   const [selectedStartDate, setSelectedStartDate] = useState();
   const [allowRangeSelection, setAllowRangeSelection] = useState(false);
 
+  const [startDate, setStartDate] = useState(null);
+  const [endDate, setEndDate] = useState(null);
+
+
   function disableSelectingPast(date) {
     const today = new Date();
     const availableDates = [];
@@ -25,8 +29,10 @@ const Calendar = ({
         );
       }
     });
+    // console.log(availableDates)
+    // console.log(new Date(date).toISOString().slice(0, 10))
     return (
-      date < today &&
+      date < today ||
       !availableDates.includes(new Date(date).toISOString().slice(0, 10))
     );
   }
@@ -51,9 +57,19 @@ const Calendar = ({
     return stringDate;
   };
 
-  const onDateChange = (date) => {
-    let string = convertToDateFormat(date);
-    setDates([...dates, string]);
+  const onDateChange = (date, startOrEnd) => {
+    if (date) {
+      let string = convertToDateFormat(date);
+      if (startOrEnd === 'START_DATE') {
+        setStartDate(string);
+        setDates([string])
+      } else {
+        setEndDate(string);
+        setDates([startDate, string])
+      }
+    } else {
+      setEndDate(date)
+    }
   };
 
   return (
