@@ -106,24 +106,30 @@ const Messaging = ({ route, navigation }) => {
               return (
                 <View key={count++} style={styles.textBubbleSender}>
                   <Text style={styles.sender}>{entry.messages}</Text>
-                  <Text
-                    style={{
-                      color: 'gray',
-                      fontSize: 11,
-                      marginTop: 2,
-                    }}>{`${moment(entry.created_on).fromNow()}`}</Text>
+                  {index === messages.length - 1 ||
+                  messages[index + 1].sender !== user_id ? (
+                    <Text
+                      style={{
+                        color: 'gray',
+                        fontSize: 11,
+                        marginTop: 2,
+                      }}>{`${moment(entry.created_on).fromNow()}`}</Text>
+                  ) : null}
                 </View>
               );
             } else {
               return (
                 <View key={count++} style={styles.textBubbleReceiver}>
                   <Text style={styles.receiver}>{entry.messages}</Text>
-                  <Text
-                    style={{
-                      color: 'gray',
-                      fontSize: 11,
-                      marginTop: 2,
-                    }}>{`${moment(entry.created_on).fromNow()}`}</Text>
+                  {index === messages.length - 1 ||
+                  messages[index + 1].sender === user_id ? (
+                    <Text
+                      style={{
+                        color: 'gray',
+                        fontSize: 11,
+                        marginTop: 2,
+                      }}>{`${moment(entry.created_on).fromNow()}`}</Text>
+                  ) : null}
                 </View>
               );
             }
