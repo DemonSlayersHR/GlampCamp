@@ -18,7 +18,8 @@ const Messaging = ({ route, navigation }) => {
   // ^ need {reserve_id, user_type}
   // ------------------------------ SET UP ------------------------------
 
-  // test type, remove on production
+  // test type, remove on productions
+  // const reserve_id = route.params.campsite.camp_id || useRef(3);
   const reserve_id = useRef(3);
 
   // toggles test

@@ -22,34 +22,30 @@ export default function SingleCampsite({
 }) {
   const { campsite } = route.params;
 
-  const [reviewsClicked, setReviewsClicked] = useState(false);
-
-  const showReviews = () => {
-    setReviewsClicked(!reviewsClicked);
-  };
+  const [dates, setDates] = useState([]);
 
   return (
     <View style={styles.container}>
       <ScrollView style={{ marginBottom: 100 }}>
         {/* overview */}
-        <Overview campsite={campsite} navigation={navigation} />
+        <Overview campsite={campsite} navigation={navigation}/>
         {/* calendar */}
         <Calendar
           setAvailabilityButtonClicked={setAvailabilityButtonClicked}
           campsite={campsite}
+          dates={dates}
+          setDates={setDates}
         />
         {/* reviews */}
         <View style={styles.paddedDivider}>
           <View style={styles.divider}></View>
-          {!reviewsClicked && (
-          <TouchableOpacity style={{ paddingTop: 20, textAlign: 'center' }}>
-            <Text onPress={showReviews}>
-              Average Rating: {Math.round(campsite?.star_rating) || 3} ⭐️'s,{' '}
+          <TouchableOpacity style={{ paddingTop: 10 }}>
+            <Text style={{fontSize: 18, fontWeight: '600'}}>
+              ★ {parseInt(campsite.star_rating).toFixed(1) || 3}{' '}•{' '}
               {campsite.reviews?.length || 0} Reviews
             </Text>
           </TouchableOpacity>
-        )}
-        {campsite?.reviews && reviewsClicked && (
+        {campsite?.reviews && (
           <ScrollView horizontal={true} style={styles.reviewsContainer}>
             {campsite.reviews.map((review, index) => {
               return <SingleReview key={index} review={review} />;
@@ -58,23 +54,20 @@ export default function SingleCampsite({
         )}
         </View>
 
-
         {/* host */}
         <View style={styles.paddedDivider}>
           <View style={styles.divider}></View>
-          <HostInfo/>
+          <HostInfo navigation={navigation} campsite={campsite}/>
         </View>
       </ScrollView>
-      <Footer campsite={campsite} />
+
+      {/* footer */}
+      <Footer campsite={campsite} dates={dates}/>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
-  reviewsContainer: {
-    flexDirection: 'row',
-    paddingTop: 10,
-  },
   container: {
     position: 'relative',
     flex: 1,
@@ -82,26 +75,12 @@ const styles = StyleSheet.create({
   },
   reviewsContainer: {
     flexDirection: 'row',
-  },
-  btnContainer: {
-    flex: 1,
-    justifyContent: 'space-around',
-    alignItems: 'center',
-  },
-  btn: {
-    borderWidth: 1,
-    padding: 15,
-    borderRadius: 10,
-    width: '90%',
-    flexDirection: 'row',
-    justifyContent: 'space-around',
-    alignItems: 'center',
-  },
-  btnText: {
-    fontWeight: 'bold',
+    paddingTop: 10,
   },
   paddedDivider: {
-    padding:20
+    paddingLeft:20,
+    paddingRight:20,
+    paddingBottom: 10,
   },
   divider: {
     paddingTop: 20,
