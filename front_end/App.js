@@ -55,7 +55,7 @@ export default function App() {
           <Stack.Screen
             name='Campsites Visited/Plans to Visit'
             component={Reviews}
-            options={{ headerShown: false }}
+            options={{ headerShown: true }}
           />
           <Stack.Screen
             name='messaging'

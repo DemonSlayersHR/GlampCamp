@@ -26,13 +26,22 @@ export default function Nav({ navigation }) {
           navigation={navigation}
         />
         {user.userInfo ? (
-          <IconFormat
-            iconName='account'
-            title='User'
-            selected={selected}
-            setSelected={setSelected}
-            navigation={navigation}
-          />
+          <>
+            <IconFormat
+              iconName='message-outline'
+              title='Messaging'
+              selected={selected}
+              setSelected={setSelected}
+              navigation={navigation}
+            />
+            <IconFormat
+              iconName='account'
+              title='User'
+              selected={selected}
+              setSelected={setSelected}
+              navigation={navigation}
+            />
+          </>
         ) : (
           <IconFormat
             iconName='account'
@@ -61,6 +70,9 @@ function IconFormat({ iconName, title, selected, setSelected, navigation }) {
     }
     if (title === 'Saved') {
       // navigation.navigate('saved');
+    }
+    if (title === 'Messaging') {
+      navigation.navigate('messaging');
     }
     if (title === 'Explore') {
       navigation.navigate('homepage');
