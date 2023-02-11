@@ -1,13 +1,17 @@
 # GLAMPCAMP
-The perfect ios app for the young outdoorsy adult who wants to go camping, but doesn't own their own camping supplies. With GlampCamp, you can easily find the perfect campsite and chat with prospective hosts to make sure it's the right fit.
+The perfect app for the young outdoorsy adult who wants to go camping, but doesn't own their own camping supplies. With GlampCamp, you can easily find the perfect campsite and chat with prospective hosts to make sure it's the right fit.
 
 ## TECH STACK
 <div align="center" width="100%">
   <img src="https://img.shields.io/badge/react_native-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB" />
+  <img src='https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E' />
+  <img src='https://img.shields.io/badge/html5-%23E34F26.svg?style=for-the-badge&logo=html5&logoColor=white' />
+  <img src='https://img.shields.io/badge/css3-%231572B6.svg?style=for-the-badge&logo=css3&logoColor=white' />
   <img src="https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white" />
   <img src="https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB" />
   <img src="https://img.shields.io/badge/firebase-%23039BE5.svg?style=for-the-badge&logo=firebase" />
   <img src="https://img.shields.io/badge/postgres-%23316192.svg?style=for-the-badge&logo=postgresql&logoColor=white" />
+  <img src="https://img.shields.io/badge/-AWS-232F3E?logo=amazonaws&logoColor=white&style=for-the-badge" />
 </div>
 
 ## FEATURES
